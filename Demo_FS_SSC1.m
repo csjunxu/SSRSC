@@ -10,8 +10,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Subspace segmentation methods
 % SegmentationMethod = 'LSR' ;
 % SegmentationMethod = 'LSRd0' ;
-SegmentationMethod = 'LSR1' ;
-% SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR1' ;
+SegmentationMethod = 'LSR2' ;
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
