@@ -13,8 +13,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 
-SegmentationMethod = 'NNLSR' ;
-% SegmentationMethod = 'NNLSRd0' ;
+% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
@@ -38,7 +38,7 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [0.6:0.1:1]
+        for rho = [0.1:0.1:1]
             Par.rho = rho;
             for lambda = [0 1]
                 Par.lambda = lambda*10^(-4);
