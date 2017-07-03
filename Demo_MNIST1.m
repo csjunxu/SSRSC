@@ -41,8 +41,8 @@ for nSample = [100 200 400 600] % number of images for each digit
     %% Subspace segmentation methods
     % SegmentationMethod = 'LSR' ;
     % SegmentationMethod = 'LSRd0' ;
-    SegmentationMethod = 'LSR1' ;
-    % SegmentationMethod = 'LSR2' ;
+%     SegmentationMethod = 'LSR1' ;
+    SegmentationMethod = 'LSR2' ;
     
     % SegmentationMethod = 'NNLSR' ;
     % SegmentationMethod = 'NNLSRd0' ;
