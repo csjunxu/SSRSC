@@ -33,6 +33,7 @@ else
     DR = 1;
     dim = 6;
 end
+
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
