@@ -41,25 +41,25 @@ for nSample = [100 200 400 600] % number of images for each digit
     %% Subspace segmentation methods
     % SegmentationMethod = 'LSR' ;
     % SegmentationMethod = 'LSRd0' ;
-    %     SegmentationMethod = 'LSR1' ;
-    SegmentationMethod = 'LSR2' ;
+    % SegmentationMethod = 'LSR1' ;
+    % SegmentationMethod = 'LSR2' ;
     
     % SegmentationMethod = 'NNLSR' ;
     % SegmentationMethod = 'NNLSRd0' ;
     % SegmentationMethod = 'NPLSR' ;
     % SegmentationMethod = 'NPLSRd0' ;
     
-    % SegmentationMethod = 'ANNLSR' ;
+    SegmentationMethod = 'ANNLSR' ;
     % SegmentationMethod = 'ANNLSRd0' ;
     % SegmentationMethod = 'ANPLSR' ;
     % SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [1]
-            Par.rho = rho*10^(-2);
-            for lambda = [1:1:9 .1:.1:.9 .01:.01:.09]
-                Par.lambda = lambda*10^(-1);
+        for rho = [.1:.1:.4]
+            Par.rho = rho;
+            for lambda = [0]
+                Par.lambda = lambda*10^(-2);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
