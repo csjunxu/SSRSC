@@ -8,7 +8,6 @@ seqs = dir(datadir);
 seq3 = seqs(3:end);
 % Save the data loaded in struct "data "
 data = struct('ProjX', {}, 'name',{}, 'ids',{});
-addpath('fnnls');
 
 dataset = 'Hopkins155';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
@@ -37,11 +36,10 @@ clear seq3;
 
 
 %% Subspace segmentation methods
-% SegmentationMethod = 'LSR1' ; % 4.8
-% SegmentationMethod = 'LSR2' ; % 4.6
-
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
+% SegmentationMethod = 'LSR1' ; % 4.8
+% SegmentationMethod = 'LSR2' ; % 4.6
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
@@ -49,8 +47,8 @@ clear seq3;
 % SegmentationMethod = 'NPLSRd0' ; % SVD 的输入不能包含 NaN 或 Inf。
 % find a fast solver is still in process
 
-% SegmentationMethod = 'ANNLSR' ;
-SegmentationMethod = 'ANNLSRd0' ;
+SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
@@ -58,10 +56,10 @@ for mu = [1]
     Par.mu = mu;
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [0.001:.0002:0.009]
+        for rho = [0.005 0.01:0.01:009]
             Par.rho = rho;
-            for lambda = [1:1:10]
-                Par.lambda = lambda*10^(-5);
+            for lambda = [0]
+                Par.lambda = lambda*10^(-4);
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
                     num(i) = 0;
@@ -74,14 +72,14 @@ for mu = [1]
                     K = length( unique( gnd ) ) ;
                     n = max(gnd);
                     switch SegmentationMethod
-                        case 'LSR1'
-                            C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
-                        case 'LSR2'
-                            C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
                         case 'LSR'
                             C = LSR( ProjX , Par ) ;
                         case 'LSRd0'
                             C = LSRd0( ProjX , Par ) ; % solved by ADMM
+                        case 'LSR1'
+                            C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
+                        case 'LSR2'
+                            C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
                         case 'NNLSR'                   % non-negative
                             C = NNLSR( ProjX , Par ) ;
                         case 'NNLSRd0'               % non-negative, diagonal = 0

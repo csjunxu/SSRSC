@@ -46,11 +46,6 @@ while  ( ~terminate )
     %% update C the data term matrix
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
     C  = solver_BCLS_closedForm(Q);
-%     C2 = zeros(size(Q));
-%     for i = 1:size(Q, 2)
-%         C2(:, i) = lsqnonneg(eye(N), Q(:, i)); 
-%         % sum to 1 is not included, slower than solver_BCLS_closedForm
-%     end
     
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);

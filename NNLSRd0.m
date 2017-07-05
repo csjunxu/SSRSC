@@ -49,12 +49,6 @@ while  ( ~terminate )
     %% update C the data term matrix
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
     C = max(0, Q);
-%     C = zeros(size(Q));
-%     for i = 1:size(Q, 2)
-%         C(:, i) = lsqnonneg(eye(N), Q(:, i));
-% %         [C(:, i), ~] = fnnls(eye(N), Q(:, i), 1e-3);
-%     end
-
     C = C - diag(diag(C));
     
     %% update Deltas the lagrange multiplier matrix

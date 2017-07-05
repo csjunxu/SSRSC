@@ -48,7 +48,6 @@ while  ( ~terminate )
     nC = max(0, -Q);
     C = -nC;
     
-    
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
