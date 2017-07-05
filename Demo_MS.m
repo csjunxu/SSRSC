@@ -47,16 +47,16 @@ clear seq3;
 % SegmentationMethod = 'NPLSRd0' ; % SVD 的输入不能包含 NaN 或 Inf。
 % find a fast solver is still in process
 
-SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
-% SegmentationMethod = 'ANPLSR' ;
+SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
 for mu = [1]
     Par.mu = mu;
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [0.005 0.01:0.01:009]
+        for rho = [0.01:0.01:009]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
