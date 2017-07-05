@@ -49,8 +49,8 @@ clear seq3;
 
 % SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
-SegmentationMethod = 'ANPLSR' ;
-% SegmentationMethod = 'ANPLSRd0' ;
+% SegmentationMethod = 'ANPLSR' ;
+SegmentationMethod = 'ANPLSRd0' ;
 
 for mu = [1]
     Par.mu = mu;
