@@ -1,18 +1,15 @@
 function C = ANNLSR( X , Par )
 
-% Input
-% X           Data matrix, dim * num
-% Par        parameters
-
-% Objective function:
-%      min_{A}  ||X - X * A||_F + lambda * ||A||_F s.t.  A>=0
-
-% Notation: L
+% Input:
 % X ... (L x N) data matrix, where L is the number of features, and
 %           N is the number of samples.
-% A ... (N x N) is a row structured sparse matrix used to select
-%           the most representive and informative samples
 % Par ...  regularization parameters
+
+% Objective function:
+%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2 s.t.  A>=0, 1'*A=1'
+
+% Output: 
+% A ... (N x N) is a coefficient matrix 
 
 [L, N] = size (X);
 
