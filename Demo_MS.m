@@ -40,13 +40,13 @@ clear seq3;
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
 
-% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ; % SVD 的输入不能包含 NaN 或 Inf。
 % SegmentationMethod = 'NPLSRd0' ; % SVD 的输入不能包含 NaN 或 Inf。
 
 % SegmentationMethod = 'ANNLSR' ;
-SegmentationMethod = 'ANNLSRd0' ;
+% SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
@@ -54,9 +54,9 @@ for mu = [1]
     Par.mu = mu;
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.0054:.0002:.0100]
+        for rho = [.05:.01:.09]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [0 .01 .1 1 10]
                 Par.lambda = lambda*10^(-4);
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
