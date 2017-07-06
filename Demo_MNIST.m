@@ -37,12 +37,13 @@ for nSample = [600] % number of images for each digit
         DR = 1;
         dim = 50;
     end
+    
     %% Subspace segmentation methods
     %     SegmentationMethod = 'LSR' ;
     %     SegmentationMethod = 'LSRd0' ;
     %     SegmentationMethod = 'LSR1' ;
     %     SegmentationMethod = 'LSR2' ;
-    %
+    
     %     SegmentationMethod = 'NNLSR' ;
     %     SegmentationMethod = 'NNLSRd0' ;
     %     SegmentationMethod = 'NPLSR' ;
@@ -52,6 +53,7 @@ for nSample = [600] % number of images for each digit
     %     SegmentationMethod = 'ANNLSRd0' ;
     %     SegmentationMethod = 'ANPLSR' ;
     %     SegmentationMethod = 'ANPLSRd0' ;
+    
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
@@ -94,7 +96,7 @@ for nSample = [600] % number of images for each digit
                         fea = eigvector' * fea ;
                         redDim = min(nCluster*dim, size(fea, 1)) ;
                     end
-%                     fprintf( 'dimension = %d \n', redDim ) ;
+                    %  fprintf( 'dimension = %d \n', redDim ) ;
                     %% normalize
                     for c = 1 : size(fea,2)
                         fea(:,c) = fea(:,c) /norm(fea(:,c)) ;
