@@ -36,9 +36,9 @@ SegmentationMethod = 'ANNLSR' ;
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
-    for rho = [0.11:.01:.14]
+    for rho = [0.12]
         Par.rho = rho;
-        for lambda = [0]
+        for lambda = [1]
             Par.lambda = lambda*10^(-4);
             for nSet = [2 3 5 8 10]
                 n = nSet;
@@ -111,21 +111,14 @@ for maxIter = [5]
                 avgmissrate(n) = mean(missrateTot{n});
                 medmissrate(n) = median(missrateTot{n});
                 fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
+                allavgmissrate = mean(avgmissrate(avgmissrate~=0));
                 if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
-                    save(matname,'missrateTot','avgmissrate','medmissrate');
+                    save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 else
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
-                    save(matname,'missrateTot','avgmissrate','medmissrate');
+                    save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 end
-            end
-            allavgmissrate = mean(avgmissrate(avgmissrate~=0));
-            if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
-                matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
-                save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-            else
-                matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
-                save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
             end
         end
     end
