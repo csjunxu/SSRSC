@@ -28,17 +28,17 @@ end
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
-% SegmentationMethod = 'ANNLSR' ;
-SegmentationMethod = 'ANNLSRd0' ;
+SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
-    for rho = [0.07]
+    for rho = [0.09:.01:.12]
         Par.rho = rho;
-        for lambda = [0 1]
+        for lambda = [0]
             Par.lambda = lambda*10^(-4);
             for nSet = [2 3 5 8 10]
                 n = nSet;
@@ -118,6 +118,14 @@ for maxIter = [5]
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrateTot','avgmissrate','medmissrate');
                 end
+            end
+            allavgmissrate = mean(avgmissrate(avgmissrate~=0));
+            if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
+                save(matname,'missrateTot','avgmissrate','medmissrate');
+            else
+                matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                save(matname,'missrateTot','avgmissrate','medmissrate');
             end
         end
     end
