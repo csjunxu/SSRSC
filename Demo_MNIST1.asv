@@ -3,7 +3,7 @@ clear;
 addpath('MNISThelpcode');
 addpath('C:\Users\csjunxu\Documents\GitHub\SubspaceCluteringCode\SSCOMP_Code\scatnet-0.2');
 %% Settings
-for nSample = [50 100 200] % number of images for each digit
+for nSample = [100] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
@@ -27,7 +27,7 @@ for nSample = [50 100 200] % number of images for each digit
     dataset = 'MNIST';
     writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
     
-    nExperiment = 5; % number of repeations
+    nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
     if DR == 0
         dim = size(Y{1, 1}, 1);
@@ -40,25 +40,25 @@ for nSample = [50 100 200] % number of images for each digit
     %% Subspace segmentation methods
     %     SegmentationMethod = 'LSR' ;
     %     SegmentationMethod = 'LSRd0' ;
-    %     SegmentationMethod = 'LSR1' ;
+    %         SegmentationMethod = 'LSR1' ;
     %     SegmentationMethod = 'LSR2' ;
-    %
-    SegmentationMethod = 'NNLSR' ;
+    
+            SegmentationMethod = 'NNLSR' ;
     %     SegmentationMethod = 'NNLSRd0' ;
     %     SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
-    %
-    %     SegmentationMethod = 'ANNLSR' ;
-    %     SegmentationMethod = 'ANNLSRd0' ;
+    
+%     SegmentationMethod = 'ANNLSR' ;
+%         SegmentationMethod = 'ANNLSRd0' ;
     %     SegmentationMethod = 'ANPLSR' ;
     %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.31:.02:.1]
+        for rho = [.95:.01:.99 1.01:.01:1.05]
             Par.rho = rho;
-            for lambda = [0]
-                Par.lambda = lambda*10^(-2);
+            for lambda = [1]
+                Par.lambda = lambda*10^(-4);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
@@ -94,7 +94,7 @@ for nSample = [50 100 200] % number of images for each digit
                         fea = eigvector' * fea ;
                         redDim = min(nCluster*dim, size(fea, 1)) ;
                     end
-                    fprintf( 'dimension = %d \n', redDim ) ;
+                    %                     fprintf( 'dimension = %d \n', redDim ) ;
                     %% normalize
                     for c = 1 : size(fea,2)
                         fea(:,c) = fea(:,c) /norm(fea(:,c)) ;
@@ -141,12 +141,12 @@ for nSample = [50 100 200] % number of images for each digit
                 %% output
                 avgmissrate = mean(missrate*100);
                 medmissrate = median(missrate*100);
-                fprintf('Total mean missrate  is %.3f%%.\n ' , avgmissrate) ;
+                fprintf('Total mean missrate  is %.3f%%.\n' , avgmissrate) ;
                 if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
-                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 else
-                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 end
             end
