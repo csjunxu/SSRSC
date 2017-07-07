@@ -23,20 +23,20 @@ end
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 
-% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
 % SegmentationMethod = 'ANNLSR' ;
-SegmentationMethod = 'ANNLSRd0' ;
+% SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
-    for rho = [.21 .19 .22 .18 .23 .17 .24 .16]
+    for rho = [.45:.02:.95]
         Par.rho = rho;
         for lambda = [0]
             Par.lambda = lambda*10^(-4);
