@@ -55,7 +55,7 @@ for nSample = [50] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.1:.1:.9]
+        for rho = [1:.1:1.9]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
@@ -141,7 +141,7 @@ for nSample = [50] % number of images for each digit
                 %% output
                 avgmissrate = mean(missrate*100);
                 medmissrate = median(missrate*100);
-                fprintf('Total mean missrate  is %.3f%%.\n ' , avgmissrate) ;
+                fprintf('Total mean missrate  is %.3f%%.\n' , avgmissrate) ;
                 if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
