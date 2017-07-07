@@ -36,7 +36,7 @@ SegmentationMethod = 'NNLSR' ;
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
-    for rho = [.45:.02:.95]
+    for rho = [.54:.02:.74]
         Par.rho = rho;
         for lambda = [0]
             Par.lambda = lambda*10^(-4);
