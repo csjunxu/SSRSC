@@ -27,7 +27,7 @@ for nSample = [600] % number of images for each digit
     dataset = 'MNIST';
     writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
     
-    nExperiment = 5; % number of repeations
+    nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
     if DR == 0
         dim = size(Y{1, 1}, 1);
@@ -57,9 +57,9 @@ for nSample = [600] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.032:-.002:.022]
+        for rho = [.030:.001:.035]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [0 1]
                 Par.lambda = lambda*10^(-4);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
@@ -145,10 +145,10 @@ for nSample = [600] % number of images for each digit
                 medmissrate = median(missrate*100);
                 fprintf('Total mean missrate  is %.3f%%.\n ' , avgmissrate) ;
                 if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
-                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 else
-                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 end
             end

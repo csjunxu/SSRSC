@@ -3,7 +3,7 @@ clear;
 addpath('MNISThelpcode');
 addpath('C:\Users\csjunxu\Documents\GitHub\SubspaceCluteringCode\SSCOMP_Code\scatnet-0.2');
 %% Settings
-for nSample = [50] % number of images for each digit
+for nSample = [100] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
@@ -27,7 +27,7 @@ for nSample = [50] % number of images for each digit
     dataset = 'MNIST';
     writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
     
-    nExperiment = 5; % number of repeations
+    nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
     if DR == 0
         dim = size(Y{1, 1}, 1);
@@ -44,20 +44,20 @@ for nSample = [50] % number of images for each digit
     %     SegmentationMethod = 'LSR2' ;
     %
     %     SegmentationMethod = 'NNLSR' ;
-    SegmentationMethod = 'NNLSRd0' ;
+    %     SegmentationMethod = 'NNLSRd0' ;
     %     SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
     %
-    %     SegmentationMethod = 'ANNLSR' ;
-    %     SegmentationMethod = 'ANNLSRd0' ;
+            SegmentationMethod = 'ANNLSR' ;
+%     SegmentationMethod = 'ANNLSRd0' ;
     %     SegmentationMethod = 'ANPLSR' ;
     %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.71:.02:.89]
+        for rho = [.175:.001:.185]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [0 1]
                 Par.lambda = lambda*10^(-4);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
@@ -94,7 +94,7 @@ for nSample = [50] % number of images for each digit
                         fea = eigvector' * fea ;
                         redDim = min(nCluster*dim, size(fea, 1)) ;
                     end
-                    fprintf( 'dimension = %d \n', redDim ) ;
+%                     fprintf( 'dimension = %d \n', redDim ) ;
                     %% normalize
                     for c = 1 : size(fea,2)
                         fea(:,c) = fea(:,c) /norm(fea(:,c)) ;
