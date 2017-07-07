@@ -57,11 +57,11 @@ while  ( ~terminate )
     err2(iter+1) = errorLinSys(X, A);
     if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
-        fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-    else
-        if (mod(iter, Par.maxIter)==0)
-            fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-        end
+%         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+%     else
+%         if (mod(iter, Par.maxIter)==0)
+%             fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+%         end
     end
     
     %         %% convergence conditions
