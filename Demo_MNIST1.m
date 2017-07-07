@@ -43,19 +43,19 @@ for nSample = [200] % number of images for each digit
     %         SegmentationMethod = 'LSR1' ;
     %     SegmentationMethod = 'LSR2' ;
     
-%             SegmentationMethod = 'NNLSR' ;
-%         SegmentationMethod = 'NNLSRd0' ;
+    %             SegmentationMethod = 'NNLSR' ;
+    %         SegmentationMethod = 'NNLSRd0' ;
     %     SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
     
-    SegmentationMethod = 'ANNLSR' ;
-%         SegmentationMethod = 'ANNLSRd0' ;
+        SegmentationMethod = 'ANNLSR' ;
+%     SegmentationMethod = 'ANNLSRd0' ;
     %     SegmentationMethod = 'ANPLSR' ;
     %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [.131:.001:.134 .136:.001:.139 .141:.001:.145]
+        for rho = [.05 .15 .25]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
