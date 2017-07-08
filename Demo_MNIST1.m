@@ -48,14 +48,14 @@ for nSample = [400] % number of images for each digit
     %     SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
     
-            SegmentationMethod = 'ANNLSR' ;
-    %     SegmentationMethod = 'ANNLSRd0' ;
+%             SegmentationMethod = 'ANNLSR' ;
+        SegmentationMethod = 'ANNLSRd0' ;
     %     SegmentationMethod = 'ANPLSR' ;
     %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5] 
         Par.maxIter = maxIter;
-        for rho = [.06:.01:.09 .11:.01:.14]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
