@@ -3,7 +3,7 @@ clear;
 addpath('MNISThelpcode');
 addpath('C:\Users\csjunxu\Documents\GitHub\SubspaceCluteringCode\SSCOMP_Code\scatnet-0.2');
 %% Settings
-for nSample = [200] % number of images for each digit
+for nSample = [600] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
@@ -44,8 +44,8 @@ for nSample = [200] % number of images for each digit
     %         SegmentationMethod = 'LSR1' ;
     %     SegmentationMethod = 'LSR2' ;
     
-    SegmentationMethod = 'NNLSR' ;
-%             SegmentationMethod = 'NNLSRd0' ;
+%     SegmentationMethod = 'NNLSR' ;
+            SegmentationMethod = 'NNLSRd0' ;
     %     SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
     
@@ -56,9 +56,9 @@ for nSample = [200] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5] 
         Par.maxIter = maxIter;
-        for rho = [4]
+        for rho = [1:.2:5]
             Par.rho = rho;
-            for lambda = [1]
+            for lambda = [0]
                 Par.lambda = lambda*10^(-4);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
