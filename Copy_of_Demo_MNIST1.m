@@ -44,9 +44,9 @@ for nSample = [100] % number of images for each digit
     %     SegmentationMethod = 'LSR1' ;
     %     SegmentationMethod = 'LSR2' ;
     
-    SegmentationMethod = 'NNLSR' ;
+%     SegmentationMethod = 'NNLSR' ;
     %     SegmentationMethod = 'NNLSRd0' ;
-    %     SegmentationMethod = 'NPLSR' ;
+        SegmentationMethod = 'NPLSR' ;
     %     SegmentationMethod = 'NPLSRd0' ;
     
     %     SegmentationMethod = 'ANNLSR' ;
