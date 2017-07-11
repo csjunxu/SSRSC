@@ -57,7 +57,7 @@ for nSample = [200] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [1:1:5]
+        for rho = [6:1:15]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
