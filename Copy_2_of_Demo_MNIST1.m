@@ -54,7 +54,7 @@ for nSample = [600] % number of images for each digit
     %     SegmentationMethod = 'ANPLSR' ;
     SegmentationMethod = 'ANPLSRd0' ;
     
-    %% Subspace segmentation
+    %% Subspace segmentation 
     for maxIter = [5]
         Par.maxIter = maxIter;
         for rho = [26:1:30]
