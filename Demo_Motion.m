@@ -35,15 +35,14 @@ clear seq3;
 
 
 %% Subspace segmentation methods
+
+SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
-SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-
-
-% SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'LSRd0' ;
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
-
+% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -69,7 +68,7 @@ for mu = [1]
             Par.s = s;
             for rho = [.1]
                 Par.rho = rho;
-                for lambda = [5:1:20]
+                for lambda = [800 750 850]
                     Par.lambda = lambda*10^(-0);
                     maxNumGroup = 5;
                     for i = 1:maxNumGroup
@@ -83,6 +82,9 @@ for mu = [1]
                         K = length( unique( gnd ) ) ;
                         n = max(gnd);
                         switch SegmentationMethod
+                            case 'SSC'
+                                %  alpha = 800;
+                                C = admmLasso_mat_func(ProjX, true, Par.lambda);
                             case 'LRR'
                                 C = solve_lrr(ProjX, Par.lambda); % without post processing
                             case 'LRSC'
@@ -142,7 +144,7 @@ for mu = [1]
                     end
                     avgallmissrate = sum(allmissrate)/length(allmissrate);
                     medallmissrate = median(allmissrate);
-                    if strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                    if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'SSCOMP')==1
