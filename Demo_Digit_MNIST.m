@@ -1,7 +1,7 @@
 clear;
 
 addpath('MNISThelpcode');
-addpath('C:\Users\csjunxu\Documents\GitHub\SubspaceCluteringCode\SSCOMP_Code\scatnet-0.2');
+addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2');
 %% Settings
 for nSample = [400 600] % number of images for each digit
     
@@ -13,7 +13,7 @@ for nSample = [400 600] % number of images for each digit
             % vector of a digit image and N = 60,000.
             % MNIST_LABEL is a 1 by N vector. Each entry is the label for the
             % corresponding column in MNIST_SC_DATA.
-            load MNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
+            load ttMNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
         catch
             MNIST_DATA = loadMNISTImages('train-images.idx3-ubyte');
             MNIST_LABEL = loadMNISTLabels('train-labels.idx1-ubyte');
@@ -23,6 +23,28 @@ for nSample = [400 600] % number of images for each digit
         MNIST_DATA = MNIST_SC_DATA;
     end
     
+    if ~exist('trMNIST_DATA', 'var') || ~exist('ttMNIST_DATA', 'var')
+        try
+            % MNIST_SC_DATA is a D by N matrix. Each column contains a feature
+            % vector of a digit image and N = 60,000.
+            % MNIST_LABEL is a 1 by N vector. Each entry is the label for the
+            % corresponding column in MNIST_SC_DATA.
+            load trMNIST_C.mat trMNIST_C_DATA trMNIST_LABEL;
+        catch
+            % training data
+            trMNIST_DATA = loadMNISTImages('train-images.idx3-ubyte');
+            trMNIST_LABEL = loadMNISTLabels('train-labels.idx1-ubyte');
+            trMNIST_C_DATA = SCofDigits(trMNIST_DATA);
+            save C:\Users\csjunxu\Desktop\SC\Datasets\trMNIST_C.mat trMNIST_C_DATA trMNIST_LABEL;
+            % testing data
+            ttMNIST_DATA = loadMNISTImages('t10k-images.idx3-ubyte');
+            ttMNIST_LABEL = loadMNISTLabels('t10k-labels.idx1-ubyte');
+            ttMNIST_C_DATA = SCofDigits(ttMNIST_DATA);
+            save C:\Users\csjunxu\Desktop\SC\Datasets\ttMNIST_C.mat ttMNIST_C_DATA ttMNIST_LABEL;
+        end
+        trMNIST_DATA = trMNIST_C_DATA;
+        ttMNIST_DATA = ttMNIST_C_DATA;
+    end
     
     dataset = 'MNIST';
     writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
@@ -51,8 +73,8 @@ for nSample = [400 600] % number of images for each digit
     
     %     SegmentationMethod = 'ANNLSR' ;
     %     SegmentationMethod = 'ANNLSRd0' ;
-        SegmentationMethod = 'ANPLSR' ;
-%     SegmentationMethod = 'ANPLSRd0' ;
+    SegmentationMethod = 'ANPLSR' ;
+    %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
