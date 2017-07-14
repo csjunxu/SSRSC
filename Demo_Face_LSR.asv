@@ -18,8 +18,6 @@ else
 end
 
 %% Subspace segmentation methods
-SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
-
 % SegmentationMethod = 'LSR' ;
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'LSR1' ;
@@ -33,15 +31,15 @@ SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 N
 % SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
-% SegmentationMethod = 'ANPLSRd0' ;
+SegmentationMethod = 'ANPLSRd0' ;
 
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
     for rho = [.05]
         Par.rho = rho;
-        for lambda = [0 1 2]
-            Par.lambda = 10^(-lambda);
+        for lambda = [1]
+            Par.lambda = lambda*10^(-4);
             for nSet = [2 3 5 8 10]
                 n = nSet;
                 index = Ind{n};
@@ -74,7 +72,8 @@ for maxIter = [5]
                     for j = 1 : Repeat
                         switch SegmentationMethod
                             case 'LRR'
-                                C = solve_lrr(Yfea, Par.lambda); % withuot post processing
+                                C = solve_lrr(X, 0.18);
+                                % withotpost processing
                             case 'LSR1'
                                 C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                             case 'LSR2'
@@ -116,7 +115,7 @@ for maxIter = [5]
                 medmissrate(n) = median(missrateTot{n});
                 fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
                 allavgmissrate = mean(avgmissrate(avgmissrate~=0));
-                if strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 else
