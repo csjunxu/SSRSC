@@ -67,7 +67,6 @@ for mu = [1]
                 Par.rho = rho;
                 for lambda = [0:1:8]
                     Par.lambda = 10^(-lambda);
-                    
                     maxNumGroup = 5;
                     for i = 1:maxNumGroup
                         num(i) = 0;
@@ -80,6 +79,11 @@ for mu = [1]
                         K = length( unique( gnd ) ) ;
                         n = max(gnd);
                         switch SegmentationMethod
+                            case 'LRR'
+                                C = solve_lrr(ProjX, Par.lambda); % without post processing
+                            case 'LRSC'
+                                C = lrsc_noiseless(ProjX, Par.lambda);
+                                %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
                             case 'LSR'
                                 C = LSR( ProjX , Par ) ;
                             case 'LSRd0'
@@ -91,6 +95,7 @@ for mu = [1]
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                                 C = OMP_mat_func(ProjX, Par.rho, Par.lambda);
+                            %% our methods
                             case 'NNLSR'                   % non-negative
                                 C = NNLSR( ProjX , Par ) ;
                             case 'NNLSRd0'               % non-negative, diagonal = 0
