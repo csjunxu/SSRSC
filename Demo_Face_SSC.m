@@ -37,7 +37,7 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [.5:.5:5]
+        for rho = [.01:.01:.15]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-4);
@@ -85,7 +85,7 @@ for maxIter = [5]
                                 case 'NNLSRd0'               % non-negative, diagonal = 0
                                     C = NNLSRd0( Yfea , Par ) ;
                                 case 'NPLSR'                   % non-positive
-                                    C = NPLSR( Yfea , Par ) ; 
+                                    C = NPLSR( Yfea , Par ) ;
                                 case 'NPLSRd0'               % non-positive, diagonal = 0
                                     C = NPLSRd0( Yfea , Par ) ;
                                 case 'ANNLSR'                 % affine, non-negative
@@ -111,20 +111,22 @@ for maxIter = [5]
                     end
                     avgmissrate(n) = mean(missrateTot{n});
                     medmissrate(n) = median(missrateTot{n});
+                    fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
+                    allavgmissrate = mean(avgmissrate(avgmissrate~=0));
                     if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
-                        save(matname,'missrateTot','avgmissrate','medmissrate');
+                        save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     else
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
-                        save(matname,'missrateTot','avgmissrate','medmissrate');
+                        save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     end
                 end
                 if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
-                    save(matname,'missrateTot','avgmissrate','medmissrate');
+                    save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 else
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
-                    save(matname,'missrateTot','avgmissrate','medmissrate');
+                    save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 end
             end
         end
