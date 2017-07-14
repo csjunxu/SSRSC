@@ -85,7 +85,7 @@ for maxIter = [5]
                                 case 'NNLSRd0'               % non-negative, diagonal = 0
                                     C = NNLSRd0( Yfea , Par ) ;
                                 case 'NPLSR'                   % non-positive
-                                    C = NPLSR( Yfea , Par ) ;
+                                    C = NPLSR( Yfea , Par ) ; 
                                 case 'NPLSRd0'               % non-positive, diagonal = 0
                                     C = NPLSRd0( Yfea , Par ) ;
                                 case 'ANNLSR'                 % affine, non-negative
