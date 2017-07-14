@@ -7,7 +7,7 @@ for nSample = [400 600] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
-    if ~exist('MNIST_DATA', 'var')
+    if ~exist('ttMNIST_DATA', 'var')
         try
             % MNIST_SC_DATA is a D by N matrix. Each column contains a feature
             % vector of a digit image and N = 60,000.
