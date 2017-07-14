@@ -35,12 +35,16 @@ clear seq3;
 
 
 %% Subspace segmentation methods
+% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+
+
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
 
-SegmentationMethod = 'SSCOMP' ;
+% SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
@@ -63,10 +67,10 @@ for mu = [1]
         Par.maxIter = maxIter;
         for s = [1]
             Par.s = s;
-            for rho = [2 3 4 6 7 8 9 10]
+            for rho = [.1]
                 Par.rho = rho;
-                for lambda = [0:1:8]
-                    Par.lambda = 10^(-lambda);
+                for lambda = [5:1:20]
+                    Par.lambda = lambda*10^(-0);
                     maxNumGroup = 5;
                     for i = 1:maxNumGroup
                         num(i) = 0;
@@ -95,7 +99,7 @@ for mu = [1]
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                                 C = OMP_mat_func(ProjX, Par.rho, Par.lambda);
-                            %% our methods
+                                %% our methods
                             case 'NNLSR'                   % non-negative
                                 C = NNLSR( ProjX , Par ) ;
                             case 'NNLSRd0'               % non-negative, diagonal = 0
