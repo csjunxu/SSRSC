@@ -40,6 +40,8 @@ clear seq3;
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
 
+SegmentationMethod = 'SSCOMP' ;
+
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ; % SVD 的输入不能包含 NaN 或 Inf。
@@ -50,7 +52,7 @@ clear seq3;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
@@ -59,12 +61,13 @@ for mu = [1]
     Par.mu = mu;
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for s = [1 2]
+        for s = [1]
             Par.s = s;
-            for rho = [.1:.1:.9]
+            for rho = [2:1:10]
                 Par.rho = rho;
-                for lambda = [0]
-                    Par.lambda = lambda*10^(-4);
+                for lambda = [0:1:8]
+                    Par.lambda = 10^(-lambda);
+                    
                     maxNumGroup = 5;
                     for i = 1:maxNumGroup
                         num(i) = 0;
@@ -85,6 +88,9 @@ for mu = [1]
                                 C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
                             case 'LSR2'
                                 C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
+                            case 'SSCOMP' % add the path of the SSCOMP method
+                                addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+                                C = OMP_mat_func(ProjX, 5, Par.lambda);
                             case 'NNLSR'                   % non-negative
                                 C = NNLSR( ProjX , Par ) ;
                             case 'NNLSRd0'               % non-negative, diagonal = 0
@@ -130,7 +136,13 @@ for mu = [1]
                     if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                    else
+                    elseif strcmp(SegmentationMethod, 'SSCOMP')==1
+                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                        save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
+                    elseif strcmp(ClassificationMethod, 'NNLSR') == 1 || strcmp(ClassificationMethod, 'NPLSR') == 1 || strcmp(ClassificationMethod, 'ANNLSR') == 1 || strcmp(ClassificationMethod, 'ANPLSR') == 1
+                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                        save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
+                    elseif strcmp(ClassificationMethod, 'DANNLSR') == 1 || strcmp(ClassificationMethod, 'DANPLSR') == 1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_scale' num2str(Par.s) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                     end
