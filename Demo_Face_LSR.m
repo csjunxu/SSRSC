@@ -120,7 +120,7 @@ for maxIter = [5]
                 medmissrate(n) = median(missrateTot{n});
                 fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
                 allavgmissrate = mean(avgmissrate(avgmissrate~=0));
-                if strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                if strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                 else
