@@ -21,7 +21,7 @@ SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
-  
+
 Repeat = 1; %number of repeations
 DR = 1; % dimension reduction
 if DR == 0
@@ -37,9 +37,9 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [0.2:0.1:0.4 0.6:0.1:0.9]
+        for rho = [.5:.5:5]
             Par.rho = rho;
-            for lambda = [0]  
+            for lambda = [0]
                 Par.lambda = lambda*10^(-4);
                 for nSet = [2 3 5 8 10]
                     n = nSet;

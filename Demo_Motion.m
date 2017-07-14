@@ -63,7 +63,7 @@ for mu = [1]
         Par.maxIter = maxIter;
         for s = [1]
             Par.s = s;
-            for rho = [2:1:10]
+            for rho = [2 3 4 6 7 8 9 10]
                 Par.rho = rho;
                 for lambda = [0:1:8]
                     Par.lambda = 10^(-lambda);
@@ -90,7 +90,7 @@ for mu = [1]
                                 C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
-                                C = OMP_mat_func(ProjX, 5, Par.lambda);
+                                C = OMP_mat_func(ProjX, Par.rho, Par.lambda);
                             case 'NNLSR'                   % non-negative
                                 C = NNLSR( ProjX , Par ) ;
                             case 'NNLSRd0'               % non-negative, diagonal = 0
