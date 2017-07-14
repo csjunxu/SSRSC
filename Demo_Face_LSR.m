@@ -18,7 +18,8 @@ else
 end
 
 %% Subspace segmentation methods
-SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 
 % SegmentationMethod = 'LSR' ;
 % SegmentationMethod = 'LSRd0' ;
@@ -40,7 +41,7 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for rho = [.05]
         Par.rho = rho;
-        for lambda = [1 5 10]
+        for lambda = [10]
             Par.lambda = lambda*10^(-0);
             for nSet = [2 3 5 8 10]
                 n = nSet;
@@ -75,6 +76,9 @@ for maxIter = [5]
                         switch SegmentationMethod
                             case 'LRR'
                                 C = solve_lrr(Yfea, Par.lambda); % withuot post processing
+                            case 'LRSC'
+                                C = lrsc_noiseless(Yfea, Par.lambda);
+%                                 [~, C] = lrsc_noisy(Yfea, Par.lambda);
                             case 'LSR1'
                                 C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                             case 'LSR2'
