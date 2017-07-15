@@ -1,19 +1,43 @@
 clear;
 
 addpath('MNISThelpcode');
-addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2');
+addpath(genpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2'));
+
+dataset = 'MNIST';
+writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+
+%% Subspace segmentation methods
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
+SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'LSR1' ; % 4.8
+% SegmentationMethod = 'LSR2' ; % 4.6
+% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'LSRd0' ;
+% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+% SegmentationMethod = 'SSCOMP' ;
+
+%     SegmentationMethod = 'NNLSR' ;
+%     SegmentationMethod = 'NNLSRd0' ;
+%     SegmentationMethod = 'NPLSR' ;
+%     SegmentationMethod = 'NPLSRd0' ;
+
+%     SegmentationMethod = 'ANNLSR' ;
+%     SegmentationMethod = 'ANNLSRd0' ;
+%     SegmentationMethod = 'ANPLSR' ;
+%     SegmentationMethod = 'ANPLSRd0' ;
 %% Settings
-for nSample = [400 600] % number of images for each digit
+for nSample = [50 100 200 400 600] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
-    if ~exist('ttMNIST_DATA', 'var')
+    if ~exist('MNIST_DATA', 'var')
         try
             % MNIST_SC_DATA is a D by N matrix. Each column contains a feature
             % vector of a digit image and N = 60,000.
             % MNIST_LABEL is a 1 by N vector. Each entry is the label for the
             % corresponding column in MNIST_SC_DATA.
-            load ttMNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
+            load MNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
         catch
             MNIST_DATA = loadMNISTImages('train-images.idx3-ubyte');
             MNIST_LABEL = loadMNISTLabels('train-labels.idx1-ubyte');
@@ -22,32 +46,6 @@ for nSample = [400 600] % number of images for each digit
         end
         MNIST_DATA = MNIST_SC_DATA;
     end
-    
-    if ~exist('trMNIST_DATA', 'var') || ~exist('ttMNIST_DATA', 'var')
-        try
-            % MNIST_SC_DATA is a D by N matrix. Each column contains a feature
-            % vector of a digit image and N = 60,000.
-            % MNIST_LABEL is a 1 by N vector. Each entry is the label for the
-            % corresponding column in MNIST_SC_DATA.
-            load trMNIST_C.mat trMNIST_C_DATA trMNIST_LABEL;
-        catch
-            % training data
-            trMNIST_DATA = loadMNISTImages('train-images.idx3-ubyte');
-            trMNIST_LABEL = loadMNISTLabels('train-labels.idx1-ubyte');
-            trMNIST_C_DATA = SCofDigits(trMNIST_DATA);
-            save C:\Users\csjunxu\Desktop\SC\Datasets\trMNIST_C.mat trMNIST_C_DATA trMNIST_LABEL;
-            % testing data
-            ttMNIST_DATA = loadMNISTImages('t10k-images.idx3-ubyte');
-            ttMNIST_LABEL = loadMNISTLabels('t10k-labels.idx1-ubyte');
-            ttMNIST_C_DATA = SCofDigits(ttMNIST_DATA);
-            save C:\Users\csjunxu\Desktop\SC\Datasets\ttMNIST_C.mat ttMNIST_C_DATA ttMNIST_LABEL;
-        end
-        trMNIST_DATA = trMNIST_C_DATA;
-        ttMNIST_DATA = ttMNIST_C_DATA;
-    end
-    
-    dataset = 'MNIST';
-    writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
     
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -59,29 +57,13 @@ for nSample = [400 600] % number of images for each digit
         DR = 1;
         dim = 50;
     end
-    
-    %% Subspace segmentation methods
-    %     SegmentationMethod = 'LSR' ;
-    %     SegmentationMethod = 'LSRd0' ;
-    %     SegmentationMethod = 'LSR1' ;
-    %     SegmentationMethod = 'LSR2' ;
-    
-    %     SegmentationMethod = 'NNLSR' ;
-    %     SegmentationMethod = 'NNLSRd0' ;
-    %     SegmentationMethod = 'NPLSR' ;
-    %     SegmentationMethod = 'NPLSRd0' ;
-    
-    %     SegmentationMethod = 'ANNLSR' ;
-    %     SegmentationMethod = 'ANNLSRd0' ;
-    SegmentationMethod = 'ANPLSR' ;
-    %     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [5:1:20]
+        for rho = [1]
             Par.rho = rho;
-            for lambda = [0]
-                Par.lambda = lambda*10^(-4);
+            for lambda = [.01 .1 1 10]
+                Par.lambda = lambda*10^(-0);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
@@ -125,6 +107,22 @@ for nSample = [400 600] % number of images for each digit
                     %% Subspace Clustering
                     Yfea = fea(1:redDim, :) ;
                     switch SegmentationMethod
+                        case 'SSC'
+                            alpha = Par.lambda;
+                            C = admmLasso_mat_func(Yfea, true, alpha);
+                        case 'LRR'
+                            C = solve_lrr(Yfea, Par.lambda); % without post processing
+                        case 'SMR'
+                            para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                            para.gamma = 1;
+                            para.alpha = 20;
+                            para.knn = 4;
+                            para.elpson =0.01;
+                            Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                            C = smr(Yfea, para);
+                        case 'SSCOMP' % add the path of the SSCOMP method
+                            addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+                            C = OMP_mat_func(Yfea, 9, 1e-6);
                         case 'LSR1'
                             C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                         case 'LSR2'
@@ -165,11 +163,15 @@ for nSample = [400 600] % number of images for each digit
                 avgmissrate = mean(missrate*100);
                 medmissrate = median(missrate*100);
                 fprintf('Total mean missrate  is %.3f%%.\n' , avgmissrate) ;
-                if strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
-                else
+                elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
+                    
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    save(matname,'missrate','avgmissrate','medmissrate');
+                elseif strcmp(SegmentationMethod, 'SSCOMP')==1
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 end
             end

@@ -2,6 +2,24 @@ clear;
 
 addpath('MNISThelpcode');
 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2');
+
+dataset = 'MNIST';
+writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+%% Subspace segmentation methods
+%     SegmentationMethod = 'LSR' ;
+%     SegmentationMethod = 'LSRd0' ;
+%     SegmentationMethod = 'LSR1' ;
+%     SegmentationMethod = 'LSR2' ;
+
+%     SegmentationMethod = 'NNLSR' ;
+%     SegmentationMethod = 'NNLSRd0' ;
+%     SegmentationMethod = 'NPLSR' ;
+%     SegmentationMethod = 'NPLSRd0' ;
+
+%     SegmentationMethod = 'ANNLSR' ;
+%     SegmentationMethod = 'ANNLSRd0' ;
+SegmentationMethod = 'ANPLSR' ;
+%     SegmentationMethod = 'ANPLSRd0' ;
 %% Settings
 for nSample = [600] % number of images for each digit
     
@@ -23,10 +41,6 @@ for nSample = [600] % number of images for each digit
         MNIST_DATA = MNIST_SC_DATA;
     end
     
-    
-    dataset = 'MNIST';
-    writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
-    
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
     if DR == 0
@@ -38,21 +52,6 @@ for nSample = [600] % number of images for each digit
         dim = 50;
     end
     
-    %% Subspace segmentation methods
-    %     SegmentationMethod = 'LSR' ;
-    %     SegmentationMethod = 'LSRd0' ;
-    %     SegmentationMethod = 'LSR1' ;
-    %     SegmentationMethod = 'LSR2' ;
-    
-    %     SegmentationMethod = 'NNLSR' ;
-    %     SegmentationMethod = 'NNLSRd0' ;
-    %     SegmentationMethod = 'NPLSR' ;
-    %     SegmentationMethod = 'NPLSRd0' ;
-    
-    %     SegmentationMethod = 'ANNLSR' ;
-    %     SegmentationMethod = 'ANNLSRd0' ;
-        SegmentationMethod = 'ANPLSR' ;
-%     SegmentationMethod = 'ANPLSRd0' ;
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
