@@ -49,7 +49,7 @@ for maxIter = [5]
         Par.mu = mu;
         for rho = [.1]
             Par.rho = rho;
-            for lambda = [15 25 35 50 100]
+            for lambda = [15 20 25 30 50]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
@@ -84,7 +84,9 @@ for maxIter = [5]
                             switch SegmentationMethod
                                 case 'SSC'
                                     alpha = Par.lambda;
-                                    C = admmLasso_mat_func(Yfea, true, alpha);
+                                    CMat = admmOutlier_mat_func(Yfea, true, alpha);
+                                    N = size(Yfea,2);
+                                    C = CMat(1:N,:);
                                 case 'LRR'
                                     C = solve_lrr(Yfea, Par.lambda); % without post processing
                                 case 'LRSC'
