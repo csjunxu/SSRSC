@@ -33,7 +33,7 @@ SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC'
 % SegmentationMethod = 'DANPLSRd0';
 
 Repeat = 1; %number of repeations
-DR = 1; % dimension reduction
+DR = 0; % dimension reduction
 if DR == 0
     dim = size(Y, 1);
 elseif DR == 1
@@ -49,7 +49,7 @@ for maxIter = [5]
         Par.mu = mu;
         for rho = [.1]
             Par.rho = rho;
-            for lambda = [100]
+            for lambda = [20]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
