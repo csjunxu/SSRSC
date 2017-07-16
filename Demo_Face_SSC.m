@@ -7,12 +7,12 @@ dataset = 'YaleB_SSC';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 
 %% Subspace segmentation methods
-SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
-% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'LSR' ;   % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'SSCOMP' ;
@@ -22,7 +22,7 @@ SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC'
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
-% SegmentationMethod = 'ANNLSR' ;
+SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
@@ -47,9 +47,9 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [.1]
+        for rho = [1.5:.5:3]
             Par.rho = rho;
-            for lambda = [20]
+            for lambda = [0]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
