@@ -7,7 +7,7 @@ dataset = 'YaleB_SSC';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 
 %% Subspace segmentation methods
-% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
+SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ; % 4.8
@@ -22,7 +22,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
-SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
@@ -33,7 +33,7 @@ SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'DANPLSRd0';
 
 Repeat = 1; %number of repeations
-DR = 0; % dimension reduction
+DR = 1; % dimension reduction
 if DR == 0
     dim = size(Y, 1);
 elseif DR == 1
@@ -47,9 +47,9 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [1.5:.5:3]
+        for rho = [1]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [100 200 500 1000]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
