@@ -27,7 +27,7 @@ SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 N
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
 %% Settings
-for nSample = [200 400 600] % number of images for each digit
+for nSample = [400 600] % number of images for each digit
     
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
@@ -62,7 +62,7 @@ for nSample = [200 400 600] % number of images for each digit
         Par.maxIter = maxIter;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [.15:.1:.25]
+            for lambda = [.09:-.01:.01]
                 Par.lambda = lambda*10^(-0);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
