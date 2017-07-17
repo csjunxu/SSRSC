@@ -20,7 +20,7 @@ SegmentationMethod = 'ANNLSR' ;
 dataset = 'USPS';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Settings
-for nSample = 50 %[100 200 400] % number of images for each digit
+for nSample = [100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -35,7 +35,7 @@ for nSample = 50 %[100 200 400] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [12.9:-.1:12.1]
+        for rho = [5:10:145]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda =lambda*10^(-4);
