@@ -9,12 +9,12 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
-SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ; % 4.8
 % SegmentationMethod = 'LSR2' ; % 4.6
 % SegmentationMethod = 'LSR' ;   % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
-% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -49,7 +49,7 @@ for maxIter = [5]
         Par.mu = mu;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [11:1:20]
+            for lambda = [5:5:50]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
@@ -101,12 +101,13 @@ for maxIter = [5]
                                 case 'LSRd0'
                                     C = LSRd0( Yfea , Par ) ; % solved by ADMM
                                 case 'SMR'
-                                    para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                                    para.aff_type = 'J1'; 
+                                    % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                     para.gamma = 1;
-                                    para.alpha = 20;
+                                    para.alpha = Par.lambda; % 20
                                     para.knn = 4;
                                     para.elpson =0.01;
-                                    Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                                    Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                                     C = smr(Yfea, para);
                                 case 'SSCOMP' % add the path of the SSCOMP method
                                     addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
