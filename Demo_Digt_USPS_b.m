@@ -18,27 +18,32 @@ else
     dim = 12;
 end
 %% Subspace segmentation methods
-% SegmentationMethod = 'LSR' ;
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
+SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'LSR1' ; % 4.8
+% SegmentationMethod = 'LSR2' ; % 4.6
+% SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
-SegmentationMethod = 'LSR1' ;
-% SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+% SegmentationMethod = 'SSCOMP' ;
 
-% SegmentationMethod = 'NNLSR' ;
-% SegmentationMethod = 'NNLSRd0' ;
-% SegmentationMethod = 'NPLSR' ;
-% SegmentationMethod = 'NPLSRd0' ;
+%     SegmentationMethod = 'NNLSR' ;
+%     SegmentationMethod = 'NNLSRd0' ;
+%     SegmentationMethod = 'NPLSR' ;
+%     SegmentationMethod = 'NPLSRd0' ;
 
-% SegmentationMethod = 'ANNLSR' ;
-% SegmentationMethod = 'ANNLSRd0' ;
-% SegmentationMethod = 'ANPLSR' ;
-% SegmentationMethod = 'ANPLSRd0' ;
+    SegmentationMethod = 'ANNLSR' ;
+%     SegmentationMethod = 'ANNLSRd0' ;
+%     SegmentationMethod = 'ANPLSR' ;
+%     SegmentationMethod = 'ANPLSRd0' ;
 
 %% Subspace segmentation
 for maxIter = [5]
     Par.maxIter = maxIter;
     for rho = [0.001]
         Par.rho = rho;
-        for lambda = [0 1]
+        for lambda = [0]
             Par.lambda =lambda*10^(-4);
             for nSet = [2 3 5 8 10]
                 n = nSet;
@@ -70,6 +75,22 @@ for maxIter = [5]
                     Yfea = fea(1:redDim, :) ;
                     for j = 1 : Repeat
                         switch SegmentationMethod
+                            case 'SSC'
+                            alpha = Par.lambda;
+                            C = admmLasso_mat_func(Yfea, true, alpha);
+                        case 'LRR'
+                            C = solve_lrr(Yfea, Par.lambda); % without post processing
+                        case 'SMR'
+                            para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                            para.gamma = 1;
+                            para.alpha = 20;
+                            para.knn = 4;
+                            para.elpson =0.01;
+                            Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                            C = smr(Yfea, para);
+                        case 'SSCOMP' % add the path of the SSCOMP method
+                            addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+                            C = OMP_mat_func(Yfea, 9, 1e-6);
                             case 'LSR1'
                                 C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                             case 'LSR2'
