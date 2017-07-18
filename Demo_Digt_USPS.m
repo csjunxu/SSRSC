@@ -1,6 +1,6 @@
 clear ;
 %% Subspace segmentation methods
-% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
+SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ; % 4.8
@@ -13,14 +13,14 @@ clear ;
 %     SegmentationMethod = 'NNLSRd0' ;
 %     SegmentationMethod = 'NPLSR' ;
 %     SegmentationMethod = 'NPLSRd0' ;
-SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSR' ;
 %     SegmentationMethod = 'ANNLSRd0' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
 dataset = 'USPS';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Settings
-for nSample = [100 200 400] % number of images for each digit
+for nSample = [50 100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -35,10 +35,10 @@ for nSample = [100 200 400] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [61:1:64 66:1:69]
+        for rho = [1]
             Par.rho = rho;
-            for lambda = [0]
-                Par.lambda =lambda*10^(-4);
+            for lambda = [10 1e2 1e3 1e4 1e5]
+                Par.lambda =lambda*10^(-0);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
