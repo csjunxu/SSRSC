@@ -110,7 +110,7 @@ for maxIter = [5]
                                     Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                                     C = smr(Yfea, para);
                                 case 'SSCOMP' 
-                                    C = OMP_mat_func(Yfea, 9, 1e-6);
+                                    C = OMP_mat_func(Yfea, Par.rho, Par.lambda);
                                 case 'NNLSR'                   % non-negative
                                     C = NNLSR( Yfea , Par ) ;
                                 case 'NNLSRd0'               % non-negative, diagonal = 0
