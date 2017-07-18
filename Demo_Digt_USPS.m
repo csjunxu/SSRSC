@@ -1,4 +1,6 @@
 clear ;
+dataset = 'USPS';
+writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Subspace segmentation methods
 SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
@@ -17,8 +19,6 @@ SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC'
 %     SegmentationMethod = 'ANNLSRd0' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
-dataset = 'USPS';
-writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 %% Settings
 for nSample = [50 100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
@@ -37,7 +37,7 @@ for nSample = [50 100 200 400] % number of images for each digit
         Par.maxIter = maxIter;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [10 1e2 1e3 1e4 1e5]
+            for lambda = [15:-2:1 ]
                 Par.lambda =lambda*10^(-0);
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
