@@ -15,9 +15,9 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR' ;   % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
-% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
@@ -47,9 +47,9 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [2:1:10]
+        for rho = [5:5:50]
             Par.rho = rho;
-            for lambda = [-2:1:6]
+            for lambda = [0]
                 Par.lambda = 10^(-lambda);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
@@ -101,7 +101,7 @@ for maxIter = [5]
                                 case 'LSRd0'
                                     C = LSRd0( Yfea , Par ) ; % solved by ADMM
                                 case 'SMR'
-                                    para.aff_type = 'J1'; 
+                                    para.aff_type = 'J1';
                                     % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                     para.gamma = 1;
                                     para.alpha = Par.lambda; % 20
@@ -109,7 +109,7 @@ for maxIter = [5]
                                     para.elpson =0.01;
                                     Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                                     C = smr(Yfea, para);
-                                case 'SSCOMP' 
+                                case 'SSCOMP'
                                     C = OMP_mat_func(Yfea, Par.rho, Par.lambda);
                                 case 'NNLSR'                   % non-negative
                                     C = NNLSR( Yfea , Par ) ;
