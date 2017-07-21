@@ -20,11 +20,11 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
-SegmentationMethod = 'NPLSRd0' ;
+% SegmentationMethod = 'NPLSRd0' ;
 
 % SegmentationMethod = 'ANNLSR' ;
 % SegmentationMethod = 'ANNLSRd0' ;
-% SegmentationMethod = 'ANPLSR' ;
+SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
 % SegmentationMethod = 'DANNLSR';
