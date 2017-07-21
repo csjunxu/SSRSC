@@ -18,8 +18,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'NNLSR' ;
-SegmentationMethod = 'NNLSRd0' ;
-% SegmentationMethod = 'NPLSR' ;
+% SegmentationMethod = 'NNLSRd0' ;
+SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
 % SegmentationMethod = 'ANNLSR' ;
@@ -47,7 +47,7 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [.01:.01:.09 .1:.1:.9 1:.5:9 10:1:20 25:5:50 60:10:100]
+        for rho = [.1:.1:.9 1:1:10]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-1);
