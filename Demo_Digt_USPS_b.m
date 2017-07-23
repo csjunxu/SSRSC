@@ -33,7 +33,7 @@ SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 N
 %     SegmentationMethod = 'NPLSR' ;
 %     SegmentationMethod = 'NPLSRd0' ;
 
-    SegmentationMethod = 'ANNLSR' ;
+SegmentationMethod = 'ANNLSR' ;
 %     SegmentationMethod = 'ANNLSRd0' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
@@ -76,21 +76,24 @@ for maxIter = [5]
                     for j = 1 : Repeat
                         switch SegmentationMethod
                             case 'SSC'
-                            alpha = Par.lambda;
-                            C = admmLasso_mat_func(Yfea, true, alpha);
-                        case 'LRR'
-                            C = solve_lrr(Yfea, Par.lambda); % without post processing
-                        case 'SMR'
-                            para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
-                            para.gamma = 1;
-                            para.alpha = 20;
-                            para.knn = 4;
-                            para.elpson =0.01;
-                            Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
-                            C = smr(Yfea, para);
-                        case 'SSCOMP' % add the path of the SSCOMP method
-                            addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
-                            C = OMP_mat_func(Yfea, 9, 1e-6);
+                                alpha = Par.lambda;
+                                C = admmLasso_mat_func(Yfea, true, alpha);
+                            case 'LRR'
+                                C = solve_lrr(Yfea, Par.lambda); % without post processing
+                            case 'LRSC'
+                                C = lrsc_noiseless(Yfea, Par.lambda);
+                                %                                 [~, C] = lrsc_noisy(Yfea, Par.lambda);
+                            case 'SMR'
+                                para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                                para.gamma = 1;
+                                para.alpha = 20;
+                                para.knn = 4;
+                                para.elpson =0.01;
+                                Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                                C = smr(Yfea, para);
+                            case 'SSCOMP' % add the path of the SSCOMP method
+                                addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+                                C = OMP_mat_func(Yfea, 9, 1e-6);
                             case 'LSR1'
                                 C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                             case 'LSR2'

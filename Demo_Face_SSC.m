@@ -92,14 +92,6 @@ for maxIter = [5]
                                 case 'LRSC'
                                     C = lrsc_noiseless(Yfea, Par.lambda);
                                     %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
-                                case 'LSR1'
-                                    C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
-                                case 'LSR2'
-                                    C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
-                                case 'LSR'
-                                    C = LSR( Yfea , Par ) ;
-                                case 'LSRd0'
-                                    C = LSRd0( Yfea , Par ) ; % solved by ADMM
                                 case 'SMR'
                                     para.aff_type = 'J1';
                                     % J1 is unrelated to gamma, which is used in J2 and J2_norm
@@ -111,6 +103,14 @@ for maxIter = [5]
                                     C = smr(Yfea, para);
                                 case 'SSCOMP'
                                     C = OMP_mat_func(Yfea, Par.rho, Par.lambda);
+                                case 'LSR1'
+                                    C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
+                                case 'LSR2'
+                                    C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
+                                case 'LSR'
+                                    C = LSR( Yfea , Par ) ;
+                                case 'LSRd0'
+                                    C = LSRd0( Yfea , Par ) ; % solved by ADMM
                                 case 'NNLSR'                   % non-negative
                                     C = NNLSR( Yfea , Par ) ;
                                 case 'NNLSRd0'               % non-negative, diagonal = 0

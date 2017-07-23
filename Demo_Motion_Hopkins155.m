@@ -39,12 +39,12 @@ clear seq3;
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-% SegmentationMethod = 'LSR1' ; % 4.8
-% SegmentationMethod = 'LSR2' ; % 4.6
-% SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'SSCOMP' ;
+% SegmentationMethod = 'LSR1' ;
+% SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'LSRd0' ; % the same with LSR1
 
 % SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'NNLSRd0';
@@ -91,14 +91,6 @@ for mu = [1]
                             case 'LRSC'
                                 C = lrsc_noiseless(ProjX, 15);
                                 %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
-                            case 'LSR'
-                                C = LSR( ProjX , Par ) ;
-                            case 'LSRd0'
-                                C = LSRd0( ProjX , Par ) ; % solved by ADMM
-                            case 'LSR1'
-                                C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
-                            case 'LSR2'
-                                C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
                             case 'SMR'
                                 para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                 para.gamma = 1;
@@ -110,6 +102,14 @@ for mu = [1]
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                                 C = OMP_mat_func(ProjX, 9, 1e-6);
+                            case 'LSR'
+                                C = LSR( ProjX , Par ) ;
+                            case 'LSRd0'
+                                C = LSRd0( ProjX , Par ) ; % solved by ADMM
+                            case 'LSR1'
+                                C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
+                            case 'LSR2'
+                                C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
                                 %% our methods
                             case 'NNLSR'                   % non-negative
                                 C = NNLSR( ProjX , Par ) ;

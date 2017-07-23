@@ -10,10 +10,10 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-% SegmentationMethod = 'LSR1' ; % 4.8
-% SegmentationMethod = 'LSR2' ; % 4.6
+% SegmentationMethod = 'LSR1' ;
+% SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'LSRd0' ;
+% SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'SSCOMP' ;
 
@@ -111,6 +111,9 @@ for nSample = [600] % number of images for each digit
                             C = admmLasso_mat_func(Yfea, true, alpha);
                         case 'LRR'
                             C = solve_lrr(Yfea, Par.lambda); % without post processing
+                        case 'LRSC'
+                            C = lrsc_noiseless(Yfea, Par.lambda);
+                            %                                 [~, C] = lrsc_noisy(Yfea, Par.lambda);
                         case 'SMR'
                             para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                             para.gamma = 1;
