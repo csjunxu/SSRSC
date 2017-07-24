@@ -38,8 +38,8 @@ for nSample = [50 100 200 400] % number of images for each digit
         Par.maxIter = maxIter;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [40:5:100]
-                Par.lambda =lambda;
+            for lambda = [0:1:20]
+                Par.lambda =2.^-lambda;
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
@@ -91,10 +91,10 @@ for nSample = [50 100 200 400] % number of images for each digit
                         case 'SMR'
                             para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                             para.gamma = 1;
-                            para.alpha = 20;
+                            para.alpha = Par.lambda;
                             para.knn = 4;
-                            para.elpson =0.01;
-                            Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                            para.elpson =0.001;
+                            Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                             C = smr(Yfea, para);
                         case 'SSCOMP' % add the path of the SSCOMP method
                             addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
@@ -139,11 +139,14 @@ for nSample = [50 100 200 400] % number of images for each digit
                 avgmissrate = mean(missrate*100);
                 medmissrate = median(missrate*100);
                 fprintf('Total mean missrate  is %.3f%%.\n' , avgmissrate) ;
-                if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
+                if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    save(matname,'missrate','avgmissrate','medmissrate');
+                elseif strcmp(SegmentationMethod, 'SMR')==1 
+                                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(para.knn) '_alpha2^-' num2str(lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);

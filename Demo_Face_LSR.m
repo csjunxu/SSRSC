@@ -90,7 +90,7 @@ for maxIter = [5]
                                 para.alpha = 20;
                                 para.knn = 4;
                                 para.elpson =0.01;
-                                Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                                Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                                 C = smr(Yfea, para);
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
