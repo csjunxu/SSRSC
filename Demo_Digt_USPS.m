@@ -6,10 +6,10 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ;
-SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
-% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'SSCOMP' ;
 
 %     SegmentationMethod = 'NNLSR' ;
@@ -21,7 +21,7 @@ SegmentationMethod = 'LSR2' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
 %% Settings
-for nSample = [400] % number of images for each digit
+for nSample = [50 100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
