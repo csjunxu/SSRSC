@@ -123,6 +123,10 @@ for nSample = [400] % number of images for each digit
                             C = ANPLSR( Yfea , Par ) ;
                         case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                             C = ANPLSRd0( Yfea , Par ) ;
+                        case 'DANNLSR'                 % affine, non-negative, sum to a scalar s
+                            C = DANNLSR( Yfea, Par );
+                        case 'DANPLSR'             % affine, non-positive, sum to a scalar -s
+                            C = DANPLSR( Yfea, Par );
                     end
                     %% generate affinity
                     for k = 1 : size(C, 2)
@@ -144,6 +148,9 @@ for nSample = [400] % number of images for each digit
                     save(matname,'missrate','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    save(matname,'missrate','avgmissrate','medmissrate');
+                elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANPLSR') == 1
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '_s' num2str(Par.s) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SMR')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(para.knn) '_alpha2^-' num2str(lambda) '.mat']);
