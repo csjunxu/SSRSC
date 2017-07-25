@@ -98,7 +98,7 @@ for nSample = [50 100 200 400] % number of images for each digit
                             C = smr(Yfea, para);
                         case 'SSCOMP' % add the path of the SSCOMP method
                             addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
-                            C = OMP_mat_func(Yfea, 9, 1e-6);
+                            C = OMP_mat_func(Yfea, Par.rho, Par.lambda);
                         case 'LSR1'
                             C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
                         case 'LSR2'
