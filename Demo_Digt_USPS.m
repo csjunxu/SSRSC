@@ -21,7 +21,7 @@ SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
 %% Settings
-for nSample = [50 100 200 400] % number of images for each digit
+for nSample = [400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -38,7 +38,7 @@ for nSample = [50 100 200 400] % number of images for each digit
         Par.maxIter = maxIter;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [0:1:20]
+            for lambda = [5:1:20]
                 Par.lambda =2.^-lambda;
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
