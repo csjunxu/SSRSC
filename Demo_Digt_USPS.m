@@ -38,7 +38,7 @@ for nSample = [400] % number of images for each digit
         Par.maxIter = maxIter;
         for rho = [1]
             Par.rho = rho;
-            for lambda = [5:1:20]
+            for lambda = [9:1:15]
                 Par.lambda =2.^-lambda;
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
@@ -145,8 +145,8 @@ for nSample = [400] % number of images for each digit
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'SMR')==1 
-                                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(para.knn) '_alpha2^-' num2str(lambda) '.mat']);
+                elseif strcmp(SegmentationMethod, 'SMR')==1
+                    matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(para.knn) '_alpha2^-' num2str(lambda) '.mat']);
                     save(matname,'missrate','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
                     matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
