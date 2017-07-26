@@ -9,8 +9,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
-% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0'); % 400:9:1:15
-SegmentationMethod = 'SSCOMP' ;
+SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0'); 
+% SegmentationMethod = 'SSCOMP' ;
 
 %     SegmentationMethod = 'NNLSR' ;
 %     SegmentationMethod = 'NNLSRd0' ;
@@ -36,10 +36,10 @@ for nSample = [400] % number of images for each digit
     %% Subspace segmentation
     for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [5:1:15]
+        for rho = [1]
             Par.rho = rho;
-            for lambda = [6]
-                Par.lambda =10^-lambda;
+            for lambda = [9:1:15]
+                Par.lambda = lambda;
                 missrate = zeros(nExperiment, 1) ;
                 for i = 1:nExperiment
                     nCluster = 10;
