@@ -126,6 +126,10 @@ for mu = [1]
                                 C = ANPLSR( ProjX , Par ) ;
                             case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                                 C = ANPLSRd0( ProjX , Par ) ;
+                            case 'DANNLSR'                 % affine, non-negative
+                                C = DANNLSR( ProjX , Par ) ;
+                            case 'DANNLSRd0'             % affine, non-negative, diagonal = 0
+                                C = DANNLSRd0( ProjX , Par ) ;
                         end
                         %% this step is useless for motion segmentation
                         %                             for k = 1 : size(C,2)
