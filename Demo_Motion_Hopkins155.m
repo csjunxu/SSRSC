@@ -62,9 +62,9 @@ SegmentationMethod = 'DANNLSR';
 
 for maxIter = [5]
     Par.maxIter = maxIter;
-    for s = [.91:.01:.94]
+    for s = [.89:.01:.91]
         Par.s = s;
-        for rho = [.02:-.001:.001]
+        for rho = [.0122:.0002:.0138]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
