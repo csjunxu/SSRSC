@@ -15,8 +15,8 @@ function C = DANNLSR( X , Par )
 
 %% initialization
 
-% A       = eye (N);
-% A   = rand (N);
+% A   = eye (N);
+% A   = rand (N); A(A<0) = 0;
 A       = zeros (N, N);
 C       = A;
 Delta = C - A;
@@ -24,7 +24,6 @@ Delta = C - A;
 %%
 tol   = 1e-4;
 iter    = 1;
-% objErr = zeros(Par.maxIter, 1);
 err1(1) = inf; err2(1) = inf;
 terminate = false;
 if N < L
@@ -56,7 +55,7 @@ while  ( ~terminate )
     if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
 %                 fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-    else
+%     else
 %                 if (mod(iter, Par.maxIter)==0)
 %                     fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
 %                 end

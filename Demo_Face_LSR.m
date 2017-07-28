@@ -124,8 +124,10 @@ for s = [1]
                                     C = ANPLSR( Yfea , Par ) ;
                                 case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                                     C = ANPLSRd0( Yfea , Par ) ;
-                                case 'DANPLSR'                 % affine, non-positive
-                                    C = DANPLSR( Yfea , Par ) ;
+                                case 'DANNLSR'                 % deformable, affine, non-negative
+                                    C = DANNLSR( Yfea , Par ) ;
+                                case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                                    C = DANNLSRd0( Yfea , Par ) ;
                             end
                             for k = 1 : size(C,2)
                                 C(:, k) = C(:, k) / max(abs(C(:, k))) ;

@@ -8,7 +8,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
-SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
@@ -26,6 +26,9 @@ SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 N
 %     SegmentationMethod = 'ANNLSRd0' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
+
+SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSRd0' ;
 %% Settings
 for nSample = [600] % number of images for each digit
     
@@ -149,6 +152,10 @@ for nSample = [600] % number of images for each digit
                             C = ANPLSR( Yfea , Par ) ;
                         case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                             C = ANPLSRd0( Yfea , Par ) ;
+                        case 'DANNLSR'                 % deformable, affine, non-negative
+                            C = DANNLSR( Yfea , Par ) ;
+                        case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                            C = DANNLSRd0( Yfea , Par ) ;
                     end
                     %% generate affinity
                     for k = 1 : size(C, 2)

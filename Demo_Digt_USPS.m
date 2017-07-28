@@ -9,7 +9,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
-SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0'); 
+% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0'); 
 % SegmentationMethod = 'SSCOMP' ;
 
 %     SegmentationMethod = 'NNLSR' ;
@@ -20,8 +20,10 @@ SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 %     SegmentationMethod = 'ANNLSRd0' ;
 %     SegmentationMethod = 'ANPLSR' ;
 %     SegmentationMethod = 'ANPLSRd0' ;
+SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSRd0' ;
 %% Settings
-for nSample = [400] % number of images for each digit
+for nSample = [50 100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -123,10 +125,10 @@ for nSample = [400] % number of images for each digit
                             C = ANPLSR( Yfea , Par ) ;
                         case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                             C = ANPLSRd0( Yfea , Par ) ;
-                        case 'DANNLSR'                 % affine, non-negative, sum to a scalar s
-                            C = DANNLSR( Yfea, Par );
-                        case 'DANPLSR'             % affine, non-positive, sum to a scalar -s
-                            C = DANPLSR( Yfea, Par );
+                        case 'DANNLSR'                 % deformable, affine, non-negative
+                            C = DANNLSR( Yfea , Par ) ;
+                        case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                            C = DANNLSRd0( Yfea , Par ) ;
                     end
                     %% generate affinity
                     for k = 1 : size(C, 2)
