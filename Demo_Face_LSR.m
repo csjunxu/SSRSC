@@ -42,11 +42,12 @@ SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 
 %% Subspace segmentation
-for maxIter = [10:1:15]
+for maxIter = [6:1:10]
     Par.maxIter = maxIter;
-    for s = [.8:.05:1.1]
+    for s = [.7:.05:1.1]
         Par.s = s;
-        for rho = [.001:.001:.015]
+        for rho = [.01:.01:.25]
+            Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
                 for nSet = [2 3 5 8 10]
@@ -73,7 +74,6 @@ for maxIter = [10:1:15]
                         for c = 1 : size(fea,2)
                             fea(:,c) = fea(:,c) /norm(fea(:,c)) ;
                         end
-                        
                         %% Subspace Clustering
                         missrate = zeros(size(index, 1), Repeat) ;
                         fprintf( 'dimension = %d \n', redDim ) ;
