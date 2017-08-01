@@ -29,7 +29,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 %% Settings
-for nSample = [50 100 200 400 600] % number of images for each digit
+for nSample = [50 100 200] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
