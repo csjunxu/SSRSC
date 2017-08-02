@@ -59,7 +59,7 @@ for nSample = [50] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.2]
+    for s = [.3]
         Par.s = s;
         for maxIter = [2]
             Par.maxIter = maxIter;
