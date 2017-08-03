@@ -1,6 +1,5 @@
 
 clear ;
-
 load 'C:\Users\csjunxu\Desktop\SC\Datasets\YaleB_Crop.mat'              % load YaleB dataset
 
 dataset = 'YaleB_LSR';
@@ -42,9 +41,9 @@ SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 
 %% Subspace segmentation
-for maxIter = [6 5 4 3 2]
+for maxIter = [1:1:5]
     Par.maxIter = maxIter;
-    for s = [.65:-.05:.2 1]
+    for s = [1:-.05:.1]
         Par.s = s;
         for rho = [.1:.1:1]
             Par.rho = rho;
@@ -112,7 +111,7 @@ for maxIter = [6 5 4 3 2]
                                 case 'NNLSRd0'               % non-negative, diagonal = 0
                                     C = NNLSRd0( Yfea , Par ) ;
                                 case 'NPLSR'                   % non-positive
-                                     C = NPLSR( Yfea , Par ) ;
+                                    C = NPLSR( Yfea , Par ) ;
                                 case 'NPLSRd0'               % non-positive, diagonal = 0
                                     C = NPLSRd0( Yfea , Par ) ;
                                 case 'ANNLSR'                 % affine, non-negative
