@@ -59,11 +59,11 @@ for nSample = [200] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.3:.05:.5]
+    for s = [.1]
         Par.s = s;
-        for maxIter = [2:1:5]
+        for maxIter = [1]
             Par.maxIter = maxIter;
-            for rho = [.1:.1:1]
+            for rho = [.69:-.01:.61 .71:.01:.79]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
@@ -188,5 +188,5 @@ for nSample = [200] % number of images for each digit
                 end
             end
         end
-    end   
+    end
 end
