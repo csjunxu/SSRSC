@@ -29,7 +29,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 %% Settings
-for nSample = [200] % number of images for each digit
+for nSample = [400] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
@@ -59,11 +59,11 @@ for nSample = [200] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.2 .3]
+    for s = [.1:.05:.5]
         Par.s = s;
-        for maxIter = floor(10*s)
+        for maxIter = [1:1:5]
             Par.maxIter = maxIter;
-            for rho = [.79:-.01:.71 .81:.01:.89]
+            for rho = [.1:.1:1]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
