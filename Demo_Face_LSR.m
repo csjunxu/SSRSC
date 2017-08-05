@@ -41,11 +41,11 @@ SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 
 %% Subspace segmentation
-for s = .75
+for s = [.75 .8 .85]
     Par.s = s;
-    for maxIter = [6 7 8]
+    for maxIter = [5:-1:1]
         Par.maxIter = maxIter;
-        for rho = [.91:.01:1.1]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
