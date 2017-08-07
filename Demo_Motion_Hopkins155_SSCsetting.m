@@ -159,19 +159,19 @@ for maxIter = [10]
                 avgallmissrate = sum(allmissrate)/length(allmissrate);
                 medallmissrate = median(allmissrate);
                 if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
-                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
-                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1
-                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
-                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'RSIM')==1
-                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 end
             end
