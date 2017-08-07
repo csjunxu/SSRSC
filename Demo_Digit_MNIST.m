@@ -17,15 +17,18 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 % SegmentationMethod = 'SSCOMP' ;
 
-%     SegmentationMethod = 'NNLSR' ;
-%     SegmentationMethod = 'NNLSRd0' ;
-%     SegmentationMethod = 'NPLSR' ;
-%     SegmentationMethod = 'NPLSRd0' ;
+% SegmentationMethod = 'NNLSR' ;
+% SegmentationMethod = 'NNLSRd0' ;
+% SegmentationMethod = 'NPLSR' ;
+% SegmentationMethod = 'NPLSRd0' ;
 
-%     SegmentationMethod = 'ANNLSR' ;
-%     SegmentationMethod = 'ANNLSRd0' ;
-%     SegmentationMethod = 'ANPLSR' ;
-%     SegmentationMethod = 'ANPLSRd0' ;
+% SegmentationMethod = 'ANNLSR' ;
+% SegmentationMethod = 'ANNLSRd0' ;
+% SegmentationMethod = 'ANPLSR' ;
+% SegmentationMethod = 'ANPLSRd0' ;
+
+% SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSRd0' ;
 
 SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
@@ -62,7 +65,7 @@ for nSample = [600] % number of images for each digit
     %% Subspace segmentation
     for s = [.1:.05:.5]
         Par.s = s;
-        for maxIter = unique(floor(10*s), ceil(10*s))
+        for maxIter = unique([floor(10*s), ceil(10*s)])
             Par.maxIter = maxIter;
             for rho = [.1:.1:1]
                 Par.rho = rho;
