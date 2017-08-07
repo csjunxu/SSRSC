@@ -13,12 +13,12 @@ end
 
 %% Subspace segmentation methods
 
-% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
+SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 
-SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
+% SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
@@ -72,7 +72,9 @@ for maxIter = [10]
                         eval(['load ' f(ind).name]);
                         cd ..
                         if (foundValidData)
-                            n = max(s);
+                            gnd = s;
+                            clear s;
+                            n = max(gnd);
                             N = size(x,2);
                             F = size(x,3);
                             D = 2*F;
@@ -82,8 +84,8 @@ for maxIter = [10]
                             Xp = DataProjection(X,r);
                             if strcmp(SegmentationMethod, 'RSIM') == 1
                                 ii = ii+1;
-                                [missrate, grp, bestRank, minNcutValue,W] = RSIM(Xp, s);
-                                disp([filepath ': ' num2str(100*missrate) '%, dim:' num2str(bestRank) ', nMotions: ' num2str(max(s)) ', seq: ' num2str(ii)]);
+                                [missrate, grp, bestRank, minNcutValue,W] = RSIM(Xp, gnd);
+                                disp([filepath ': ' num2str(100*missrate) '%, dim:' num2str(bestRank) ', nMotions: ' num2str(n) ', seq: ' num2str(ii)]);
                             else
                                 switch SegmentationMethod
                                     case 'SSC'
@@ -134,10 +136,10 @@ for maxIter = [10]
                                     case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                         C = DANNLSRd0( Xp , Par ) ;
                                 end
-                                nCluster = length( unique( s ) ) ;
+                                nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
                                 idx = clu_ncut(Z,nCluster) ;
-                                accuracy = compacc(idx,s) ;
+                                accuracy = compacc(idx, gnd') ;
                                 missrate = 1-accuracy;
                                 fprintf('seq %d\t %f\n', i , missrate ) ;
                             end
@@ -158,20 +160,21 @@ for maxIter = [10]
                 end
                 avgallmissrate = sum(allmissrate)/length(allmissrate);
                 medallmissrate = median(allmissrate);
+                fprintf('Total mean error  is %.3f%%.\n ' , avgallmissrate) ;
                 if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
-                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
-                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1
-                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
-                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'RSIM')==1
-                    matname = sprintf([writefilepath dataset '_SSC_' SegmentationMethod '.mat']);
+                    matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 end
             end

@@ -25,8 +25,8 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C\S3C');
-% SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
+% SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C\S3C');
+SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -83,17 +83,28 @@ for s = [.8]
                             if strcmp(SegmentationMethod, 'RSIM') == 1
                                 [missrate(i, j), grp, bestRank, minNcutValue,W] = RSIM(Yfea, gnd);
                             elseif strcmp(SegmentationMethod, 'S3C') == 1
-                                opt.affine =0;
-                                opt.outliers =1;
-                                opt.lambda = 20;
-                                opt.r =0;  % the dimension of the target space when applying PCA or random projection
-                                opt.SSCrho=1;
-                                % paramters for StrSSC
-                                opt.iter_max =10; %  iter_max is for loop in StrLRSCE
-                                opt.nu =1;
-                                opt.gamma0 = 0.1;% This is for reweighting the off-diagonal entries in Z
-                                opt.maxIter =150;
-                                missrate(i, j) = StrSSC(Yfea, gnd, opt);
+                                % paramters for standard SSC
+        opt.affine =0;
+        opt.outliers =1;        
+        opt.lambda =alpha;
+        opt.r =0;  % the dimension of the target space when applying PCA or random projection
+        opt.SSCrho=1;
+        
+        % paramters for StrSSC
+        opt.iter_max =10; %  iter_max is for loop in StrLRSCE
+        opt.nu =1;
+        opt.gamma0 =gamma0;% This is for reweighting the off-diagonal entries in Z
+
+        
+        %% paramters for ADMM
+        %opt.tol =1e-5;
+        %opt.rho=1.1;
+        opt.maxIter =150;
+        %opt.mu_max = 1e8;
+        %opt.epsilon =1e-3;        
+        %opt.tol =1e-3;
+        %opt.rho =1.1;
+        missrate(i, j) = StrSSC(X, s{n}', opt);            
                             else
                                 switch SegmentationMethod
                                     case 'SSC'
@@ -161,10 +172,7 @@ for s = [.8]
                     medmissrate(n) = median(missrateTot{n});
                     fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
                     allavgmissrate = mean(avgmissrate(avgmissrate~=0));
-                    if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'S3C')==1
-                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_alpha' num2str(Par.lambda) '.mat']);
-                        save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif  strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
+                    if strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'NNLSR')==1 || strcmp(SegmentationMethod, 'NPLSR')==1 || strcmp(SegmentationMethod, 'NNLSRd0')==1 || strcmp(SegmentationMethod, 'NPLSRd0')==1
