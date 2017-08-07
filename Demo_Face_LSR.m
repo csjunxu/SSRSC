@@ -84,27 +84,17 @@ for s = [.8]
                                 [missrate(i, j), grp, bestRank, minNcutValue,W] = RSIM(Yfea, gnd);
                             elseif strcmp(SegmentationMethod, 'S3C') == 1
                                 % paramters for standard SSC
-        opt.affine =0;
-        opt.outliers =1;        
-        opt.lambda =alpha;
-        opt.r =0;  % the dimension of the target space when applying PCA or random projection
-        opt.SSCrho=1;
-        
-        % paramters for StrSSC
-        opt.iter_max =10; %  iter_max is for loop in StrLRSCE
-        opt.nu =1;
-        opt.gamma0 =gamma0;% This is for reweighting the off-diagonal entries in Z
-
-        
-        %% paramters for ADMM
-        %opt.tol =1e-5;
-        %opt.rho=1.1;
-        opt.maxIter =150;
-        %opt.mu_max = 1e8;
-        %opt.epsilon =1e-3;        
-        %opt.tol =1e-3;
-        %opt.rho =1.1;
-        missrate(i, j) = StrSSC(X, s{n}', opt);            
+                                opt.affine =0;
+                                opt.outliers =1;
+                                opt.lambda = 20;
+                                opt.r =0;  % the dimension of the target space when applying PCA or random projection
+                                opt.SSCrho=1;
+                                % paramters for StrSSC
+                                opt.iter_max =10; %  iter_max is for loop in StrLRSCE
+                                opt.nu =1;
+                                opt.gamma0 = .1;% This is for reweighting the off-diagonal entries in Z
+                                opt.maxIter =150;
+                                missrate(i, j) = StrSSC(X, s{n}', opt);
                             else
                                 switch SegmentationMethod
                                     case 'SSC'
