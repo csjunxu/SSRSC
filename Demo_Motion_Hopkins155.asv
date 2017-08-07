@@ -56,7 +56,7 @@ clear seq3;
 % SegmentationMethod = 'ANPLSRd0';
 
 % SegmentationMethod = 'DANNLSR';
-% SegmentationMethod = 'DANNLSRd0';
+SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
 
@@ -96,6 +96,8 @@ for maxIter = [10:1:15]
                             para.elpson =0.01;
                             ProjX = [ProjX ; ones(1,size(ProjX,2))] ;
                             C = smr(ProjX, para);
+                        case 'MGR'
+                        case 'S'
                         case 'SSCOMP' % add the path of the SSCOMP method
                             addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                             C = OMP_mat_func(ProjX, 9, 1e-6);
