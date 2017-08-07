@@ -25,6 +25,7 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -37,15 +38,15 @@ end
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 
 %% Subspace segmentation
-for s = [.8:.05:1]
+for s = [.8]
     Par.s = s;
-    for maxIter = [5:-1:1]
+    for maxIter = [5]
         Par.maxIter = maxIter;
-        for rho = [1:-.1:.1]
+        for rho = [.1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -78,61 +79,65 @@ for s = [.8:.05:1]
                         fprintf( 'dimension = %d \n', redDim ) ;
                         Yfea = fea(1:redDim, :) ;
                         for j = 1 : Repeat
-                            switch SegmentationMethod
-                                case 'SSC'
-                                    alpha = Par.lambda;
-                                    C = admmLasso_mat_func(Yfea, true, alpha);
-                                case 'LRR'
-                                    C = solve_lrr(Yfea, Par.lambda); % withuot post processing
-                                case 'LRSC'
-                                    C = lrsc_noiseless(Yfea, Par.lambda);
-                                    %                                 [~, C] = lrsc_noisy(Yfea, Par.lambda);
-                                case 'SMR'
-                                    para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
-                                    para.gamma = 1;
-                                    para.alpha = 20;
-                                    para.knn = 4;
-                                    para.elpson =0.01;
-                                    Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
-                                    C = smr(Yfea, para);
-                                case 'SSCOMP' % add the path of the SSCOMP method
-                                    addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
-                                    C = OMP_mat_func(Yfea, 9, 1e-6);
-                                case 'LSR1'
-                                    C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
-                                case 'LSR2'
-                                    C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
-                                case 'LSR'
-                                    C = LSR( Yfea , Par ) ;
-                                case 'LSRd0'
-                                    C = LSRd0( Yfea , Par ) ; % solved by ADMM
-                                case 'NNLSR'                   % non-negative
-                                    C = NNLSR( Yfea , Par ) ;
-                                case 'NNLSRd0'               % non-negative, diagonal = 0
-                                    C = NNLSRd0( Yfea , Par ) ;
-                                case 'NPLSR'                   % non-positive
-                                    C = NPLSR( Yfea , Par ) ;
-                                case 'NPLSRd0'               % non-positive, diagonal = 0
-                                    C = NPLSRd0( Yfea , Par ) ;
-                                case 'ANNLSR'                 % affine, non-negative
-                                    C = ANNLSR( Yfea , Par ) ;
-                                case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
-                                    C = ANNLSRd0( Yfea , Par ) ;
-                                case 'ANPLSR'                 % affine, non-positive
-                                    C = ANPLSR( Yfea , Par ) ;
-                                case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
-                                    C = ANPLSRd0( Yfea , Par ) ;
-                                case 'DANNLSR'                 % deformable, affine, non-negative
-                                    C = DANNLSR( Yfea , Par ) ;
-                                case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
-                                    C = DANNLSRd0( Yfea , Par ) ;
+                            if strcmp(SegmentationMethod, 'RSIM') == 1
+                                [missrate(i, j), grp, bestRank, minNcutValue,W] = RSIM(Yfea, gnd);
+                            else
+                                switch SegmentationMethod
+                                    case 'SSC'
+                                        alpha = Par.lambda;
+                                        C = admmLasso_mat_func(Yfea, true, alpha);
+                                    case 'LRR'
+                                        C = solve_lrr(Yfea, Par.lambda); % withuot post processing
+                                    case 'LRSC'
+                                        C = lrsc_noiseless(Yfea, Par.lambda);
+                                        % [~, C] = lrsc_noisy(Yfea, Par.lambda);
+                                    case 'SMR'
+                                        para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                                        para.gamma = 1;
+                                        para.alpha = 20;
+                                        para.knn = 4;
+                                        para.elpson =0.01;
+                                        Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
+                                        C = smr(Yfea, para);
+                                    case 'SSCOMP' % add the path of the SSCOMP method
+                                        addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+                                        C = OMP_mat_func(Yfea, 9, 1e-6);
+                                    case 'LSR1'
+                                        C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
+                                    case 'LSR2'
+                                        C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
+                                    case 'LSR'
+                                        C = LSR( Yfea , Par ) ;
+                                    case 'LSRd0'
+                                        C = LSRd0( Yfea , Par ) ; % solved by ADMM
+                                    case 'NNLSR'                   % non-negative
+                                        C = NNLSR( Yfea , Par ) ;
+                                    case 'NNLSRd0'               % non-negative, diagonal = 0
+                                        C = NNLSRd0( Yfea , Par ) ;
+                                    case 'NPLSR'                   % non-positive
+                                        C = NPLSR( Yfea , Par ) ;
+                                    case 'NPLSRd0'               % non-positive, diagonal = 0
+                                        C = NPLSRd0( Yfea , Par ) ;
+                                    case 'ANNLSR'                 % affine, non-negative
+                                        C = ANNLSR( Yfea , Par ) ;
+                                    case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
+                                        C = ANNLSRd0( Yfea , Par ) ;
+                                    case 'ANPLSR'                 % affine, non-positive
+                                        C = ANPLSR( Yfea , Par ) ;
+                                    case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
+                                        C = ANPLSRd0( Yfea , Par ) ;
+                                    case 'DANNLSR'                 % deformable, affine, non-negative
+                                        C = DANNLSR( Yfea , Par ) ;
+                                    case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                                        C = DANNLSRd0( Yfea , Par ) ;
+                                end
+                                for k = 1 : size(C,2)
+                                    C(:, k) = C(:, k) / max(abs(C(:, k))) ;
+                                end
+                                Z = ( abs(C) + abs(C') ) / 2 ;
+                                idx = clu_ncut(Z,n) ;
+                                missrate(i, j) = 1 - compacc(idx, gnd);
                             end
-                            for k = 1 : size(C,2)
-                                C(:, k) = C(:, k) / max(abs(C(:, k))) ;
-                            end
-                            Z = ( abs(C) + abs(C') ) / 2 ;
-                            idx = clu_ncut(Z,n) ;
-                            missrate(i, j) = 1 - compacc(idx,gnd);
                             fprintf('%.3f%% \n' , missrate(i, j)*100) ;
                         end
                         missrateTot{n}(i) = mean(missrate(i, :)*100);
@@ -152,6 +157,9 @@ for s = [.8:.05:1]
                     elseif strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
+                    elseif strcmp(SegmentationMethod, 'RSIM')==1
+                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
+                        save(matname,'avgallmissrate','missrateTot','avgmissrate','medmissrate');
                     end
                 end
             end

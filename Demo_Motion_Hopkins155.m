@@ -39,6 +39,9 @@ clear seq3;
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+
+SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
+
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
@@ -60,11 +63,11 @@ clear seq3;
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
 
-for maxIter = [10:1:15]
+for maxIter = [10]
     Par.maxIter = maxIter;
-    for s = [.8:.05:1.1]
+    for s = [.8]
         Par.s = s;
-        for rho = [.001:.001:.015]
+        for rho = [.1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -79,64 +82,64 @@ for maxIter = [10:1:15]
                     gnd = data(i).ids' ;
                     K = length( unique( gnd ) ) ;
                     n = max(gnd);
-                    switch SegmentationMethod
-                        case 'SSC'
-                            alpha = 800;
-                            C = admmLasso_mat_func(ProjX, true, alpha);
-                        case 'LRR'
-                            C = solve_lrr(ProjX, Par.lambda); % without post processing
-                        case 'LRSC'
-                            C = lrsc_noiseless(ProjX, 15);
-                            %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
-                        case 'SMR'
-                            para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
-                            para.gamma = 1;
-                            para.alpha = 20;
-                            para.knn = 4;
-                            para.elpson =0.01;
-                            ProjX = [ProjX ; ones(1,size(ProjX,2))] ;
-                            C = smr(ProjX, para);
-                        case 'SSCOMP' % add the path of the SSCOMP method
-                            C = OMP_mat_func(ProjX, 9, 1e-6);
-                        case 'LSR'
-                            C = LSR( ProjX , Par ) ;
-                        case 'LSRd0'
-                            C = LSRd0( ProjX , Par ) ; % solved by ADMM
-                        case 'LSR1'
-                            C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
-                        case 'LSR2'
-                            C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
-                            %% our methods
-                        case 'NNLSR'                   % non-negative
-                            C = NNLSR( ProjX , Par ) ;
-                        case 'NNLSRd0'               % non-negative, diagonal = 0
-                            C = NNLSRd0( ProjX , Par ) ;
-                        case 'NPLSR'                   % non-positive
-                            C = NPLSR( ProjX , Par ) ;
-                        case 'NPLSRd0'               % non-positive, diagonal = 0
-                            C = NPLSRd0( ProjX , Par ) ;
-                        case 'ANNLSR'                 % affine, non-negative
-                            C = ANNLSR( ProjX , Par ) ;
-                        case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
-                            C = ANNLSRd0( ProjX , Par ) ;
-                        case 'ANPLSR'                 % affine, non-positive
-                            C = ANPLSR( ProjX , Par ) ;
-                        case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
-                            C = ANPLSRd0( ProjX , Par ) ;
-                        case 'DANNLSR'                 % deformable, affine, non-negative
-                            C = DANNLSR( ProjX , Par ) ;
-                        case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
-                            C = DANNLSRd0( ProjX , Par ) ;
+                    if strcmp(SegmentationMethod, 'RSIM') == 1
+                        [missrate, grp, bestRank, minNcutValue,W] = RSIM(ProjX, gnd);
+                    else
+                        switch SegmentationMethod
+                            case 'SSC'
+                                alpha = 800;
+                                C = admmLasso_mat_func(ProjX, true, alpha);
+                            case 'LRR'
+                                C = solve_lrr(ProjX, Par.lambda); % without post processing
+                            case 'LRSC'
+                                C = lrsc_noiseless(ProjX, 15);
+                                %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
+                            case 'SMR'
+                                para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
+                                para.gamma = 1;
+                                para.alpha = 20;
+                                para.knn = 4;
+                                para.elpson =0.01;
+                                ProjX = [ProjX ; ones(1,size(ProjX,2))] ;
+                                C = smr(ProjX, para);
+                            case 'SSCOMP' % add the path of the SSCOMP method
+                                C = OMP_mat_func(ProjX, 9, 1e-6);
+                            case 'LSR'
+                                C = LSR( ProjX , Par ) ;
+                            case 'LSRd0'
+                                C = LSRd0( ProjX , Par ) ; % solved by ADMM
+                            case 'LSR1'
+                                C = LSR1( ProjX , Par.lambda ) ; % proposed by Lu
+                            case 'LSR2'
+                                C = LSR2( ProjX , Par.lambda ) ; % proposed by Lu
+                                %% our methods
+                            case 'NNLSR'                   % non-negative
+                                C = NNLSR( ProjX , Par ) ;
+                            case 'NNLSRd0'               % non-negative, diagonal = 0
+                                C = NNLSRd0( ProjX , Par ) ;
+                            case 'NPLSR'                   % non-positive
+                                C = NPLSR( ProjX , Par ) ;
+                            case 'NPLSRd0'               % non-positive, diagonal = 0
+                                C = NPLSRd0( ProjX , Par ) ;
+                            case 'ANNLSR'                 % affine, non-negative
+                                C = ANNLSR( ProjX , Par ) ;
+                            case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
+                                C = ANNLSRd0( ProjX , Par ) ;
+                            case 'ANPLSR'                 % affine, non-positive
+                                C = ANPLSR( ProjX , Par ) ;
+                            case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
+                                C = ANPLSRd0( ProjX , Par ) ;
+                            case 'DANNLSR'                 % deformable, affine, non-negative
+                                C = DANNLSR( ProjX , Par ) ;
+                            case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                                C = DANNLSRd0( ProjX , Par ) ;
+                        end
+                        nCluster = length( unique( gnd ) ) ;
+                        Z = ( abs(C) + abs(C') ) / 2 ;
+                        idx = clu_ncut(Z,nCluster) ;
+                        accuracy = compacc(idx,gnd) ;
+                        missrate = 1-accuracy;
                     end
-                    %% this step is useless for motion segmentation
-                    %                             for k = 1 : size(C,2)
-                    %                                 C(:, k) = C(:, k) / max(abs(C(:, k))) ;
-                    %                             end
-                    nCluster = length( unique( gnd ) ) ;
-                    Z = ( abs(C) + abs(C') ) / 2 ;
-                    idx = clu_ncut(Z,nCluster) ;
-                    accuracy = compacc(idx,gnd) ;
-                    missrate = 1-accuracy;
                     num(n) = num(n) + 1;
                     missrateTot{n}(num(n)) = missrate;
                     fprintf('seq %d\t %f\n', i , missrate ) ;
@@ -164,6 +167,9 @@ for maxIter = [10:1:15]
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
                     matname = sprintf([writefilepath dataset '_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                    save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
+                elseif strcmp(SegmentationMethod, 'RSIM')==1
+                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 end
             end
