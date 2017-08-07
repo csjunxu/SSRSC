@@ -35,11 +35,11 @@ clear seq3;
 
 %% Subspace segmentation methods
 
-% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
-% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
+% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-% SegmentationMethod = 'SSCOMP' ;
+% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
@@ -97,7 +97,6 @@ for maxIter = [10:1:15]
                             ProjX = [ProjX ; ones(1,size(ProjX,2))] ;
                             C = smr(ProjX, para);
                         case 'SSCOMP' % add the path of the SSCOMP method
-                            addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                             C = OMP_mat_func(ProjX, 9, 1e-6);
                         case 'LSR'
                             C = LSR( ProjX , Par ) ;
