@@ -159,7 +159,7 @@ for s = [.8]
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
-                        save(matname,'avgallmissrate','missrateTot','avgmissrate','medmissrate');
+                        save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     end
                 end
             end
