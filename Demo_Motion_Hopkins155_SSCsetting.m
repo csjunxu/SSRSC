@@ -13,7 +13,7 @@ end
 
 %% Subspace segmentation methods
 
-SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
@@ -160,7 +160,7 @@ for maxIter = [10]
                 end
                 avgallmissrate = sum(allmissrate)/length(allmissrate);
                 medallmissrate = median(allmissrate);
-                fprintf('Total mean error  is %.3f%%.\n ' , avgallmissrate) ;
+                fprintf('Total mean error  is %.3f%%.\n ' , avgallmissrate*100) ;
                 if strcmp(SegmentationMethod, 'SSC')==1
                     matname = sprintf([writefilepath dataset '_SSCsetting_' SegmentationMethod '_alpha' num2str(alpha) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
