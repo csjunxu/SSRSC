@@ -14,6 +14,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
+% SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 % SegmentationMethod = 'SSCOMP' ;
 
@@ -114,6 +115,18 @@ for nSample = [600] % number of images for each digit
                         Yfea = fea(1:redDim, :) ;
                         if strcmp(SegmentationMethod, 'RSIM') == 1
                             [missrate(i), grp, bestRank, minNcutValue,W] = RSIM(Yfea, gnd);
+                              elseif strcmp(SegmentationMethod, 'S3C') == 1
+                                opt.affine =0;
+                                opt.outliers =1;
+                                opt.lambda = 20;
+                                opt.r =0;  % the dimension of the target space when applying PCA or random projection
+                                opt.SSCrho=1;
+                                % paramters for StrSSC
+                                opt.iter_max =10; %  iter_max is for loop in StrLRSCE
+                                opt.nu =1;
+                                opt.gamma0 = 0.1;% This is for reweighting the off-diagonal entries in Z
+                                opt.maxIter =150;
+                                missrate(i) = StrSSC(Yfea, gnd, opt);
                         else
                             switch SegmentationMethod
                                 case 'SSC'
@@ -123,7 +136,7 @@ for nSample = [600] % number of images for each digit
                                     C = solve_lrr(Yfea, Par.lambda); % without post processing
                                 case 'LRSC'
                                     C = lrsc_noiseless(Yfea, Par.lambda);
-                                    %                                 [~, C] = lrsc_noisy(Yfea, Par.lambda);
+                                    % [~, C] = lrsc_noisy(Yfea, Par.lambda);
                                 case 'SMR'
                                     para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                     para.gamma = 1;
@@ -136,7 +149,7 @@ for nSample = [600] % number of images for each digit
                                     addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
                                     C = OMP_mat_func(Yfea, 9, 1e-6);
                                 case 'LSR1'
-                                    C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
+                                    C = LSR1( Yfea , Par.lambda ) ; % prop osed by Lu
                                 case 'LSR2'
                                     C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
                                 case 'LSR'
