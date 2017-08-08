@@ -9,12 +9,12 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-% SegmentationMethod = 'LSR1' ; 
-% SegmentationMethod = 'LSR2' ;  
-% SegmentationMethod = 'LSR' ;    
+% SegmentationMethod = 'LSR1' ;
+% SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR' ;
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
+% SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'NNLSR' ;
@@ -27,7 +27,7 @@ SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR';
+SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
@@ -42,12 +42,13 @@ else
     DR = 1;
     dim = 6;
 end
+ar.mu = 1;
 %% Subspace segmentation
-for maxIter = [5]
-    Par.maxIter = maxIter;
-    for mu = [1]
-        Par.mu = mu;
-        for rho = [.1]
+for scale = [.1:.05:.5 1]
+    Par.s = scale;
+    for maxIter = [1:1:5]
+        Par.maxIter = maxIter;
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-2);
@@ -130,6 +131,10 @@ for maxIter = [5]
                                         C = ANPLSR( Yfea , Par ) ;
                                     case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
                                         C = ANPLSRd0( Yfea , Par ) ;
+                                    case 'DANNLSR'                 % deformable, affine, non-negative
+                                        C = DANNLSR( Yfea , Par ) ;
+                                    case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                                        C = DANNLSRd0( Yfea , Par ) ;
                                 end
                                 for k = 1 : size(C,2)
                                     C(:, k) = C(:, k) / max(abs(C(:, k))) ;
@@ -151,19 +156,16 @@ for maxIter = [5]
                     if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
+                    elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1 || strcmp(SegmentationMethod, 'NNLSRd0') == 1 || strcmp(SegmentationMethod, 'NPLSRd0') == 1 || strcmp(SegmentationMethod, 'ANNLSRd0') == 1 || strcmp(SegmentationMethod, 'ANPLSRd0') == 1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'NNLSRd0') == 1 || strcmp(SegmentationMethod, 'NPLSRd0') == 1 || strcmp(SegmentationMethod, 'ANNLSRd0') == 1 || strcmp(SegmentationMethod, 'ANPLSRd0') == 1
-                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
-                        save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANPLSR') == 1
-                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '_scale' num2str(Par.s) '.mat']);
+                    elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1
+                        matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'SSCOMP')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'RSIM')==1
+                    elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     end

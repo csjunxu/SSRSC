@@ -173,7 +173,7 @@ for s = [.8]
                     elseif strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'RSIM')==1
+                    elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     end

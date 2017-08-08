@@ -106,7 +106,6 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                             fea = eigvector' * fea ;
                             redDim = min(nCluster*dim, size(fea, 1)) ;
                         end
-                        %                     fprintf( 'dimension = %d \n', redDim ) ;
                         %% normalize
                         for c = 1 : size(fea,2)
                             fea(:,c) = fea(:,c) /norm(fea(:,c)) ;
