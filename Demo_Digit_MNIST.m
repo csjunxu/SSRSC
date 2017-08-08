@@ -15,7 +15,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
-SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
+% SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -28,13 +28,12 @@ SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addp
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR' ;
+SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
-
-% SegmentationMethod = 'DANNLSR' ;
-% SegmentationMethod = 'DANNLSRd0' ;
+% SegmentationMethod = 'DANPLSR' ;
+% SegmentationMethod = 'DANPLSRd0' ;
 %% Settings
-for nSample = [50 100 200 400 600] % number of images for each digit
+for nSample = [600] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
@@ -64,11 +63,11 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.1]
+    for s = [.15]
         Par.s = s;
-        for maxIter = unique([floor(10*s), ceil(10*s)])
+        for maxIter = 2 %unique([floor(10*s), ceil(10*s)])
             Par.maxIter = maxIter;
-            for rho = [.1]
+            for rho = [.1:.1:1]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
