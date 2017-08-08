@@ -25,8 +25,8 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-% SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C\S3C');
-SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
+SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C\S3C');
+% SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
@@ -94,7 +94,7 @@ for s = [.8]
                                 opt.nu =1;
                                 opt.gamma0 = .1;% This is for reweighting the off-diagonal entries in Z
                                 opt.maxIter =150;
-                                missrate(i, j) = StrSSC(X, s{n}', opt);
+                                missrate(i, j) = StrSSC(Yfea, gnd, opt);
                             else
                                 switch SegmentationMethod
                                     case 'SSC'

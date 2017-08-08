@@ -15,7 +15,7 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'LSR' ;   % the same with LSR2
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM\ICCV15_release');
+SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
@@ -49,9 +49,9 @@ for maxIter = [5]
     Par.maxIter = maxIter;
     for mu = [1]
         Par.mu = mu;
-        for rho = [.15:.1:.25]
+        for rho = [.1]
             Par.rho = rho;
-            for lambda = [0 1]
+            for lambda = [0]
                 Par.lambda = lambda*10^(-2);
                 for nSet = [2 3 5 8 10]
                     n = nSet;
