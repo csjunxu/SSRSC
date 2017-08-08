@@ -42,11 +42,11 @@ else
     DR = 1;
     dim = 6;
 end
-ar.mu = 1;
+
 %% Subspace segmentation
 for scale = [.15:.05:.5 1]
     Par.s = scale;
-    for maxIter = unique([floor(10*s), ceil(10*s)])
+    for maxIter = unique([floor(10*scale), ceil(10*scale)])
         Par.maxIter = maxIter;
         for rho = [.1:.1:1]
             Par.rho = rho;
