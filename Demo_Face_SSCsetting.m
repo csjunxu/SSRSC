@@ -2,7 +2,6 @@
 clear ;
 
 load 'C:\Users\csjunxu\Desktop\SC\Datasets\YaleBCrop025.mat';
-% load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
 dataset = 'YaleB_SSC';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 
@@ -10,13 +9,12 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-% SegmentationMethod = 'LSR1' ; % 4.8
-% SegmentationMethod = 'LSR2' ; % 4.6
-% SegmentationMethod = 'LSR' ;   % the same with LSR2
+% SegmentationMethod = 'LSR1' ; 
+% SegmentationMethod = 'LSR2' ;  
+% SegmentationMethod = 'LSR' ;    
 % SegmentationMethod = 'LSRd0' ;
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'NNLSR' ;
