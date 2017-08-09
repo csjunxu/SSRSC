@@ -65,7 +65,7 @@ for s = [1]
     Par.s = s;
     for maxIter = [1:1:4]
         Par.maxIter = maxIter;
-        for rho = [.1:.1:1]
+        for rho = [.09:-.01:.01]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -153,9 +153,7 @@ for s = [1]
                     num(n) = num(n) + 1;
                     missrateTot{n}(num(n)) = missrate;
                     fprintf('seq %d\t %f\n', i , missrate ) ;
-                end
-                fprintf('\n') ;
-                
+                end               
                 L = [2 3];
                 allmissrate = [];
                 for i = 1:length(L)
