@@ -1,11 +1,9 @@
-
-clear ;
-load 'C:\Users\csjunxu\Desktop\SC\Datasets\YaleB_Crop.mat'              % load YaleB dataset
-
+clear;
+load '/Users/xujun/Desktop/SubspaceClustering/YaleB_Crop.mat'
 dataset = 'YaleB_LSR';
-writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+writefilepath = ['/Users/xujun/Desktop/SubspaceClustering/' dataset '/'];
 
-Repeat = 1; %number of repeations
+Repeat = 1; % number of repeations
 DR = 1; % perform dimension reduction or not
 if DR == 0
     dim = size(Y{1, 1}, 1);
@@ -29,7 +27,7 @@ end
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
-% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
@@ -41,13 +39,15 @@ end
 
 % SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
+% SegmentationMethod = 'DANPLSR' ;
+% SegmentationMethod = 'DANPLSRd0' ;
 
 %% Subspace segmentation
-for s = [.8]
+for s = [1]
     Par.s = s;
-    for maxIter = [5]
+    for maxIter = [1:1:10]
         Par.maxIter = maxIter;
-        for rho = [.1]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
