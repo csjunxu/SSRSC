@@ -211,9 +211,9 @@ for nSample = [600] % number of images for each digit
             end
         end
     end
-    for s = [.15]%:.05:.5]
+    for s = .15
         Par.s = s;
-        for maxIter = 2 %unique([floor(10*s), ceil(10*s)])
+        for maxIter = 2 
             Par.maxIter = maxIter;
             for rho = [.585 .595 .605]
                 Par.rho = rho;
