@@ -1,7 +1,7 @@
 clear ;
 
 %% reduced dimension
-ProjRank = 12 ;
+ProjRank = 12;
 datadir = 'C:/Users/csjunxu/Desktop/SC/Datasets/Hopkins155/';
 seqs = dir(datadir);
 % Get rid of the two directories: "." and ".."
@@ -65,7 +65,7 @@ for s = [1]
     Par.s = s;
     for maxIter = 1:1:10
         Par.maxIter = maxIter;
-        for rho = [.01:.01:.09]
+        for rho = [.009:-.001:.001]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
