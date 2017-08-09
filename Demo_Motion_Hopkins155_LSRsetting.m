@@ -40,9 +40,7 @@ clear seq3;
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
-
-SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-
+% SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
@@ -50,7 +48,7 @@ SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); add
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 
 % SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'NNLSRd0';
+SegmentationMethod = 'NNLSRd0';
 % SegmentationMethod = 'NPLSR'; % SVD 的输入不能包含 NaN 或 Inf。
 % SegmentationMethod = 'NPLSRd0'; % SVD 的输入不能包含 NaN 或 Inf。
 
@@ -63,12 +61,11 @@ SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); add
 % SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
-
-for maxIter = [10]
-    Par.maxIter = maxIter;
-    for s = [.8]
-        Par.s = s;
-        for rho = [.1]
+for s = [1]
+    Par.s = s;
+    for maxIter = [1:1:4]
+        Par.maxIter = maxIter;
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
