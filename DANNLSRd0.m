@@ -6,15 +6,15 @@ function C = DANNLSRd0( X , Par )
 % Par ...  regularization parameters
 
 % Objective function:
-%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2 s.t.  A>=0, 1'*A=s*1'
+%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2 
+%      s.t.  A>=0, 1'*A=s*1', diag(A) = 0
 
 % Output: 
 % A ... (N x N) is a coefficient matrix 
 
-[L, N] = size (X);
+[D, N] = size (X);
 
 %% initialization
-
 % A       = eye (N);
 % A   = rand (N);
 A       = zeros (N, N);
@@ -27,14 +27,14 @@ iter    = 1;
 % objErr = zeros(Par.maxIter, 1);
 err1(1) = inf; err2(1) = inf;
 terminate = false;
-if N < L
+if N < D
     XTXinv = (X' * X + Par.rho/2 * eye(N))\eye(N);
 else
-    P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(L)) * X );
+    P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
 end
 while  ( ~terminate )
     %% update A the coefficient matrix
-    if N < L
+    if N < D
         A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     else
         A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);

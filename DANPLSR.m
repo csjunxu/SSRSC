@@ -15,13 +15,13 @@ function C = DANPLSR( X , Par )
 %           the most representive and informative samples
 % Par ...  structure of the regularization parameters
 
-[D , N] = size (X);
+[D, N] = size (X);
 
 %% initialization
 
 % A       = eye (N);
 % A   = rand (N);
-A       = zeros (N, 1);
+A       = zeros (N, N);
 C       = A;
 Delta = C - A;
 
@@ -34,11 +34,15 @@ terminate = false;
 if N < D
     XTXinv = (X' * X + Par.rho/2 * eye(N))\eye(N);
 else
-    XTXinv = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
+    P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
 end
 while  ( ~terminate )
     %% update A the coefficient matrix
-    A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
+    if N < D
+        A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
+    else
+        A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);
+    end
     
     %% update C the data term matrix
     Q = (Par.rho*A - Delta)/( Par.s*(2*Par.lambda+Par.rho) );
@@ -55,13 +59,13 @@ while  ( ~terminate )
     err2(iter+1) = errorLinSys(X, A);
     if (  (err1(iter+1) <=tol && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
-%         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-%     else
-%         if (mod(iter, Par.maxIter)==0)
-%             fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-%         end
+        %         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %     else
+        %         if (mod(iter, Par.maxIter)==0)
+        %             fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %         end
     end
-
+    
     %% next iteration number
     iter = iter + 1;
 end

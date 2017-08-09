@@ -1,7 +1,7 @@
 clear ;
 
 %% reduced dimension
-ProjRank = 12 ;
+ProjRank = 12;
 datadir = 'C:/Users/csjunxu/Desktop/SC/Datasets/Hopkins155/';
 seqs = dir(datadir);
 % Get rid of the two directories: "." and ".."
@@ -47,7 +47,7 @@ clear seq3;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 
-SegmentationMethod = 'NNLSR';
+% SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'NNLSRd0';
 % SegmentationMethod = 'NPLSR'; % SVD 的输入不能包含 NaN 或 Inf。
 % SegmentationMethod = 'NPLSRd0'; % SVD 的输入不能包含 NaN 或 Inf。
@@ -59,13 +59,13 @@ SegmentationMethod = 'NNLSR';
 
 % SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
-% SegmentationMethod = 'DANPLSR';
+SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
-for s = [1]
+for s = [.1:.1:1]
     Par.s = s;
-    for maxIter = 1:1:10
+    for maxIter = 1:1:5
         Par.maxIter = maxIter;
-        for rho = [.01:.01:.09]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -142,7 +142,11 @@ for s = [1]
                             case 'DANNLSR'                 % deformable, affine, non-negative
                                 C = DANNLSR( ProjX , Par ) ;
                             case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
-                                C = DANNLSRd0( ProjX , Par ) ;
+                                C = DANNLSRd0( ProjX , Par ) ; 
+                            case 'DANPLSR'                 % deformable, affine, non-positive
+                                C = DANPLSR( ProjX , Par ) ;
+                            case 'DANPLSRd0'             % deformable, affine, non-positive, diagonal = 0
+                                C = DANPLSRd0( ProjX , Par ) ;
                         end
                         nCluster = length( unique( gnd ) ) ;
                         Z = ( abs(C) + abs(C') ) / 2 ;
