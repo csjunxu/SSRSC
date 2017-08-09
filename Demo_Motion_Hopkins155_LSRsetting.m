@@ -63,9 +63,9 @@ SegmentationMethod = 'NNLSRd0';
 % SegmentationMethod = 'DANPLSRd0';
 for s = [1]
     Par.s = s;
-    for maxIter = [1:1:4]
+    for maxIter = 4:-1:1
         Par.maxIter = maxIter;
-        for rho = [.09:-.01:.01]
+        for rho = [.009:-.001:.001]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -153,7 +153,7 @@ for s = [1]
                     num(n) = num(n) + 1;
                     missrateTot{n}(num(n)) = missrate;
                     fprintf('seq %d\t %f\n', i , missrate ) ;
-                end               
+                end
                 L = [2 3];
                 allmissrate = [];
                 for i = 1:length(L)
