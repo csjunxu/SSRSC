@@ -27,8 +27,8 @@ end
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
-SegmentationMethod = 'NNLSR' ;
-% SegmentationMethod = 'NNLSRd0' ;
+% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
@@ -45,9 +45,9 @@ SegmentationMethod = 'NNLSR' ;
 %% Subspace segmentation
 for s = [1]
     Par.s = s;
-    for maxIter = [4:1:10]
+    for maxIter = [1:1:10]
         Par.maxIter = maxIter;
-        for rho = [.6:.1:1]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
