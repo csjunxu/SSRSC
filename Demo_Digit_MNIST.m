@@ -33,7 +33,7 @@ SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 %% Settings
-for nSample = [100 200 400 600] % number of images for each digit
+for nSample = [200 400 600] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
