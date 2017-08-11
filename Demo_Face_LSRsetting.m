@@ -45,7 +45,7 @@ SegmentationMethod = 'NNLSRd0' ;
 %% Subspace segmentation
 for s = [1]
     Par.s = s;
-    for maxIter = [1:1:10]
+    for maxIter = [2:1:10]
         Par.maxIter = maxIter;
         for rho = [.1:.1:1]
             Par.rho = rho;
