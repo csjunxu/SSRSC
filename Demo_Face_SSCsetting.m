@@ -27,8 +27,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR';
-SegmentationMethod = 'DANNLSRd0';
+SegmentationMethod = 'DANNLSR';
+% SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
 
@@ -44,9 +44,9 @@ else
 end
 
 %% Subspace segmentation
-for scale = [.1:.05:1]
+for scale = [.3:.05:.5]
     Par.s = scale;
-    for maxIter = [1:1:5] % unique([floor(10*scale), ceil(10*scale)])
+    for maxIter = [1 2] % unique([floor(10*scale), ceil(10*scale)])
         Par.maxIter = maxIter;
         for rho = [.1:.1:.9]
             Par.rho = rho;
