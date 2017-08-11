@@ -44,9 +44,9 @@ else
 end
 
 %% Subspace segmentation
-for scale = [.15:.05:.5]
+for scale = [.1]
     Par.s = scale;
-    for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
+    for maxIter = [2:1:10] % unique([floor(10*scale), ceil(10*scale)])
         Par.maxIter = maxIter;
         for rho = [.1:.1:1]
             Par.rho = rho;
