@@ -28,8 +28,8 @@ end
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
-SegmentationMethod = 'NNLSRd0' ;
-% SegmentationMethod = 'NPLSR' ;
+% SegmentationMethod = 'NNLSRd0' ;
+SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
 % SegmentationMethod = 'ANNLSR' ;
@@ -45,7 +45,7 @@ SegmentationMethod = 'NNLSRd0' ;
 %% Subspace segmentation
 for s = [1]
     Par.s = s;
-    for maxIter = [11:1:15]
+    for maxIter = [1:1:10]
         Par.maxIter = maxIter;
         for rho = [.1:.1:1]
             Par.rho = rho;
