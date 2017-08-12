@@ -17,8 +17,8 @@ writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 % SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
-SegmentationMethod = 'NNLSR' ;
-% SegmentationMethod = 'NNLSRd0' ;
+% SegmentationMethod = 'NNLSR' ;
+SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
@@ -46,7 +46,7 @@ end
 %% Subspace segmentation
 for scale = [.1]
     Par.s = scale;
-    for maxIter = [2:1:10] % unique([floor(10*scale), ceil(10*scale)])
+    for maxIter = [1:1:10] % unique([floor(10*scale), ceil(10*scale)])
         Par.maxIter = maxIter;
         for rho = [.1:.1:1]
             Par.rho = rho;
