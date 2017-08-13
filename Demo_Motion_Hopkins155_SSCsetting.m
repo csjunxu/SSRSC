@@ -5,6 +5,9 @@ addpath 'C:\Users\csjunxu\Documents\GitHub\Non-negativeSubspaceClustering';
 
 dataset = 'Hopkins155';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 maxNumGroup = 5;
 for i = 1:maxNumGroup

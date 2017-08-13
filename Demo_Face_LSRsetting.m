@@ -2,6 +2,9 @@ clear;
 load '/Users/xujun/Desktop/SubspaceClustering/YaleB_Crop.mat'
 dataset = 'YaleB_LSR';
 writefilepath = ['/Users/xujun/Desktop/SubspaceClustering/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 Repeat = 1; % number of repeations
 DR = 1; % perform dimension reduction or not

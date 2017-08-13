@@ -1,6 +1,9 @@
 clear ;
 dataset = 'USPS';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');

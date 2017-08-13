@@ -4,6 +4,9 @@ clear ;
 load 'C:\Users\csjunxu\Desktop\SC\Datasets\YaleBCrop025.mat';
 dataset = 'YaleB_SSC';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');

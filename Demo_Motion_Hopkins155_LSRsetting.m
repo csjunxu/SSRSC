@@ -11,6 +11,9 @@ data = struct('ProjX', {}, 'name',{}, 'ids',{});
 
 dataset = 'Hopkins155';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 for i=1:length(seq3)
     fname = seq3(i).name;
