@@ -59,9 +59,9 @@ clear seq3;
 
 % SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
-SegmentationMethod = 'DANPLSR';
-% SegmentationMethod = 'DANPLSRd0';
-for s = [.7:.1:1]
+% SegmentationMethod = 'DANPLSR';
+SegmentationMethod = 'DANPLSRd0';
+for s = [1:-.1:.1]
     Par.s = s;
     for maxIter = 1
         Par.maxIter = maxIter;
