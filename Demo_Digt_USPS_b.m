@@ -6,6 +6,9 @@ load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
 % load 'C:\Users\csjunxu\Desktop\SC\Datasets\MNIST_Crop.mat' % load MNIST dataset
 dataset = 'USPS';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 Repeat = 1; %number of repeations
 DR = 1; % perform dimension reduction or not

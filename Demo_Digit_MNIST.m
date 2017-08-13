@@ -4,6 +4,9 @@ addpath('MNISThelpcode');
 addpath(genpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2'));
 dataset = 'MNIST';
 writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2013 PAMI SSC');
