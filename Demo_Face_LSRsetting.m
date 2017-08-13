@@ -38,16 +38,16 @@ end
 % SegmentationMethod = 'ANPLSRd0' ;
 
 % SegmentationMethod = 'DANNLSR' ;
-SegmentationMethod = 'DANNLSRd0' ;
-% SegmentationMethod = 'DANPLSR' ;
+% SegmentationMethod = 'DANNLSRd0' ;
+SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 
 %% Subspace segmentation
-for s = .2 % [.25:.05:1]
+for s = [.1:.1:1]
     Par.s = s;
-    for maxIter = 2%[2:1:5]
+    for maxIter = [1:1:5]
         Par.maxIter = maxIter;
-        for rho = [.51:.01:.59 .49:-.01:.41]
+        for rho = [.1:.1:1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda*10^(-0);
@@ -143,6 +143,10 @@ for s = .2 % [.25:.05:1]
                                         C = DANNLSR( Yfea , Par ) ;
                                     case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                         C = DANNLSRd0( Yfea , Par ) ;
+                                    case 'DANPLSR'                 % deformable, affine, non-negative
+                                        C = DANPLSR( Yfea , Par ) ;
+                                    case 'DANPLSRd0'             % deformable, affine, non-negative, diagonal = 0
+                                        C = DANPLSRd0( Yfea , Par ) ;
                                 end
                                 for k = 1 : size(C,2)
                                     C(:, k) = C(:, k) / max(abs(C(:, k))) ;
@@ -170,7 +174,9 @@ for s = .2 % [.25:.05:1]
                     elseif strcmp(SegmentationMethod, 'NNLSR')==1 || strcmp(SegmentationMethod, 'NPLSR')==1 || strcmp(SegmentationMethod, 'NNLSRd0')==1 || strcmp(SegmentationMethod, 'NPLSRd0')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1
+                    elseif strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'DANPLSR')==1 || strcmp(SegmentationMethod, 'DANPLSRd0')==1
                         matname = sprintf([writefilepath dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
