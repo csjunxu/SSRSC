@@ -10,7 +10,7 @@ seq3 = seqs(3:end);
 data = struct('ProjX', {}, 'name',{}, 'ids',{});
 
 dataset = 'Hopkins155';
-writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -176,25 +176,25 @@ for s = [1:-.1:.1]
                         strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || ...
                         strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || ...
                         strcmp(SegmentationMethod, 'SMR')==1
-                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'NNLSR')==1 || strcmp(SegmentationMethod, 'NNLSRd0')==1 || ...
                         strcmp(SegmentationMethod, 'NPLSR')==1 || strcmp(SegmentationMethod, 'NPLSRd0')==1 || ...
                         strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'ANPLSR')==1 || ...
                         strcmp(SegmentationMethod, 'ANNLSRd0')==1 || strcmp(SegmentationMethod, 'ANPLSRd0')==1
-                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || ...
                         strcmp(SegmentationMethod, 'DANNLSRd0') == 1 || ...
                         strcmp(SegmentationMethod, 'DANPLSR') == 1 || ...
                         strcmp(SegmentationMethod, 'DANPLSRd0') == 1
-                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
-                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                    matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'RSIM')==1
-                    matname = sprintf([writefilepath dataset '_' SegmentationMethod '.mat']);
+                    matname = sprintf([write_results_dir dataset '_' SegmentationMethod '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 end
             end
