@@ -36,7 +36,7 @@ SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 %% Settings
-for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
+for nSample = [100 200 400 600]%[50 100 200 400 600] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
@@ -68,9 +68,9 @@ for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
     %% Subspace segmentation
     for s = [.1 .05 .15] %[.1:.05:.5]
         Par.s = s;
-        for maxIter = 4 %1:1:5
+        for maxIter = [4 5]%1:1:5
             Par.maxIter = maxIter;
-            for rho = [1.6:.1:2]
+            for rho = [1.1:.1:1.6]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
