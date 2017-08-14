@@ -21,7 +21,7 @@ end
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
-SegmentationMethod = 'NNLSR' ;
+% SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
@@ -33,7 +33,7 @@ SegmentationMethod = 'NNLSR' ;
 
 % SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
-% SegmentationMethod = 'DANPLSR' ;
+SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 
 %% Settings
@@ -67,9 +67,9 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.1]
+    for s = [.05:.05:.2]
         Par.s = s;
-        for maxIter = 1:1:4
+        for maxIter = 1:1:5
             Par.maxIter = maxIter;
             for rho = [.1:.1:1]
                 Par.rho = rho;
