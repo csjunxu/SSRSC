@@ -31,9 +31,9 @@ end
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR' ;
+SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
-SegmentationMethod = 'DANPLSR' ;
+% SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 
 %% Settings
