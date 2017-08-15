@@ -28,7 +28,7 @@ end
 SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 %% Settings
-for nSample = [50 100 200 400] % number of images for each digit
+for nSample = [100 200 400] % number of images for each digit
     load 'C:\Users\csjunxu\Desktop\SC\Datasets\USPS_Crop.mat'   % load USPS dataset
     nExperiment = 20; % number of repeations
     DR = 1; % perform dimension reduction or not
@@ -41,11 +41,11 @@ for nSample = [50 100 200 400] % number of images for each digit
         dim = 10;
     end
     %% Subspace segmentation
-    for s = [.1:.1:1]
+    for s = [.1:.1:.5]
         Par.s = s;
         for maxIter = [1]
             Par.maxIter = maxIter;
-            for rho = [3.1:.1:5]
+            for rho = [1:1:20]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda;
