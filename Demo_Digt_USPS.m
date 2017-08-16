@@ -41,7 +41,7 @@ for nSample = [100 200 400] % number of images for each digit
         dim = 10;
     end
     %% Subspace segmentation
-    for s = [.01:.01:09]
+    for s = [.03:.01:09]
         Par.s = s;
         for maxIter = [1]
             Par.maxIter = maxIter;
