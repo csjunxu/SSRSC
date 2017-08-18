@@ -1,5 +1,5 @@
 function C = BNNLS( X , Par )
-
+warning off;
 % Input
 % X           Data matrix, dim * num
 % Par        parameters
