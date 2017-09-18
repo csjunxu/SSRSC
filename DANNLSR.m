@@ -40,14 +40,22 @@ while  ( ~terminate )
     end
     
     %% update C the data term matrix
-%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%     C  = Par.s*solver_BCLS_closedForm(Q);
+    tic
+    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    C1  = Par.s*solver_BCLS_closedForm(Q);
+    toc
+    tic
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
     for i=1:size(Q, 2)
         C(:,i) = projsplx(Q(:,i));
     end
-    C = Par.s*C;
-    
+    C2 = Par.s*C;
+    toc
+    tic
+    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    C = SimplexProj(Q');
+    C3 = Par.s*C';
+    toc
 %     %% update C with closed-form solution (now problematic)
 %     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
 %     for i=1:size(Q, 2)
