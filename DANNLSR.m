@@ -43,15 +43,15 @@ while  ( ~terminate )
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
     C  = Par.s*solver_BCLS_closedForm(Q);
     
-%     %% update C with closed-form solution (now problematic)
-%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-%     for i=1:size(Q, 2)
-%         Q1(:,i) = Q(:,i) - 1/N*(ones(1,N)*Q(:,i)-Par.s)*ones(N,1);
-%     end
-%     Q1(Q1<0) = 0;
-%     for i=1:size(Q1, 2)
-%         Cclose(:,i) = Q1(:,i) - 1/N*(ones(1,N)*Q1(:,i)-Par.s)*ones(N,1);
-%     end
+    %% update C with closed-form solution (now problematic)
+    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    for i=1:size(Q, 2)
+        Q1(:,i) = Q(:,i) - 1/N*(ones(1,N)*Q(:,i)-Par.s)*ones(N,1);
+    end
+    Q1(Q1<0) = 0;
+    for i=1:size(Q1, 2)
+        Cclose(:,i) = Q1(:,i) - 1/N*(ones(1,N)*Q1(:,i)-Par.s)*ones(N,1);
+    end
     
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
