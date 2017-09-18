@@ -19,7 +19,7 @@ function C = DANNLSR( X , Par )
 % A   = rand (N); A(A<0) = 0;
 A       = zeros (N, N);
 C       = A;
-Delta = C - A;
+Delta = zeros (N, N); %C - A;
 
 %%
 tol   = 1e-4;
@@ -40,22 +40,19 @@ while  ( ~terminate )
     end
     
     %% update C the data term matrix
-    tic
+%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+%     C  = Par.s*solver_BCLS_closedForm(Q);
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-    C  = Par.s*solver_BCLS_closedForm(Q);
-    toc
-    %% update C with closed-form solution (now problematic)
+    for i=1:size(Q, 2)
+        C(:,i) = projsplx(Q(:,i));
+    end
+    C = Par.s*C;
+    
+%     %% update C with closed-form solution (now problematic)
 %     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
 %     for i=1:size(Q, 2)
 %         Cclose(:,i) = Q(:,i) - 1/N*(ones(1,N)*Q(:,i)-Par.s)*ones(N,1);
 %     end
-    tic
-    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-    for i=1:size(Q, 2)
-        Cclose(:,i) = projsplx(Q(:,i));
-    end
-    Cclose = Par.s*Cclose;
-    toc
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
