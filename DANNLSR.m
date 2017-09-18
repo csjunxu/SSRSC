@@ -42,12 +42,14 @@ while  ( ~terminate )
     %% update C the data term matrix
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
     C  = Par.s*solver_BCLS_closedForm(Q);
-    
+
     %% update C with closed-form solution (now problematic)
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
     for i=1:size(Q, 2)
         Cclose(:,i) = max(0, Q(:,i) - 1/N*(ones(1,N)*Q(:,i)-Par.s)*ones(N,1));
+%         Cclose(:,i) = Q(:,i) - 1/N*(ones(1,N)*Q(:,i)-Par.s)*ones(N,1);
     end
+    
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
