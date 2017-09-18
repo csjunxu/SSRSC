@@ -61,11 +61,11 @@ clear seq3;
 % SegmentationMethod = 'ANPLSRd0';
 
 % SegmentationMethod = 'DANNLSR';
-% SegmentationMethod = 'DANNLSRd0';
+SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
 
-SegmentationMethod = 'BNNLS';
+% SegmentationMethod = 'BNNLS';
 % SegmentationMethod = 'BNNLSd0';
 % SegmentationMethod = 'BNNLSR';
 % SegmentationMethod = 'BNNLSRd0';
@@ -73,14 +73,14 @@ SegmentationMethod = 'BNNLS';
 % SegmentationMethod = 'BNPLSRd0';
 
 
-for s = [.1:.1:1]
+for s = [.8]
     Par.s = s;
-    for maxIter = 1
+    for maxIter = 7
         Par.maxIter = maxIter;
-        for rho = [1]
+        for rho = [.002:.001:.004]
             Par.rho = rho;
             for lambda = [0]
-                Par.lambda = lambda*10^(-0);
+                Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
                     num(i) = 0;
