@@ -50,12 +50,15 @@ while  ( ~terminate )
     %     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
     %     Q = Q - diag(diag(Q));
     %     C  = solver_BCLS_closedForm(Q);
-    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-    Q = Q - diag(diag(Q));
-    for i=1:size(Q, 2)
-        C(:,i) = projsplx(Q(:,i));
-    end
     
+%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     Q = Q - diag(diag(Q));
+%     for i=1:size(Q, 2)
+%         C(:,i) = projsplx(Q(:,i));
+%     end
+    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    C = SimplexProj(Q');
+    C = C';
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
