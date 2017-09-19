@@ -57,6 +57,7 @@ while  ( ~terminate )
 %         C(:,i) = projsplx(Q(:,i));
 %     end
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    Q = Q - diag(diag(Q));
     C = SimplexProj(Q');
     C = C';
     %% update Deltas the lagrange multiplier matrix
