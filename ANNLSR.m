@@ -41,8 +41,16 @@ while  ( ~terminate )
     end
     
     %% update C the data term matrix
+%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     C  = solver_BCLS_closedForm(Q);
+%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     for i=1:size(Q, 2)
+%         C(:,i) = projsplx(Q(:,i));
+%     end
+
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-    C  = solver_BCLS_closedForm(Q);
+    C = SimplexProj(Q');
+    C = C';
     
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);

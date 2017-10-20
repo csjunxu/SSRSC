@@ -3,7 +3,7 @@ clear;
 addpath('MNISThelpcode');
 addpath(genpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code\scatnet-0.2'));
 dataset = 'MNIST';
-writefilepath = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -31,12 +31,13 @@ end
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR' ;
-SegmentationMethod = 'DANNLSRd0' ;
+SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
+
 %% Settings
-for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
+for nSample = [100 200 400 600] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
@@ -66,11 +67,11 @@ for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.1:.05:.5]
+    for s = [2]
         Par.s = s;
-        for maxIter = 1:1:5
+        for maxIter = 5
             Par.maxIter = maxIter;
-            for rho = [1:-.1:.1]
+            for rho = [10]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
@@ -177,6 +178,10 @@ for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
                                     C = DANNLSR( Yfea , Par ) ;
                                 case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                     C = DANNLSRd0( Yfea , Par ) ;
+                                case 'DANPLSR'                 % deformable, affine, non-positive
+                                    C = DANPLSR( Yfea , Par ) ;
+                                case 'DANPLSRd0'             % deformable, affine, non-positive, diagonal = 0
+                                    C = DANPLSRd0( Yfea , Par ) ;
                             end
                             %% generate affinity
                             for k = 1 : size(C, 2)
@@ -194,20 +199,36 @@ for nSample = [400  600]%[50 100 200 400 600] % number of images for each digit
                     avgmissrate = mean(missrate*100);
                     medmissrate = median(missrate*100);
                     fprintf('Total mean missrate  is %.3f%%.\n' , avgmissrate) ;
-                    if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1
-                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
+                    if strcmp(SegmentationMethod, 'SSC')==1 ...
+                            || strcmp(SegmentationMethod, 'LRR')==1 ...
+                            || strcmp(SegmentationMethod, 'LRSC')==1 ...
+                            || strcmp(SegmentationMethod, 'LSR')==1 ...
+                            || strcmp(SegmentationMethod, 'LSR1')==1 ...
+                            || strcmp(SegmentationMethod, 'LSR2')==1 ...
+                            || strcmp(SegmentationMethod, 'SMR')==1
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'SSCOMP')==1
-                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
-                    elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 || strcmp(SegmentationMethod, 'ANPLSR') == 1  || strcmp(SegmentationMethod, 'ANPLSRd0')==1
-                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    elseif strcmp(SegmentationMethod, 'NNLSR') == 1 ...
+                            || strcmp(SegmentationMethod, 'NPLSR') == 1 ...
+                            || strcmp(SegmentationMethod, 'NNLSRd0') == 1 ...
+                            || strcmp(SegmentationMethod, 'NPLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'ANNLSR') == 1 ...
+                            || strcmp(SegmentationMethod, 'ANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'ANPLSR')==1 ...
+                            || strcmp(SegmentationMethod, 'ANPLSRd0')==1
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
-                    elseif strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1
-                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                    elseif strcmp(SegmentationMethod, 'DANNLSR')==1 ...
+                            || strcmp(SegmentationMethod, 'DANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'DANPLSR')==1 ...
+                            || strcmp(SegmentationMethod, 'DANPLSRd0')==1
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1
-                        matname = sprintf([writefilepath dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     end
                 end

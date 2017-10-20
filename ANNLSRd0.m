@@ -47,26 +47,35 @@ while  ( ~terminate )
     A = A - diag(diag(A));
     
     %% update C the data term matrix
-    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-    C  = solver_BCLS_closedForm(Q);
-    C = C - diag(diag(C));
+    %     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    %     Q = Q - diag(diag(Q));
+    %     C  = solver_BCLS_closedForm(Q);
     
+%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     Q = Q - diag(diag(Q));
+%     for i=1:size(Q, 2)
+%         C(:,i) = projsplx(Q(:,i));
+%     end
+    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    Q = Q - diag(diag(Q));
+    C = SimplexProj(Q');
+    C = C';
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
-%     %% update rho the penalty parameter scalar
-%     Par.rho = min(1e4, Par.mu * Par.rho);
+    %     %% update rho the penalty parameter scalar
+    %     Par.rho = min(1e4, Par.mu * Par.rho);
     
     %% computing errors
     err1(iter+1) = errorCoef(C, A);
     err2(iter+1) = errorLinSys(X, A);
     if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
-%         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-%     else
-%                 if (mod(iter, Par.maxIter)==0)
-%         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-%                 end
+        %         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %     else
+        %                 if (mod(iter, Par.maxIter)==0)
+        %         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %                 end
     end
     %% next iteration number
     iter = iter + 1;
