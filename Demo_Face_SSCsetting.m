@@ -21,7 +21,7 @@ end
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'NNLSR' ;
-SegmentationMethod = 'NNLSRd0' ;
+% SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'NPLSR' ;
 % SegmentationMethod = 'NPLSRd0' ;
 
@@ -30,7 +30,7 @@ SegmentationMethod = 'NNLSRd0' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR';
+SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
@@ -47,12 +47,12 @@ else
 end
 
 %% Subspace segmentation
-for scale = [.1]
-    Par.s = scale;
-    for maxIter = [9:1:10] % unique([floor(10*scale), ceil(10*scale)])
-        Par.maxIter = maxIter;
-        for rho = [.1:.1:1]
-            Par.rho = rho;
+for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
+    Par.maxIter = maxIter;
+    for rho = [.25 .1:.1:1]
+        Par.rho = rho;
+        for scale = [.05:.05:1.2]
+            Par.s = scale;
             for lambda = [0]
                 Par.lambda = lambda*10^(-2);
                 for nSet = [2 3 5 8 10]

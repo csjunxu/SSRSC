@@ -1,4 +1,4 @@
-clear ;
+clear;
 
 cd 'C:/Users/csjunxu/Desktop/SC/Datasets/Hopkins155/';
 addpath 'C:\Users\csjunxu\Documents\GitHub\Non-negativeSubspaceClustering';
@@ -8,11 +8,11 @@ write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
-
 maxNumGroup = 5;
 for i = 1:maxNumGroup
     num(i) = 0;
 end
+
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
