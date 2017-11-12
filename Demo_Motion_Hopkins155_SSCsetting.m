@@ -20,7 +20,7 @@ end
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
@@ -36,7 +36,7 @@ SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code
 % SegmentationMethod = 'ANPLSR';
 % SegmentationMethod = 'ANPLSRd0';
 
-% SegmentationMethod = 'DANNLSR';
+SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
