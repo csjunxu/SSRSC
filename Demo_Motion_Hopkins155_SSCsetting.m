@@ -17,7 +17,7 @@ end
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
-SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
@@ -36,7 +36,7 @@ SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRS
 % SegmentationMethod = 'ANPLSR';
 % SegmentationMethod = 'ANPLSRd0';
 
-% SegmentationMethod = 'DANNLSR';
+% % SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';

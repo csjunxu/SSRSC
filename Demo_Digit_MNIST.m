@@ -37,7 +37,7 @@ SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 
 %% Settings
-for nSample = [100 200 400 600] % number of images for each digit
+for nSample = [600] % number of images for each digit
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
     if ~exist('MNIST_DATA', 'var')
@@ -67,15 +67,17 @@ for nSample = [100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [2]
+    for s = [.15]
         Par.s = s;
-        for maxIter = 5
+        for maxIter = 2
             Par.maxIter = maxIter;
-            for rho = [10]
+            for rho = [0.59]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda*10^(-0);
                     missrate = zeros(nExperiment, 1) ;
+                    ii=0;
+                    alltime = [];
                     for i = 1:nExperiment
                         nCluster = 10;
                         digit_set = 0:9; % set of digits to test on, e.g. [2, 0]. Pick randomly if empty.
@@ -100,6 +102,9 @@ for nSample = [100 200 400 600] % number of images for each digit
                         end
                         fea = MNIST_DATA(:, mask);
                         N = length(gnd);
+                        
+                        ii = ii+1;
+                        t1=clock;
                         
                         %% PCA Projection
                         redDim = size(fea, 1);
@@ -190,9 +195,12 @@ for nSample = [100 200 400 600] % number of images for each digit
                             Z = ( abs(C) + abs(C') ) / 2 ; % abs is useless in our model
                             %% generate label
                             idx = clu_ncut(Z, nCluster) ;
+                            
                             %% Evaluation
                             missrate(i) = 1 - compacc(idx, gnd);
                         end
+                        t2=clock;
+                        alltime(ii) = etime(t2,t1);
                         fprintf('%d: %.3f%% \n' , i, missrate(i)*100) ;
                     end
                     %% output
