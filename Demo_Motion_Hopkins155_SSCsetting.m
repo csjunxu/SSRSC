@@ -20,7 +20,7 @@ end
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
@@ -37,7 +37,7 @@ end
 % SegmentationMethod = 'ANPLSRd0';
 
 % SegmentationMethod = 'DANNLSR';
-SegmentationMethod = 'DANNLSRd0';
+% SegmentationMethod = 'DANNLSRd0';
 % SegmentationMethod = 'DANPLSR';
 % SegmentationMethod = 'DANPLSRd0';
 
@@ -45,16 +45,18 @@ for maxIter = [7]
     Par.maxIter = maxIter;
     for s = [.8]
         Par.s = s;
-        for rho = [.002:.001:.004]
+        for rho = [.003]
             Par.rho = rho;
             for lambda = [0]
-                Par.lambda = lambda*10^(-0);
+                Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
                     num(i) = 0;
                 end
                 %%
                 d = dir;
+                ii=0;
+                alltime = [];
                 for i = 1:length(d)
                     if ( (d(i).isdir == 1) && ~strcmp(d(i).name,'.') && ~strcmp(d(i).name,'..') )
                         filepath = d(i).name;
@@ -79,11 +81,11 @@ for maxIter = [7]
                             F = size(x,3);
                             D = 2*F;
                             X = reshape(permute(x(1:2,:,:),[1 3 2]),D,N);
-                            
+                            ii = ii+1;
                             r = 4*n;
+                            t1=clock;
                             Xp = DataProjection(X,r);
                             if strcmp(SegmentationMethod, 'RSIM') == 1
-                                ii = ii+1;
                                 [missrate, grp, bestRank, minNcutValue,W] = RSIM(Xp, gnd);
                                 disp([filepath ': ' num2str(100*missrate) '%, dim:' num2str(bestRank) ', nMotions: ' num2str(n) ', seq: ' num2str(ii)]);
                             else
@@ -143,6 +145,8 @@ for maxIter = [7]
                                 missrate = 1-accuracy;
                                 fprintf('seq %d\t %f\n', i , missrate ) ;
                             end
+                            t2=clock;
+                            alltime(ii) = etime(t2,t1);
                             num(n) = num(n) + 1;
                             missrateTot{n}(num(n)) = missrate;
                             eval(['cd ' filepath]);
