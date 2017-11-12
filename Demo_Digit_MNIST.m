@@ -17,9 +17,9 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
+% SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-% SegmentationMethod = 'SSCOMP' ;
+SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
@@ -35,7 +35,7 @@ SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C'
 % SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
-% alltime = [];
+alltime = [];
 jj=0;
 %% Settings
 for nSample = [50 100 200 400 600] % number of images for each digit
@@ -246,5 +246,5 @@ for nSample = [50 100 200 400 600] % number of images for each digit
     end
 end
 
-save mnist_S3C.mat alltime
+save mnist_SSCOMP.mat alltime
 
