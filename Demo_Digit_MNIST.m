@@ -19,7 +19,7 @@ end
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
 % SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-SegmentationMethod = 'SSCOMP' ;
+% SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
@@ -31,14 +31,14 @@ SegmentationMethod = 'SSCOMP' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR' ;
+SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
 alltime = [];
 jj=0;
 %% Settings
-for nSample = [50 100 200 400 600] % number of images for each digit
+for nSample = 50 %[50 100 200 400 600] % number of images for each digit
     jj=jj+1;
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\SC\Datasets\MNIST\')
@@ -71,12 +71,12 @@ for nSample = [50 100 200 400 600] % number of images for each digit
     %% Subspace segmentation
     for s = [.15]
         Par.s = s;
-        for maxIter = 2
+        for maxIter = 1
             Par.maxIter = maxIter;
-            for rho = [0.59]
+            for rho = [0.91]
                 Par.rho = rho;
-                for lambda = [0.06]
-                    Par.lambda = lambda*10^(-0);
+                for lambda = [0]
+                    Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
                     for i = 1:nExperiment
@@ -245,6 +245,4 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         end
     end
 end
-
-save mnist_SSCOMP.mat alltime
 

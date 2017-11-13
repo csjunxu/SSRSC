@@ -51,7 +51,7 @@ jj=0;
 %% Subspace segmentation
 for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
     Par.maxIter = maxIter;
-    for rho = [5]
+    for rho = [10]
         Par.rho = rho;
         for scale = [.05]
             Par.s = scale;
@@ -153,6 +153,7 @@ for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
                             end
                             t2=clock;
                             alltime(jj,ii) = etime(t2,t1);
+                            save(['YaleBSSC_' SegmentationMethod '.mat'], 'alltime');
                             fprintf('%.3f%% \n' , missrate(i, j)*100) ;
                         end
                         missrateTot{n}(i) = mean(missrate(i, :)*100);
@@ -168,8 +169,6 @@ for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
         end
     end
 end
-meantime = mean(alltime,2);
-save(['YaleBSSC_' SegmentationMethod '.mat'], 'alltime', 'meantime');
 
 
 
