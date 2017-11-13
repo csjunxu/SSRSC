@@ -134,7 +134,7 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                             opt.nu =1;
                             opt.gamma0 = 0.1;% This is for reweighting the off-diagonal entries in Z
                             opt.maxIter =150;
-                            missrate(i) = StrSSC(Yfea, gnd, opt);
+                            [missrate(i), Theta, C, eval_iter] = StrSSC(Yfea, gnd, opt);
                         else
                             switch SegmentationMethod
                                 case 'SSC'
