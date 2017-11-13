@@ -130,7 +130,7 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                             opt.r =0;  % the dimension of the target space when applying PCA or random projection
                             opt.SSCrho=1;
                             % paramters for StrSSC
-                            opt.iter_max =10; %  iter_max is for loop in StrLRSCE
+                            opt.iter_max =5; %  iter_max is for loop in StrLRSCE
                             opt.nu =1;
                             opt.gamma0 = 0.1;% This is for reweighting the off-diagonal entries in Z
                             opt.maxIter =150;
@@ -143,8 +143,8 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                                 case 'LRR'
                                     C = solve_lrr(Yfea, Par.lambda); % without post processing
                                 case 'LRSC'
-                                    C = lrsc_noiseless(Yfea, Par.lambda);
-                                    % [~, C] = lrsc_noisy(Yfea, Par.lambda);
+%                                     C = lrsc_noiseless(Yfea, Par.lambda);
+                                    [~, C] = lrsc_noisy(Yfea, Par.lambda);
                                 case 'SMR'
                                     para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                     para.gamma = 1;
@@ -192,7 +192,7 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                             %% generate affinity
                             for k = 1 : size(C, 2)
                                 C(:, k) = C(:, k) / max(abs(C(:, k))) ;
-                            end
+                            end 
                             Z = ( abs(C) + abs(C') ) / 2 ; % abs is useless in our model
                             %% generate label 
                             idx = clu_ncut(Z, nCluster) ;
