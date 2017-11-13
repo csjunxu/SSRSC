@@ -19,7 +19,7 @@ end
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\2014 CVPR SMR');
 % SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-SegmentationMethod = 'SSCOMP' ;
+% SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'NNLSR' ;
 % SegmentationMethod = 'NNLSRd0' ;
@@ -31,7 +31,7 @@ SegmentationMethod = 'SSCOMP' ;
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-% SegmentationMethod = 'DANNLSR' ;
+SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
 % SegmentationMethod = 'DANPLSR' ;
 % SegmentationMethod = 'DANPLSRd0' ;
@@ -73,9 +73,9 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
         Par.s = s;
         for maxIter = 1
             Par.maxIter = maxIter;
-            for rho = [1.09]
+            for rho = [0.91]
                 Par.rho = rho;
-                for lambda = [.1]
+                for lambda = [0]
                     Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
