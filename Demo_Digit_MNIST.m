@@ -11,13 +11,13 @@ end
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
-SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
-% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-% SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
+% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\2014 CVPR SMR');
+SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
@@ -148,10 +148,10 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                                 case 'SMR'
                                     para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
                                     para.gamma = 1;
-                                    para.alpha = 20;
+                                    para.alpha = 2e-5;
                                     para.knn = 4;
-                                    para.elpson =0.01;
-                                    Yfea = [Yfea ; ones(1,size(ProjX,2))] ;
+                                    para.elpson =0.001;
+                                    Yfea = [Yfea ; ones(1,size(Yfea,2))] ;
                                     C = smr(Yfea, para);
                                 case 'SSCOMP' % add the path of the SSCOMP method
                                     addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
