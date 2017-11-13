@@ -9,8 +9,8 @@ if ~isdir(write_results_dir)
 end
 
 %% Subspace segmentation methods
-SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
-% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\LRR ICML2010 NIPS2011 PAMI2013\code\');
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
+SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
@@ -75,7 +75,7 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
             Par.maxIter = maxIter;
             for rho = [1.09]
                 Par.rho = rho;
-                for lambda = [200]
+                for lambda = [.7]
                     Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
