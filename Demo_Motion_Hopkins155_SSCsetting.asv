@@ -137,7 +137,7 @@ for maxIter = [7]
                                         C = DANNLSR( Xp , Par ) ;
                                     case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                         C = DANNLSRd0( Xp , Par ) ;
-                                    case 'DALSRd0'             % deformable, affine, diagonal = 0
+                                    case 'DALSRd0'             % deformable, affine, non-negative, diagonal = 0
                                         C = DALSRd0( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
