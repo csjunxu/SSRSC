@@ -31,14 +31,14 @@ end
 % SegmentationMethod = 'ANPLSR' ;
 % SegmentationMethod = 'ANPLSRd0' ;
 
-SegmentationMethod = 'DANNLSR' ;
+% SegmentationMethod = 'DANNLSR' ;
 % SegmentationMethod = 'DANNLSRd0' ;
-% SegmentationMethod = 'DANPLSR' ;
-% SegmentationMethod = 'DANPLSRd0' ;
+SegmentationMethod = 'DALSR' ;
+% SegmentationMethod = 'DALSRd0' ;
 alltime = [];
 jj=0;
 %% Settings
-for nSample = 50 %[50 100 200 400 600] % number of images for each digit
+for nSample = [50 100] % [50 100 200 400 600] % number of images for each digit
     jj=jj+1;
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\MNIST\')
@@ -69,11 +69,11 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s = [.15]
+    for s = [.1:.1:1]
         Par.s = s;
-        for maxIter = 1
+        for maxIter = 1:1:10
             Par.maxIter = maxIter;
-            for rho = [0.91]
+            for rho = [0.1:.1:1]
                 Par.rho = rho;
                 for lambda = [0]
                     Par.lambda = lambda;
@@ -184,10 +184,10 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                                     C = DANNLSR( Yfea , Par ) ;
                                 case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                     C = DANNLSRd0( Yfea , Par ) ;
-                                case 'DANPLSR'                 % deformable, affine, non-positive
-                                    C = DANPLSR( Yfea , Par ) ;
-                                case 'DANPLSRd0'             % deformable, affine, non-positive, diagonal = 0
-                                    C = DANPLSRd0( Yfea , Par ) ;
+                                case 'DALSR'                 % deformable, affine, non-positive
+                                    C = DALSR( Yfea , Par ) ;
+                                case 'DALSRd0'             % deformable, affine, non-positive, diagonal = 0
+                                    C = DALSRd0( Yfea , Par ) ;
                             end
                             %% generate affinity
                             for k = 1 : size(C, 2)
@@ -231,8 +231,8 @@ for nSample = 50 %[50 100 200 400 600] % number of images for each digit
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'DANNLSR')==1 ...
                             || strcmp(SegmentationMethod, 'DANNLSRd0')==1 ...
-                            || strcmp(SegmentationMethod, 'DANPLSR')==1 ...
-                            || strcmp(SegmentationMethod, 'DANPLSRd0')==1
+                            || strcmp(SegmentationMethod, 'DALSR')==1 ...
+                            || strcmp(SegmentationMethod, 'DALSRd0')==1
                         matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1

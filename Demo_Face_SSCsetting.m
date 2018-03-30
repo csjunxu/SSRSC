@@ -153,7 +153,7 @@ for maxIter = [1:1:10] % unique([floor(10*scale), ceil(10*scale)])
                             end
                             t2=clock;
                             alltime(jj,ii) = etime(t2,t1);
-                            save(['YaleBSSC_' SegmentationMethod '.mat'], 'alltime');
+                            % save(['YaleBSSC_' SegmentationMethod '.mat'], 'alltime');
                             fprintf('%.3f%% \n' , missrate(i, j)*100) ;
                         end
                         missrateTot{n}(i) = mean(missrate(i, :)*100);
