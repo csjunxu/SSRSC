@@ -1,10 +1,10 @@
 clear;
 
-cd 'C:/Users/csjunxu/Desktop/SC/Datasets/Hopkins155/';
+cd 'C:/Users/csjunxu/Desktop/CVPR2018 SC/Datasets/Hopkins155/';
 addpath 'C:\Users\csjunxu\Documents\GitHub\Non-negativeSubspaceClustering';
 
 dataset = 'Hopkins155';
-write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 SC/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -37,15 +37,15 @@ end
 % SegmentationMethod = 'ANPLSRd0';
 
 % SegmentationMethod = 'DANNLSR';
-SegmentationMethod = 'DANNLSRd0';
-% SegmentationMethod = 'DANPLSR';
-% SegmentationMethod = 'DANPLSRd0';
+% SegmentationMethod = 'DANNLSRd0';
+% SegmentationMethod = 'DALSR';
+SegmentationMethod = 'DALSRd0';
 
-for maxIter = [7]
+for maxIter = [1:10]
     Par.maxIter = maxIter;
-    for s = [.8]
+    for s = [.1:.1:1.1]
         Par.s = s;
-        for rho = [.003]
+        for rho = [.001:.001:.009 .01:.01:.1]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda;
@@ -137,7 +137,9 @@ for maxIter = [7]
                                         C = DANNLSR( Xp , Par ) ;
                                     case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
                                         C = DANNLSRd0( Xp , Par ) ;
-                                    case 'DALSRd0'             % deformable, affine, diagonal = 0
+                                    case 'DALSR'
+                                        C = DALSR(Xp, Par); % affine
+                                    case 'DALSRd0'             % affine diagonal = 0
                                         C = DALSRd0( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
@@ -176,7 +178,8 @@ for maxIter = [7]
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1
+                elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1 ...
+                        strcmp(matname,'DALSR')==1 || strcmp(matname, 'DALSRd0')==1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1

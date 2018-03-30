@@ -1,4 +1,4 @@
-function C = DALSRd0( X , Par )
+function C = DALSR( X , Par )
 
 % Input:
 % X ... (L x N) data matrix, where L is the number of features, and
@@ -6,8 +6,7 @@ function C = DALSRd0( X , Par )
 % Par ...  regularization parameters
 
 % Objective function:
-%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2
-%      s.t. 1'*A=s*1', diag(A) = 0
+%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2 s.t.  1'*A=s*1'
 
 % Output:
 % A ... (N x N) is a coefficient matrix
@@ -15,16 +14,16 @@ function C = DALSRd0( X , Par )
 [D, N] = size (X);
 
 %% initialization
-% A       = eye (N);
-% A   = rand (N);
+
+% A   = eye (N);
+% A   = rand (N); A(A<0) = 0;
 A       = zeros (N, N);
 C       = A;
-Delta = C - A;
+Delta = zeros (N, N); %C - A;
 
 %%
 tol   = 1e-4;
 iter    = 1;
-% objErr = zeros(Par.maxIter, 1);
 err1(1) = inf; err2(1) = inf;
 terminate = false;
 if N < D
@@ -39,22 +38,18 @@ while  ( ~terminate )
     else
         A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     end
-    A = A - diag(diag(A));
     
     %% update C the data term matrix
 %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%     Q = Q - diag(diag(Q));
 %     C  = Par.s*solver_BCLS_closedForm(Q);
-    
+
 %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%     Q = Q - diag(diag(Q));
 %     for i=1:size(Q, 2)
 %         C(:,i) = projsplx(Q(:,i));
 %     end
 %     C = Par.s*C;
 
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-    Q = Q - diag(diag(Q));
     C = AffineProj(Q');
     C = Par.s*C';
     

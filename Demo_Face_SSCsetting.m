@@ -1,7 +1,7 @@
 
 clear ;
 
-load 'C:\Users\csjunxu\Desktop\SC\Datasets\YaleBCrop025.mat';
+load 'C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\YaleBCrop025.mat';
 dataset = 'YaleB_SSC';
 write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
 if ~isdir(write_results_dir)
