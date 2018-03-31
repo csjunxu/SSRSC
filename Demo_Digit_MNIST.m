@@ -38,7 +38,7 @@ SegmentationMethod = 'DALSR' ;
 alltime = [];
 jj=0;
 %% Settings
-for nSample = [50 100] % [50 100 200 400 600] % number of images for each digit
+for nSample = [200 400 600] % number of images for each digit
     jj=jj+1;
     %% Load data
     addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\MNIST\')
