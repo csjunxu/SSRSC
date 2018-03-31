@@ -38,8 +38,8 @@ end
 
 % SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
-% SegmentationMethod = 'DALSR';
-SegmentationMethod = 'DALSRd0';
+SegmentationMethod = 'DALSR';
+% SegmentationMethod = 'DALSRd0';
 
 for maxIter = [1:10]
     Par.maxIter = maxIter;
