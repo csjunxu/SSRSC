@@ -32,8 +32,8 @@ end
 
 % SegmentationMethod = 'DANNLSR';
 % SegmentationMethod = 'DANNLSRd0';
-SegmentationMethod = 'DALSR';
-% SegmentationMethod = 'DALSRd0';
+% SegmentationMethod = 'DALSR';
+SegmentationMethod = 'DALSRd0';
 
 Repeat = 1; %number of repeations
 DR = 1; % dimension reduction
@@ -53,7 +53,7 @@ for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
     Par.maxIter = maxIter;
     for rho = [1]
         Par.rho = rho;
-        for scale = [1.2:.1:2]
+        for scale = [.1:.1:1.5]
             Par.s = scale;
             for lambda = [0]
                 Par.lambda = lambda;
