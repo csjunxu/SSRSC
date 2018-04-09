@@ -49,11 +49,11 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for maxIter = [1:1:10] % unique([floor(10*scale), ceil(10*scale)])
+for maxIter = [1] % unique([floor(10*scale), ceil(10*scale)])
     Par.maxIter = maxIter;
-    for rho = [1:1:10]
+    for rho = [1]
         Par.rho = rho;
-        for scale = [.1:.1:1.1]
+        for scale = [1.2:.1:2]
             Par.s = scale;
             for lambda = [0]
                 Par.lambda = lambda;
