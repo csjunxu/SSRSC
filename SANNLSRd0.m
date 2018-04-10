@@ -1,24 +1,20 @@
-function C = ANNLSRd0( X , Par )
+function C = SANNLSRd0( X , Par )
 
-% Input
-% X             Data matrix, dim * num
-% lambda        parameter, lambda>0
-
-% Objective function:
-%      min_{A}  ||X - X * A||_F + lambda * ||A||_F s.t. diag(A)=0, A>=0
-
-% Notation: L
+% Input:
 % X ... (L x N) data matrix, where L is the number of features, and
 %           N is the number of samples.
-% A ... (N x N) is a row structured sparse matrix used to select
-%           the most representive and informative samples
-% p ... (p=1, 2, inf) the norm of the regularization term
-% lambda ... nonnegative regularization parameter
+% Par ...  regularization parameters
+
+% Objective function:
+%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2
+%      s.t.  A>=0, 1'*A=s*1', diag(A) = 0
+
+% Output:
+% A ... (N x N) is a coefficient matrix
 
 [D, N] = size (X);
 
 %% initialization
-
 % A       = eye (N);
 % A   = rand (N);
 A       = zeros (N, N);
@@ -31,7 +27,6 @@ iter    = 1;
 % objErr = zeros(Par.maxIter, 1);
 err1(1) = inf; err2(1) = inf;
 terminate = false;
-
 if N < D
     XTXinv = (X' * X + Par.rho/2 * eye(N))\eye(N);
 else
@@ -47,19 +42,22 @@ while  ( ~terminate )
     A = A - diag(diag(A));
     
     %% update C the data term matrix
-    %     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-    %     Q = Q - diag(diag(Q));
-    %     C  = solver_BCLS_closedForm(Q);
+%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+%     Q = Q - diag(diag(Q));
+%     C  = Par.s*solver_BCLS_closedForm(Q);
     
-%     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
 %     Q = Q - diag(diag(Q));
 %     for i=1:size(Q, 2)
 %         C(:,i) = projsplx(Q(:,i));
 %     end
-    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+%     C = Par.s*C;
+
+    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
     Q = Q - diag(diag(Q));
     C = SimplexProj(Q');
-    C = C';
+    C = Par.s*C';
+    
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
     
@@ -71,12 +69,13 @@ while  ( ~terminate )
     err2(iter+1) = errorLinSys(X, A);
     if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
-        %         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %                 fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
         %     else
         %                 if (mod(iter, Par.maxIter)==0)
-        %         fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %                     fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
         %                 end
     end
+    
     %% next iteration number
     iter = iter + 1;
 end
