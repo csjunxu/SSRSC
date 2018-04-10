@@ -25,8 +25,8 @@ end
 % SegmentationMethod = 'LSR2' ;
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'SALSR';
+% SegmentationMethod = 'NNLSR';
+SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
 
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
@@ -36,7 +36,7 @@ SegmentationMethod = 'NNLSR';
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;
-    for s = 0
+    for s = .1:.1:1.5
         Par.s = s;
         for rho = .1:.1:1
             Par.rho = rho;
