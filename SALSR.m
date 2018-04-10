@@ -1,4 +1,4 @@
-function C = DALSR( X , Par )
+function C = SALSR( X , Par )
 
 % Input:
 % X ... (L x N) data matrix, where L is the number of features, and

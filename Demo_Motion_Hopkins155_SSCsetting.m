@@ -23,23 +23,16 @@ end
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
+
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'LSRd0' ; % the same with LSR1
-
 % SegmentationMethod = 'NNLSR';
+SegmentationMethod = 'SALSR';
+% SegmentationMethod = 'SANNLSR';
+
+% SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'NNLSRd0';
-% SegmentationMethod = 'NPLSR'; % SVD 的输入不能包含 NaN 或 Inf。
-% SegmentationMethod = 'NPLSRd0'; % SVD 的输入不能包含 NaN 或 Inf。
-
-% SegmentationMethod = 'ANNLSR';
-% SegmentationMethod = 'ANNLSRd0';
-% SegmentationMethod = 'ANPLSR';
-% SegmentationMethod = 'ANPLSRd0';
-
-% SegmentationMethod = 'DANNLSR';
-% SegmentationMethod = 'DANNLSRd0';
-SegmentationMethod = 'DALSR';
 % SegmentationMethod = 'DALSRd0';
+% SegmentationMethod = 'DANNLSRd0';
 
 for maxIter = [1:10]
     Par.maxIter = maxIter;
@@ -121,26 +114,10 @@ for maxIter = [1:10]
                                         C = NNLSR( Xp , Par ) ;
                                     case 'NNLSRd0'               % non-negative, diagonal = 0
                                         C = NNLSRd0( Xp , Par ) ;
-                                    case 'NPLSR'                   % non-positive
-                                        C = NPLSR( Xp , Par ) ;
-                                    case 'NPLSRd0'               % non-positive, diagonal = 0
-                                        C = NPLSRd0( Xp , Par ) ;
-                                    case 'ANNLSR'                 % affine, non-negative
-                                        C = ANNLSR( Xp , Par ) ;
-                                    case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
-                                        C = ANNLSRd0( Xp , Par ) ;
-                                    case 'ANPLSR'                 % affine, non-positive
-                                        C = ANPLSR( Xp , Par ) ;
-                                    case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
-                                        C = ANPLSRd0( Xp , Par ) ;
-                                    case 'DANNLSR'                 % deformable, affine, non-negative
-                                        C = DANNLSR( Xp , Par ) ;
-                                    case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
-                                        C = DANNLSRd0( Xp , Par ) ;
-                                    case 'DALSR'
-                                        C = DALSR(Xp, Par); % affine
-                                    case 'DALSRd0'             % affine diagonal = 0
-                                        C = DALSRd0( Xp , Par ) ;
+                                    case 'SALSR'
+                                        C = SALSR(Xp, Par); % affine
+                                    case 'SANNLSR'                 % deformable, affine, non-negative
+                                        C = SANNLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
@@ -178,8 +155,8 @@ for maxIter = [1:10]
                 elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'DANNLSR') == 1 || strcmp(SegmentationMethod, 'DANNLSRd0') == 1 ...
-                       || strcmp(SegmentationMethod,'DALSR')==1 || strcmp(SegmentationMethod, 'DALSRd0')==1
+                elseif strcmp(SegmentationMethod, 'SANNLSR') == 1 || strcmp(SegmentationMethod, 'SANNLSRd0') == 1 ...
+                        || strcmp(SegmentationMethod,'SALSR')==1 || strcmp(SegmentationMethod, 'SALSRd0')==1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
