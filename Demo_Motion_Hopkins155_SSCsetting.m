@@ -24,15 +24,16 @@ end
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 
-% SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'SALSR';
-SegmentationMethod = 'SANNLSR';
-
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'NNLSRd0';
 % SegmentationMethod = 'DALSRd0';
 % SegmentationMethod = 'DANNLSRd0';
+
+
+% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'NNLSR';
+% SegmentationMethod = 'SALSR';
+SegmentationMethod = 'SANNLSR';
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;

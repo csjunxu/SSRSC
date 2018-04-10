@@ -41,8 +41,8 @@ for maxIter = [0] % unique([floor(10*scale), ceil(10*scale)])
     Par.maxIter = maxIter;
     for rho = [0]
         Par.rho = rho;
-        for scale = [0]
-            Par.s = scale;
+        for s = [0]
+            Par.s = s;
             for lambda = [.1:.1:1]
                 Par.lambda = lambda;
                 for nSet = [2 3 5 8 10]
@@ -108,11 +108,11 @@ for maxIter = [0] % unique([floor(10*scale), ceil(10*scale)])
                                         C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
                                     case 'LSR'
                                         C = LSR( Yfea , Par ) ;
-                                    case 'NNLSR'                   % non-negative LSR
+                                    case 'NNLSR'                   % non-negative
                                         C = NNLSR( Yfea , Par ) ;
-                                    case 'SALSR'                 % scaled affine LSR
+                                    case 'SALSR'                 % affine
                                         C = SALSR( Yfea , Par ) ;
-                                    case 'SANNLSR'                 % scaled affine, non-negative, LSR
+                                    case 'SANNLSR'                 % SCALED, affine, non-negative
                                         C = SANNLSR( Yfea , Par ) ;
                                 end
                                 for k = 1 : size(C,2)
@@ -141,11 +141,12 @@ for maxIter = [0] % unique([floor(10*scale), ceil(10*scale)])
                     elseif  strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'NNLSR')==1 || strcmp(SegmentationMethod, 'NNLSRd0')==1
+                    elseif strcmp(SegmentationMethod, 'NNLSR')==1 || strcmp(SegmentationMethod, 'NPLSR')==1 || strcmp(SegmentationMethod, 'NNLSRd0')==1 || strcmp(SegmentationMethod, 'NPLSRd0')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                      elseif strcmp(SegmentationMethod, 'SANNLSR')==1 || strcmp(SegmentationMethod, 'SANNLSRd0')==1 ...
-                            || strcmp(SegmentationMethod, 'SALSR')==1 || strcmp(SegmentationMethod, 'SALSRd0')==1
+                    elseif strcmp(SegmentationMethod, 'ANNLSR')==1 || strcmp(SegmentationMethod, 'ANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'DANNLSR')==1 || strcmp(SegmentationMethod, 'DANNLSRd0')==1 ...
+                            || strcmp(SegmentationMethod, 'DALSR')==1 || strcmp(SegmentationMethod, 'DALSRd0')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
