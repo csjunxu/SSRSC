@@ -26,8 +26,8 @@ end
 
 % SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'NNLSRd0';
-% SegmentationMethod = 'DALSRd0';
-% SegmentationMethod = 'DANNLSRd0';
+% SegmentationMethod = 'SALSRd0';
+% SegmentationMethod = 'SANNLSRd0';
 
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
@@ -35,13 +35,13 @@ end
 SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
 
-for maxIter = 16:1:25
+for maxIter = 10
     Par.maxIter = maxIter;
-    for s = 0
+    for s = .8:.1:1.2
         Par.s = s;
         for rho = [.01 .005 .001]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [0 .01]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -171,8 +171,3 @@ for maxIter = 16:1:25
         end
     end
 end
-
-
-
-
-`
