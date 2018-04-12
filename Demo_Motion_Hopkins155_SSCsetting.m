@@ -35,11 +35,11 @@ SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
 
-for maxIter = 9:1:15
+for maxIter = 10:1:15
     Par.maxIter = maxIter;
     for s = 0
         Par.s = s;
-        for rho = .01:.01:.1
+        for rho = [.01 .001]
             Par.rho = rho;
             for lambda = [0]
                 Par.lambda = lambda;
