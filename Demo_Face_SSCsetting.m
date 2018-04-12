@@ -1,5 +1,5 @@
 
-clear ;
+clear;
 
 load 'C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\YaleBCrop025.mat';
 dataset = 'YaleB_SSC';
@@ -37,13 +37,13 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for maxIter = [1:1:10] 
+for maxIter = [10:1:20] 
     Par.maxIter = maxIter;
     for rho = [.1:.1:1]
         Par.rho = rho;
         for scale = [0]
             Par.s = scale;
-            for lambda = [.001 .005 .01 .05 .1 .5 1]
+            for lambda = [0 .001 .01 .1]
                 Par.lambda = lambda;
                 for nSet = [2 3 5 8 10]
                     n = nSet;
