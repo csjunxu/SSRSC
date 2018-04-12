@@ -19,7 +19,7 @@ end
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-SegmentationMethod = 'NNLSR';
+% SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
 
