@@ -37,9 +37,9 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for maxIter = [10:1:20] 
+for maxIter = [11:1:20] 
     Par.maxIter = maxIter;
-    for rho = [.1:.1:1]
+    for rho = [.2:.2:1]
         Par.rho = rho;
         for scale = [0]
             Par.s = scale;
