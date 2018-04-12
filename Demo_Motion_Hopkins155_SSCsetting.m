@@ -125,7 +125,7 @@ for maxIter = 16:1:25
                                 idx = clu_ncut(Z,nCluster) ;
                                 accuracy = compacc(idx, gnd') ;
                                 missrate = 1-accuracy;
-                                fprintf('seq %d\t %f\n', i , missrate ) ;
+                                fprintf('seq %d %f\n', i , missrate ) ;
                             end
                             t2=clock;
                             alltime(ii) = etime(t2,t1);
