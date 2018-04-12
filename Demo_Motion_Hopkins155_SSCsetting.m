@@ -37,7 +37,7 @@ SegmentationMethod = 'SALSR';
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;
-    for s = .8:.1:1.2
+    for s = .7:.1:1.2
         Par.s = s;
         for rho = [.01 .005 .001]
             Par.rho = rho;
