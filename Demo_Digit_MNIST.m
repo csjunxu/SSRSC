@@ -153,16 +153,12 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                                     %% our methods
                                 case 'LSR'
                                     C = LSR( Yfea , Par ) ;
-                                case 'LSRd0'
-                                    C = LSRd0( Yfea , Par ) ; % solved by ADMM
                                 case 'NNLSR'                   % non-negative
-                                    C = NNLSR( Xp , Par ) ;
-                                case 'NNLSRd0'               % non-negative, diagonal = 0
-                                    C = NNLSRd0( Xp , Par ) ;
+                                    C = NNLSR( Yfea , Par ) ;
                                 case 'SALSR'
-                                    C = SALSR(Xp, Par); % affine
+                                    C = SALSR(Yfea, Par); % affine
                                 case 'SANNLSR'                 % deformable, affine, non-negative
-                                    C = SANNLSR( Xp , Par ) ;
+                                    C = SANNLSR( Yfea , Par ) ;
                             end
                             %% generate affinity
                             for k = 1 : size(C, 2)
