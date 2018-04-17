@@ -13,13 +13,15 @@ end
 % SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
 % SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
 % SegmentationMethod = 'LSR1' ;
-SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR2' ;
+% SegmentationMethod = 'LSR' ; % the same with LSR2
+% SegmentationMethod = 'LSRd0' ; % the same with LSR1
 % SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\2014 CVPR SMR');
 % SegmentationMethod = 'S3C' ; addpath('C:\Users\csjunxu\Desktop\SC\2015 CVPR S3C');
 % SegmentationMethod = 'RSIM' ; addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9');addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
 % SegmentationMethod = 'SSCOMP' ;
 
-% SegmentationMethod = 'LSR' ; % the same with LSR2
+SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
@@ -63,7 +65,7 @@ for nSample = [50 100 200 400 600] % number of images for each digit
             Par.maxIter = maxIter;
             for rho = 0% [.001 .01 .1]
                 Par.rho = rho;
-                for lambda = [.001 .005 .01 .1]
+                for lambda = [.001 .005 .01 .05 .1 .5 1]
                     Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
@@ -145,7 +147,7 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                                     addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\SSCOMP_Code');
                                     C = OMP_mat_func(Yfea, 9, 1e-6);
                                 case 'LSR1'
-                                    C = LSR1( Yfea , Par.lambda ) ; % proposed by Lu
+                                    C = LSR1( Yfea , Par.lambda ) ; % prop osed by Lu
                                 case 'LSR2'
                                     C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
                                     %% our methods
