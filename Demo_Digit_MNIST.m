@@ -20,9 +20,9 @@ end
 % SegmentationMethod = 'SSCOMP' ;
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'SALSR';
-% SegmentationMethod = 'SANNLSR';
+% SegmentationMethod = 'NLSR';
+% SegmentationMethod = 'SLSR';
+SegmentationMethod = 'SANNLSR';
 alltime = [];
 jj=0;
 %% Settings
@@ -57,13 +57,13 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for s =0 % [.1:.1:1.5]
-        Par.s = s;
-        for maxIter =  1:1:20
-            Par.maxIter = maxIter;
+    for maxIter =  1:1:20
+        Par.maxIter = maxIter;
+        for s = [.1:.1:1.5]
+            Par.s = s;
             for rho =  [.001 .005 .01 .05 .1 .5 1]
                 Par.rho = rho;
-                for lambda = [.001 .005 .01 .05 .1 .5 1]
+                for lambda = [0 .001 .005 .01 .05 .1 .5 1]
                     Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
@@ -187,9 +187,9 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                     elseif strcmp(SegmentationMethod, 'SSCOMP')==1
                         matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_K' num2str(Par.rho) '_thr' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
-                    elseif strcmp(SegmentationMethod, 'NNLSR') == 1 ...
+                    elseif strcmp(SegmentationMethod, 'NLSR') == 1 ...
                             || strcmp(SegmentationMethod, 'LSR')==1 ...
-                            || strcmp(SegmentationMethod, 'SALSR') == 1 ...
+                            || strcmp(SegmentationMethod, 'SLSR') == 1 ...
                             || strcmp(SegmentationMethod, 'SANNLSR') == 1
                         matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
