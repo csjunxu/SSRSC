@@ -20,7 +20,7 @@ end
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'SALSR';
+SegmentationMethod = 'SALSR';
 % SegmentationMethod = 'SANNLSR';
 
 Repeat = 1; %number of repeations
