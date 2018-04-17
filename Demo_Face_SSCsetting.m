@@ -19,8 +19,8 @@ end
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NNLSR';
-% SegmentationMethod = 'SALSR';
-SegmentationMethod = 'SANNLSR';
+SegmentationMethod = 'SALSR';
+% SegmentationMethod = 'SANNLSR';
 
 Repeat = 1; %number of repeations
 DR = 1; % dimension reduction
@@ -36,13 +36,13 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for maxIter = [1] 
-    Par.maxIter = maxIter;
-    for rho = [.41 ]
-        Par.rho = rho;
-        for scale = [.25]
-            Par.s = scale;
-            for lambda = [0 .001 .005 .01 .05 .1]
+for scale = [.1:.1:.3]
+    Par.s = scale;
+    for maxIter = [1]
+        Par.maxIter = maxIter;
+        for rho = [.1:.1:.5]
+            Par.rho = rho;
+            for lambda = [0 .1]
                 Par.lambda = lambda;
                 for nSet = [2 3 5 8 10]
                     n = nSet;
@@ -134,7 +134,7 @@ for maxIter = [1]
                     medmissrate(n) = median(missrateTot{n});
                     fprintf('Total mean error  is %.3f%%.\n ' , avgmissrate(n)) ;
                     allavgmissrate = mean(avgmissrate(avgmissrate~=0));
-                      if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'S3C')==1
+                    if strcmp(SegmentationMethod, 'SSC')==1 || strcmp(SegmentationMethod, 'S3C')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_alpha' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif  strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1
@@ -143,7 +143,7 @@ for maxIter = [1]
                     elseif strcmp(SegmentationMethod, 'NNLSR')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                      elseif strcmp(SegmentationMethod, 'SANNLSR')==1 || strcmp(SegmentationMethod, 'SALSR')==1
+                    elseif strcmp(SegmentationMethod, 'SANNLSR')==1 || strcmp(SegmentationMethod, 'SALSR')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
