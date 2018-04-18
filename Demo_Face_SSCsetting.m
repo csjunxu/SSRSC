@@ -36,13 +36,13 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for scale = [.1:.1:.3]
+for scale = [1.2]
     Par.s = scale;
-    for maxIter = [1]
+    for maxIter = [10:1:20]
         Par.maxIter = maxIter;
-        for rho = [.1:.1:.5]
+        for rho = [.1]
             Par.rho = rho;
-            for lambda = [0 .1]
+            for lambda = [.5 1 2 ]
                 Par.lambda = lambda;
                 for nSet = [2 3 5 8 10]
                     n = nSet;
