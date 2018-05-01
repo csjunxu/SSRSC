@@ -35,13 +35,13 @@ end
 % SegmentationMethod = 'SLSR';
 SegmentationMethod = 'SRLSR';
 
-for maxIter = 5
+for maxIter = 1:1:10
     Par.maxIter = maxIter;
-    for s = .9
+    for s = .5:.05:1.2
         Par.s = s;
-        for rho = [.013]
+        for rho = [.01:.01:.1]
             Par.rho = rho;
-            for lambda = [0]
+            for lambda = [0:.01:.1]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -116,7 +116,7 @@ for maxIter = 5
                                     case 'SLSR'
                                         C = SLSR(Xp, Par); % affine
                                     case 'SRLSR'                 % deformable, affine, non-negative
-                                        C = SANNLSR( Xp , Par ) ;
+                                        C = SRLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
