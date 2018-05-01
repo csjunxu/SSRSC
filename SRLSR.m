@@ -1,4 +1,4 @@
-function C = DANNLSR( X , Par )
+function C = SRLSR( X , Par )
 
 % Input:
 % X ... (L x N) data matrix, where L is the number of features, and

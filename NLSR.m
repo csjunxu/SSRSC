@@ -1,4 +1,4 @@
-function C = NNLSR( X , Par )
+function C = NLSR( X , Par )
 
 % Input
 % X           Data matrix, dim * num

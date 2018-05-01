@@ -151,12 +151,12 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                                     %% our methods
                                 case 'LSR'
                                     C = LSR( Yfea , Par ) ;
-                                case 'NNLSR'                   % non-negative
-                                    C = NNLSR( Yfea , Par ) ;
-                                case 'SALSR'
-                                    C = SALSR(Yfea, Par); % affine
+                                case 'NLSR'                   % non-negative
+                                    C = NLSR( Yfea , Par ) ;
+                                case 'SLSR'
+                                    C = SLSR(Yfea, Par); % affine
                                 case 'SRLSR'                 % deformable, affine, non-negative
-                                    C = SANNLSR( Yfea , Par ) ;
+                                    C = SRLSR( Yfea , Par ) ;
                             end
                             %% generate affinity
                             for k = 1 : size(C, 2)
