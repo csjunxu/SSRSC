@@ -18,9 +18,9 @@ end
 % SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'NNLSR';
-SegmentationMethod = 'SALSR';
-% SegmentationMethod = 'SANNLSR';
+% SegmentationMethod = 'NLSR';
+SegmentationMethod = 'SLSR';
+% SegmentationMethod = 'SRLSR';
 
 Repeat = 1; %number of repeations
 DR = 1; % dimension reduction
@@ -107,12 +107,12 @@ for scale = [1.2:.1:1.5]
                                         C = LSR2( Yfea , Par.lambda ) ; % proposed by Lu
                                     case 'LSR'
                                         C = LSR( Yfea , Par ) ;
-                                    case 'NNLSR'                   % non-negative LSR
-                                        C = NNLSR( Yfea , Par ) ;
-                                    case 'SALSR'                 % scaled affine LSR
-                                        C = SALSR( Yfea , Par ) ;
-                                    case 'SANNLSR'                 % scaled affine, non-negative, LSR
-                                        C = SANNLSR( Yfea , Par ) ;
+                                    case 'NLSR'                   % non-negative LSR
+                                        C = NLSR( Yfea , Par ) ;
+                                    case 'SLSR'                 % scaled affine LSR
+                                        C = SLSR( Yfea , Par ) ;
+                                    case 'SRLSR'                 % scaled affine, non-negative, LSR
+                                        C = SRLSR( Yfea , Par ) ;
                                 end
                                 for k = 1 : size(C,2)
                                     C(:, k) = C(:, k) / max(abs(C(:, k))) ;
