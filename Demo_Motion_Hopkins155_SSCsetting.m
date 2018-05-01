@@ -31,9 +31,9 @@ end
 
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
-% SegmentationMethod = 'NNLSR';
-SegmentationMethod = 'SALSR';
-% SegmentationMethod = 'SANNLSR';
+% SegmentationMethod = 'NLSR';
+% SegmentationMethod = 'SLSR';
+SegmentationMethod = 'SRLSR';
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;
@@ -41,7 +41,7 @@ for maxIter = 1:1:10
         Par.s = s;
         for rho = [.01 .005 .001]
             Par.rho = rho;
-            for lambda = [0 .01]
+            for lambda = [0 .01 .05 .1 .5]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -111,14 +111,12 @@ for maxIter = 1:1:10
                                     case 'LSR2'
                                         C = LSR2( Xp , Par.lambda ) ; % proposed by Lu
                                         %% our methods
-                                    case 'NNLSR'                   % non-negative
-                                        C = NNLSR( Xp , Par ) ;
-                                    case 'NNLSRd0'               % non-negative, diagonal = 0
-                                        C = NNLSRd0( Xp , Par ) ;
-                                    case 'SALSR'
-                                        C = SALSR(Xp, Par); % affine
-                                    case 'SANNLSR'                 % deformable, affine, non-negative
-                                        C = SANNLSR( Xp , Par ) ;
+                                    case 'NLSR'                   % non-negative
+                                        C = NLSR( Xp , Par ) ;
+                                    case 'SLSR'
+                                        C = SLSR(Xp, Par); % affine
+                                    case 'SRLSR'                 % deformable, affine, non-negative
+                                        C = SRLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
@@ -153,11 +151,10 @@ for maxIter = 1:1:10
                 elseif strcmp(SegmentationMethod, 'LRR')==1 || strcmp(SegmentationMethod, 'LRSC')==1 || strcmp(SegmentationMethod, 'LSR')==1 || strcmp(SegmentationMethod, 'LSR1')==1 || strcmp(SegmentationMethod, 'LSR2')==1 || strcmp(SegmentationMethod, 'SMR')==1 %|| strcmp(SegmentationMethod, 'SSCOMP')==1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'NNLSR') == 1 || strcmp(SegmentationMethod, 'NPLSR') == 1 || strcmp(SegmentationMethod, 'ANNLSR') == 1 || strcmp(SegmentationMethod, 'ANPLSR') == 1
+                elseif strcmp(SegmentationMethod, 'NLSR') == 1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'SANNLSR') == 1 || strcmp(SegmentationMethod, 'SANNLSRd0') == 1 ...
-                        || strcmp(SegmentationMethod,'SALSR')==1 || strcmp(SegmentationMethod, 'SALSRd0')==1
+                elseif strcmp(SegmentationMethod, 'SRLSR') == 1 || strcmp(SegmentationMethod,'SLSR')==1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1
