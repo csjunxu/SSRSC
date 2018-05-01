@@ -46,7 +46,7 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         MNIST_DATA = MNIST_SC_DATA;
     end
     
-    nExperiment = 20; % number of repeations
+    nExperiment = 1; % 20 number of repeations
     DR = 1; % perform dimension reduction or not
     if DR == 0
         dim = size(Y{1, 1}, 1);
@@ -190,8 +190,8 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                     elseif strcmp(SegmentationMethod, 'NLSR') == 1 ...
                             || strcmp(SegmentationMethod, 'LSR')==1 ...
                             || strcmp(SegmentationMethod, 'SLSR') == 1 ...
-                            || strcmp(SegmentationMethod, 'SANNLSR') == 1
-                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                            || strcmp(SegmentationMethod, 'SRLSR') == 1
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1
                         matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
