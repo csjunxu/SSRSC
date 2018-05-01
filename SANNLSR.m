@@ -1,4 +1,4 @@
-function C = SANNLSRd0( X , Par )
+function C = SANNLSR( X , Par )
 
 % Input:
 % X ... (L x N) data matrix, where L is the number of features, and
@@ -7,7 +7,7 @@ function C = SANNLSRd0( X , Par )
 
 % Objective function:
 %      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2
-%      s.t.  A>=0, 1'*A=s*1', diag(A) = 0
+%      s.t.  A>=0, 1'*A=s*1'
 
 % Output:
 % A ... (N x N) is a coefficient matrix
@@ -39,7 +39,6 @@ while  ( ~terminate )
     else
         A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     end
-    A = A - diag(diag(A));
     
     %% update C the data term matrix
 %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
@@ -54,7 +53,6 @@ while  ( ~terminate )
 %     C = Par.s*C;
 
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-    Q = Q - diag(diag(Q));
     C = SimplexProj(Q');
     C = Par.s*C';
     

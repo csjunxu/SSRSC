@@ -41,7 +41,7 @@ for maxIter = 5
         Par.s = s;
         for rho = [.013]
             Par.rho = rho;
-            for lambda = [0 .001 .005 .01 .05 .1]
+            for lambda = [0]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -116,7 +116,7 @@ for maxIter = 5
                                     case 'SLSR'
                                         C = SLSR(Xp, Par); % affine
                                     case 'SRLSR'                 % deformable, affine, non-negative
-                                        C = SRLSR( Xp , Par ) ;
+                                        C = SANNLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
