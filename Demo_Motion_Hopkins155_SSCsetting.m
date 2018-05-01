@@ -35,13 +35,13 @@ end
 % SegmentationMethod = 'SLSR';
 SegmentationMethod = 'SRLSR';
 
-for maxIter = 1:1:10
+for maxIter = 5
     Par.maxIter = maxIter;
-    for s = .7:.1:1.2
+    for s = .9
         Par.s = s;
-        for rho = [.01 .005 .001]
+        for rho = [.013]
             Par.rho = rho;
-            for lambda = [0 .01 .05 .1 .5]
+            for lambda = [0 .001 .005 .01 .05 .1]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
