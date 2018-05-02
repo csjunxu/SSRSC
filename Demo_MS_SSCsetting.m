@@ -33,11 +33,12 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NLSR';
 % SegmentationMethod = 'SLSR';
-SegmentationMethod = 'SRLSR';
+% SegmentationMethod = 'SRLSR';
+SegmentationMethod = 'RSRLSR'; % relaxed simplex representation
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;
-    for s = .5:.05:1.2
+    for s = .5:.1:1.2
         Par.s = s;
         for rho = [.01:.01:.1]
             Par.rho = rho;
@@ -115,8 +116,10 @@ for maxIter = 1:1:10
                                         C = NLSR( Xp , Par ) ;
                                     case 'SLSR'
                                         C = SLSR(Xp, Par); % affine
-                                    case 'SRLSR'                 % deformable, affine, non-negative
+                                    case 'SRLSR'                
                                         C = SRLSR( Xp , Par ) ;
+                                    case 'RSRLSR'                
+                                        C = RSRLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;
@@ -154,7 +157,7 @@ for maxIter = 1:1:10
                 elseif strcmp(SegmentationMethod, 'NLSR') == 1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
-                elseif strcmp(SegmentationMethod, 'SRLSR') == 1 || strcmp(SegmentationMethod,'SLSR')==1
+                elseif strcmp(SegmentationMethod, 'SRLSR') == 1 || strcmp(SegmentationMethod,'RSRLSR')==1 || strcmp(SegmentationMethod,'SLSR')==1
                     matname = sprintf([write_results_dir dataset '_SSCsetting_' SegmentationMethod '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                     save(matname,'avgallmissrate','medallmissrate','missrateTot','avgmissrate','medmissrate');
                 elseif strcmp(SegmentationMethod, 'SSCOMP')==1

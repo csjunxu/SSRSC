@@ -1,0 +1,65 @@
+function C = RSRLSR( X , Par )
+
+% Input:
+% X ... (D x N) data matrix, where D is the number of features, and
+%           N is the number of samples.
+% Par ...  regularization parameters
+
+% Objective function:
+%      min_{A}  ||X1 - X2 * A||_F^2 + lambda * ||A||_F^2 s.t.  A >= 0
+%      where X1 = (X^T s*1)^T, X2 = (X^T 1)^T
+% Output:
+% A ... (N x N) is a coefficient matrix
+
+[D, N] = size (X);
+
+%% initialization
+
+% A   = eye (N);
+% A   = rand (N); A(A<0) = 0;
+A     = zeros (N, N);
+C     = A;
+Delta = zeros (N, N); %C - A;
+
+%%
+tol   = 1e-4;
+iter    = 1;
+err1(1) = inf; err2(1) = inf;
+terminate = false;
+X1 = [X' Par.s*ones(N,1)]';
+X2 = [X' ones(N,1)]';
+% if N < D
+XTXinv = (X2' * X2 + Par.rho/2 * eye(N+1))\eye(N+1);
+%else
+%    P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
+%end
+while  ( ~terminate )
+    %% update A the coefficient matrix
+    A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
+    
+    %% update C the data term matrix
+    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
+    C = max(0, Q);
+    
+    %% update Deltas the lagrange multiplier matrix
+    Delta = Delta + Par.rho * ( C - A);
+    
+    %     %% update rho the penalty parameter scalar
+    %     Par.rho = min(1e4, Par.mu * Par.rho);
+    
+    %% computing errors
+    err1(iter+1) = errorCoef(C, A);
+    err2(iter+1) = errorLinSys(X, A);
+    if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
+        terminate = true;
+        %                 fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %     else
+        %                 if (mod(iter, Par.maxIter)==0)
+        %                     fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        %                 end
+    end
+    
+    %% next iteration number
+    iter = iter + 1;
+end
+end
