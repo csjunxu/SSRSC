@@ -21,8 +21,8 @@ end
 
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NLSR';
-SegmentationMethod = 'SLSR';
-% SegmentationMethod = 'SRLSR';
+% SegmentationMethod = 'SLSR';
+SegmentationMethod = 'SRLSR';
 alltime = [];
 jj=0;
 %% Settings

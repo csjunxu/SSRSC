@@ -39,15 +39,15 @@ while  ( ~terminate )
         A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     end
     
-    %% update C the data term matrix
-    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-    C  = Par.s*solver_BCLS_closedForm(Q);
-
+%     %% update C the data term matrix
 %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%     for i=1:size(Q, 2)
-%         C(:,i) = projsplx(Q(:,i));
-%     end
-%     C = Par.s*C;
+%     C  = Par.s*solver_BCLS_closedForm(Q);
+
+    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    for i=1:size(Q, 2)
+        C(:,i) = projsplx(Q(:,i));
+    end
+    C = Par.s*C;
 
 %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
 %     C = SimplexProj(Q');

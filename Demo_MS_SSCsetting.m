@@ -15,12 +15,12 @@ end
 
 
 %% Subspace segmentation methods
-% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
-% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\SC\2010 ICML 2013 PAMI LRR\code\');
-% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2011 CVPR LRSC\');
-% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\SC\SMR_v1.0');
-% SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
-% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\SC\SSCOMP_Code');
+% SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\2009 CVPR 2013 PAMI SSC');
+% SegmentationMethod = 'LRR' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\2010 ICML 2013 PAMI LRR\code\');
+% SegmentationMethod = 'LRSC' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\2011 CVPR LRSC\');
+% SegmentationMethod = 'SMR' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\SMR_v1.0');
+% SegmentationMethod = 'RSIM' ; ii = 0;addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\Ncut_9'); addpath('C:\Users\csjunxu\Desktop\SC\2015 ICCV RSIM');
+% SegmentationMethod = 'SSCOMP' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\SSCOMP_Code');
 % SegmentationMethod = 'LSR1' ;
 % SegmentationMethod = 'LSR2' ;
 
@@ -33,16 +33,15 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NLSR';
 % SegmentationMethod = 'SLSR';
-% SegmentationMethod = 'SRLSR';
-SegmentationMethod = 'RSRLSR'; % relaxed simplex representation
+SegmentationMethod = 'SRLSR';
 
-for maxIter = 1:1:10
+for maxIter = 5
     Par.maxIter = maxIter;
-    for s = .5:.1:1.2
+    for s = .9
         Par.s = s;
-        for rho = [.01:.01:.1]
+        for rho = [.013]
             Par.rho = rho;
-            for lambda = [0:.01:.1]
+            for lambda = [0]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -118,8 +117,6 @@ for maxIter = 1:1:10
                                         C = SLSR(Xp, Par); % affine
                                     case 'SRLSR'                
                                         C = SRLSR( Xp , Par ) ;
-                                    case 'RSRLSR'                
-                                        C = RSRLSR( Xp , Par ) ;
                                 end
                                 nCluster = length( unique( gnd ) ) ;
                                 Z = ( abs(C) + abs(C') ) / 2 ;

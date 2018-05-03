@@ -1,49 +1,62 @@
-function C = RSRLSR( X , Par )
+function C = DANNLSRd0( X , Par )
 
 % Input:
-% X ... (D x N) data matrix, where D is the number of features, and
+% X ... (L x N) data matrix, where L is the number of features, and
 %           N is the number of samples.
 % Par ...  regularization parameters
 
 % Objective function:
-%      min_{A}  ||X1 - X2 * A||_F^2 + lambda * ||A||_F^2 s.t.  A >= 0
-%      where X1 = (X^T s*1)^T, X2 = (X^T 1)^T
+%      min_{A}  ||X - X * A||_F^2 + lambda * ||A||_F^2
+%      s.t.  A>=0, 1'*A=s*1', diag(A) = 0
+
 % Output:
 % A ... (N x N) is a coefficient matrix
 
 [D, N] = size (X);
 
 %% initialization
-
-% A   = eye (N);
-% A   = rand (N); A(A<0) = 0;
-A     = zeros (N, N);
-C     = A;
-Delta = zeros (N, N); %C - A;
+% A       = eye (N);
+% A   = rand (N);
+A       = zeros (N, N);
+C       = A;
+Delta = C - A;
 
 %%
 tol   = 1e-4;
 iter    = 1;
+% objErr = zeros(Par.maxIter, 1);
 err1(1) = inf; err2(1) = inf;
 terminate = false;
-X1 = [X' Par.s*ones(N,1)]';
-X2 = [X' ones(N,1)]';
 if N < D
     XTXinv = (X' * X + Par.rho/2 * eye(N))\eye(N);
 else
     P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
 end
 while  ( ~terminate )
-        %% update A the coefficient matrix
+    %% update A the coefficient matrix
     if N < D
         A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     else
         A =  P * (X' * X + Par.rho/2 * C + 0.5 * Delta);
     end
+    A = A - diag(diag(A));
     
     %% update C the data term matrix
-    Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
-    C = max(0, Q);
+%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+%     Q = Q - diag(diag(Q));
+%     C  = Par.s*solver_BCLS_closedForm(Q);
+    
+%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+%     Q = Q - diag(diag(Q));
+%     for i=1:size(Q, 2)
+%         C(:,i) = projsplx(Q(:,i));
+%     end
+%     C = Par.s*C;
+
+    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    Q = Q - diag(diag(Q));
+    C = SimplexProj(Q');
+    C = Par.s*C';
     
     %% update Deltas the lagrange multiplier matrix
     Delta = Delta + Par.rho * ( C - A);
