@@ -29,13 +29,13 @@ terminate = false;
 X1 = [X' Par.s*ones(N,1)]';
 X2 = [X' ones(N,1)]';
 % if N < D
-XTXinv = (X2' * X2 + Par.rho/2 * eye(N+1))\eye(N+1);
+XTXinv = (X2' * X2 + Par.rho/2 * eye(N))\eye(N);
 %else
 %    P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
 %end
 while  ( ~terminate )
     %% update A the coefficient matrix
-    A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
+    A = XTXinv * (X2' * X1 + Par.rho/2 * C + 0.5 * Delta);
     
     %% update C the data term matrix
     Q = (Par.rho*A - Delta)/(2*Par.lambda+Par.rho);
