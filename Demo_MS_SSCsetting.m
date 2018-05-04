@@ -33,16 +33,15 @@ end
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NLSR';
 % SegmentationMethod = 'SLSR';
-% SegmentationMethod = 'SRLSR';
-SegmentationMethod = 'RSRLSR'; % relaxed simplex representation
+SegmentationMethod = 'SRLSR';
 
-for maxIter = 1:1:10
+for maxIter = 5
     Par.maxIter = maxIter;
-    for s = .5:.1:1.2
+    for s = .9
         Par.s = s;
-        for rho = [.01:.01:.1]
+        for rho = [.013]
             Par.rho = rho;
-            for lambda = [0:.01:.1]
+            for lambda = [0]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
