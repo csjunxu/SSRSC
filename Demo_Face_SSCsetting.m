@@ -1,8 +1,8 @@
 clear;
 
-load '/Users/xujun/Desktop/SC/Datasets/YaleBCrop025.mat';
+load '/Users/xujun/Downloads/YaleBCrop025.mat';
 dataset = 'YaleB_SSC';
-write_results_dir = ['/Users/xujun/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['/Users/xujun/Desktop/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -35,13 +35,13 @@ end
 alltime = [];
 jj=0;
 %% Subspace segmentation
-for scale = [.25]
+for scale = [.5]
     Par.s = scale;
-    for maxIter = [1]
+    for maxIter = [2]
         Par.maxIter = maxIter;
-        for rho = [.41]
+        for rho = [.2 .05 .01]
             Par.rho = rho;
-            for lambda = [.0 .001]
+            for lambda = [.001]
                 Par.lambda = lambda;
                 for nSet = [2 3 5 8 10]
                     n = nSet;
@@ -140,7 +140,7 @@ for scale = [.25]
                     elseif strcmp(SegmentationMethod, 'NNLSR')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
-                    elseif strcmp(SegmentationMethod, 'SANNLSR')==1 || strcmp(SegmentationMethod, 'SALSR')==1
+                    elseif strcmp(SegmentationMethod, 'SRLSR')==1 || strcmp(SegmentationMethod, 'SALSR')==1
                         matname = sprintf([write_results_dir dataset '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrateTot','avgmissrate','medmissrate','allavgmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1 || strcmp(SegmentationMethod, 'S3C') == 1
