@@ -12,7 +12,7 @@ maxNumGroup = 5;
 for i = 1:maxNumGroup
     num(i) = 0;
 end
-
+    
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\2009 CVPR 2013 PAMI SSC');
@@ -37,11 +37,11 @@ SegmentationMethod = 'SRLSR';
 
 for maxIter = 1:1:10
     Par.maxIter = maxIter;
-    for s = [.5 .4 .3 .2]
+    for s = [0.9 .5]
         Par.s = s;
-        for rho = [.01 .05 .1 .2 .4]
+        for rho = [.001 .005 .01]
             Par.rho = rho;
-            for lambda = [.001 .01 .1]
+            for lambda = [.001 .005 .01 .05 .1 .5]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
