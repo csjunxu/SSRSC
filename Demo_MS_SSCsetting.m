@@ -29,7 +29,6 @@ end
 % SegmentationMethod = 'SALSRd0';
 % SegmentationMethod = 'SANNLSRd0';
 
-
 % SegmentationMethod = 'LSR' ; % the same with LSR2
 % SegmentationMethod = 'NLSR';
 % SegmentationMethod = 'SLSR';
