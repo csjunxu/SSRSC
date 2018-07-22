@@ -2,10 +2,6 @@ clear;
 
 addpath('MNISThelpcode');
 dataset = 'MNIST';
-write_results_dir = ['/Users/xujun/Desktop/Results/' dataset '/'];
-if ~isdir(write_results_dir)
-    mkdir(write_results_dir);
-end
 
 %% Subspace segmentation methods
 % SegmentationMethod = 'SSC' ; addpath('C:\Users\csjunxu\Desktop\SC\2009 CVPR 2013 PAMI SSC');
@@ -26,6 +22,10 @@ alltime = [];
 jj=0;
 %% Settings
 for nSample = [50 100 200 400 600] % number of images for each digit
+    write_results_dir = ['/Users/xujun/Desktop/Results/' dataset '/' num2str(nSample) '/'];
+if ~isdir(write_results_dir)
+    mkdir(write_results_dir);
+end
     jj=jj+1;
     %% Load data
     addpath('/Users/xujun/Downloads/MNIST/')
@@ -190,7 +190,7 @@ for nSample = [50 100 200 400 600] % number of images for each digit
                             || strcmp(SegmentationMethod, 'LSR')==1 ...
                             || strcmp(SegmentationMethod, 'SLSR') == 1 ...
                             || strcmp(SegmentationMethod, 'SRLSR') == 1
-                        matname = sprintf([write_results_dir nSample '/' dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
+                        matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '_s' num2str(Par.s) '_maxIter' num2str(Par.maxIter) '_rho' num2str(Par.rho) '_lambda' num2str(Par.lambda) '.mat']);
                         save(matname,'missrate','avgmissrate','medmissrate');
                     elseif strcmp(SegmentationMethod, 'RSIM')==1
                         matname = sprintf([write_results_dir dataset '_' num2str(nSample(1)) '_' num2str(nExperiment) '_' SegmentationMethod '_DR' num2str(DR) '_dim' num2str(dim) '.mat']);
