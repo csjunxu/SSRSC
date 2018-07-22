@@ -58,9 +58,9 @@ end
     %% Subspace segmentation
     for s = [.5]
         Par.s = s;
-        for maxIter =  1:1:5
+        for maxIter =  5
             Par.maxIter = maxIter;
-            for rho =  [.5 1]
+            for rho =  [.5:.1:1]
                 Par.rho = rho;
                 for lambda = [0 .1 .001 .01]
                     Par.lambda = lambda;
