@@ -1,9 +1,8 @@
 clear;
 
 addpath('MNISThelpcode');
-addpath(genpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\SSCOMP_Code\scatnet-0.2'));
 dataset = 'MNIST';
-write_results_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 SC/Results/' dataset '/'];
+write_results_dir = ['/Users/xujun/Desktop/Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -29,7 +28,7 @@ jj=0;
 for nSample = [50 100 200 400 600] % number of images for each digit
     jj=jj+1;
     %% Load data
-    addpath('C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\MNIST\')
+    addpath('/Users/xujun/Downloads/MNIST/')
     if ~exist('MNIST_DATA', 'var')
         try
             % MNIST_SC_DATA is a D by N matrix. Each column contains a feature
@@ -41,7 +40,7 @@ for nSample = [50 100 200 400 600] % number of images for each digit
             MNIST_DATA = loadMNISTImages('train-images.idx3-ubyte');
             MNIST_LABEL = loadMNISTLabels('train-labels.idx1-ubyte');
             MNIST_SC_DATA = SCofDigits(MNIST_DATA);
-            save C:\Users\csjunxu\Desktop\CVPR2018 SC\Datasets\MNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
+            save /Users/xujun/Downloads/MNIST/MNIST_SC.mat MNIST_SC_DATA MNIST_LABEL;
         end
         MNIST_DATA = MNIST_SC_DATA;
     end
@@ -57,13 +56,13 @@ for nSample = [50 100 200 400 600] % number of images for each digit
         dim = 50;
     end
     %% Subspace segmentation
-    for maxIter =  1:1:20
-        Par.maxIter = maxIter;
-        for s = [.1:.1:1.5]
-            Par.s = s;
-            for rho =  [.001 .005 .01 .05 .1 .5 1]
+    for s = [.5]
+        Par.s = s;
+        for maxIter =  1:1:10
+            Par.maxIter = maxIter;
+            for rho =  [.001 .01 .1 .5 1]
                 Par.rho = rho;
-                for lambda = [0 .001 .005 .01 .05 .1 .5 1]
+                for lambda = [0 .001 .01 .1 .5 1]
                     Par.lambda = lambda;
                     missrate = zeros(nExperiment, 1) ;
                     ii=0;
