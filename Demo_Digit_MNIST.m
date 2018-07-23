@@ -21,7 +21,7 @@ SegmentationMethod = 'SRLSR';
 alltime = [];
 jj=0;
 %% Settings
-for nSample = [400 600] % number of images for each digit
+for nSample = [600] % number of images for each digit
     write_results_dir = ['/Users/xujun/Desktop/Results/' dataset '/' num2str(nSample) '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
