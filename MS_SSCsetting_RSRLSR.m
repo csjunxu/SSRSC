@@ -5,7 +5,7 @@ addpath '/Users/xujun/Documents/GitHub/SRLSR/';
 
 dataset = 'Hopkins155';
 cd '/Users/xujun/Desktop/SC/Datasets/Hopkins155/';
-write_results_dir = ['/Users/xujun/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['/Users/xujun/Desktop/SC/Results/' dataset '/2018a/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -22,7 +22,7 @@ for maxIter = 1:1:5
     Par.maxIter = maxIter;
     for s = [1:-.1:.1]
         Par.s = s;
-        for rho = [.1 .3 .5]
+        for rho = [1 2]
             Par.rho = rho;
             for lambda = [0 .001 .01 .1]
                 Par.lambda = lambda;
