@@ -53,7 +53,7 @@ clear seq3;
 % SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'NNLSRd0';
 
-SegmentationMethod = 'DANNLSR';
+SegmentationMethod = 'SRLSR';
 
 % SegmentationMethod = 'BNNLS';
 % SegmentationMethod = 'BNNLSd0';
@@ -96,22 +96,6 @@ for s = [.8]
                         missrate = StrSSC(ProjX, gnd, opt);
                     else
                         switch SegmentationMethod
-                            case 'SSC'
-                                alpha = 800;
-                                C = admmLasso_mat_func(ProjX, true, alpha);
-                            case 'LRR'
-                                C = solve_lrr(ProjX, Par.lambda); % without post processing
-                            case 'LRSC'
-                                C = lrsc_noiseless(ProjX, 15);
-                                %  [~, C] = lrsc_noisy(ProjX, Par.lambda);
-                            case 'SMR'
-                                para.aff_type = 'J1'; % J1 is unrelated to gamma, which is used in J2 and J2_norm
-                                para.gamma = 1;
-                                para.alpha = 20;
-                                para.knn = 4;
-                                para.elpson =0.01;
-                                ProjX = [ProjX ; ones(1,size(ProjX,2))] ;
-                                C = smr(ProjX, para);
                             case 'SSCOMP' % add the path of the SSCOMP method
                                 C = OMP_mat_func(ProjX, 9, 1e-6);
                             case 'LSR'
@@ -127,26 +111,12 @@ for s = [.8]
                                 C = NNLSR( ProjX , Par ) ;
                             case 'NNLSRd0'               % non-negative, diagonal = 0
                                 C = NNLSRd0( ProjX , Par ) ;
-                            case 'NPLSR'                   % non-positive
-                                C = NPLSR( ProjX , Par ) ;
-                            case 'NPLSRd0'               % non-positive, diagonal = 0
-                                C = NPLSRd0( ProjX , Par ) ;
                             case 'ANNLSR'                 % affine, non-negative
                                 C = ANNLSR( ProjX , Par ) ;
                             case 'ANNLSRd0'             % affine, non-negative, diagonal = 0
                                 C = ANNLSRd0( ProjX , Par ) ;
-                            case 'ANPLSR'                 % affine, non-positive
-                                C = ANPLSR( ProjX , Par ) ;
-                            case 'ANPLSRd0'             % affine, non-positive, diagonal = 0
-                                C = ANPLSRd0( ProjX , Par ) ;
-                            case 'DANNLSR'                 % deformable, affine, non-negative
-                                C = DANNLSR( ProjX , Par ) ;
-                            case 'DANNLSRd0'             % deformable, affine, non-negative, diagonal = 0
-                                C = DANNLSRd0( ProjX , Par ) ;
-                            case 'DANPLSR'                 % deformable, affine, non-positive
-                                C = DANPLSR( ProjX , Par ) ;
-                            case 'DANPLSRd0'             % deformable, affine, non-positive, diagonal = 0
-                                C = DANPLSRd0( ProjX , Par ) ;
+                            case 'SRLSR'                 % deformable, affine, non-negative
+                                C = SRLSR( ProjX , Par ) ;
                             case 'BNNLS' % deformable, affine, non-negative
                                 C = BNNLS( ProjX , Par ) ;
                         end
