@@ -2,7 +2,7 @@ clear ;
 
 %% reduced dimension
 ProjRank = 12;
-datadir = 'C:/Users/csjunxu/Desktop/SC/Datasets/Hopkins155/';
+datadir = '../SRLSR_Datasets/Hopkins155/'; 
 seqs = dir(datadir);
 % Get rid of the two directories: "." and ".."
 seq3 = seqs(3:end);
@@ -10,7 +10,7 @@ seq3 = seqs(3:end);
 data = struct('ProjX', {}, 'name',{}, 'ids',{});
 
 dataset = 'Hopkins155';
-write_results_dir = ['C:/Users/csjunxu/Desktop/SC/Results/' dataset '/'];
+write_results_dir = ['../SRLSR_Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -52,25 +52,13 @@ clear seq3;
 
 % SegmentationMethod = 'NNLSR';
 % SegmentationMethod = 'NNLSRd0';
-% SegmentationMethod = 'NPLSR'; % SVD 的输入不能包含 NaN 或 Inf。
-% SegmentationMethod = 'NPLSRd0'; % SVD 的输入不能包含 NaN 或 Inf。
-
-% SegmentationMethod = 'ANNLSR';
-% SegmentationMethod = 'ANNLSRd0';
-% SegmentationMethod = 'ANPLSR';
-% SegmentationMethod = 'ANPLSRd0';
 
 SegmentationMethod = 'DANNLSR';
-% SegmentationMethod = 'DANNLSRd0';
-% SegmentationMethod = 'DANPLSR';
-% SegmentationMethod = 'DANPLSRd0';
 
 % SegmentationMethod = 'BNNLS';
 % SegmentationMethod = 'BNNLSd0';
 % SegmentationMethod = 'BNNLSR';
 % SegmentationMethod = 'BNNLSRd0';
-% SegmentationMethod = 'BNPLSR';
-% SegmentationMethod = 'BNPLSRd0';
 
 
 for s = [.8]
@@ -159,7 +147,7 @@ for s = [.8]
                                 C = DANPLSR( ProjX , Par ) ;
                             case 'DANPLSRd0'             % deformable, affine, non-positive, diagonal = 0
                                 C = DANPLSRd0( ProjX , Par ) ;
-                            case 'BNNLS'                 % deformable, affine, non-negative
+                            case 'BNNLS' % deformable, affine, non-negative
                                 C = BNNLS( ProjX , Par ) ;
                         end
                         nCluster = length( unique( gnd ) ) ;
