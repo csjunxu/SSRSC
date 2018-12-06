@@ -23,7 +23,7 @@ Ctime = [];
 %% Subspace segmentation
 for rho = [1]
     Par.rho = rho;
-    for lambda = [2^-16 1 20 2^16]
+    for lambda = [1 100 .01]
         Par.lambda = lambda;
         t1=clock;
         % normalize
