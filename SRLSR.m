@@ -22,9 +22,9 @@ C       = A;
 Delta = zeros (N, N); %C - A;
 
 %%
-tol   = 1e-4;
+tol   = 1e-3;
 iter    = 1;
-err1(1) = inf; err2(1) = inf;
+err1(1) = inf; err2(1) = inf; err3(1) = inf;
 terminate = false;
 if N < D
     XTXinv = (X' * X + Par.rho/2 * eye(N))\eye(N);
@@ -32,6 +32,8 @@ else
     P = (2/Par.rho * eye(N) - (2/Par.rho)^2 * X' / (2/Par.rho * (X * X') + eye(D)) * X );
 end
 while  ( ~terminate )
+    Apre = A;
+    Cpre = C;
     %% update A the coefficient matrix
     if N < D
         A = XTXinv * (X' * X + Par.rho/2 * C + 0.5 * Delta);
@@ -40,14 +42,14 @@ while  ( ~terminate )
     end
     
     %% update C the data term matrix
-%    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%    C  = Par.s*solver_BCLS_closedForm(Q);
-
-%     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
-%     for i=1:size(Q, 2)
-%         C(:,i) = projsplx(Q(:,i));
-%     end
-%     C = Par.s*C;
+    %    Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    %    C  = Par.s*solver_BCLS_closedForm(Q);
+    
+    %     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
+    %     for i=1:size(Q, 2)
+    %         C(:,i) = projsplx(Q(:,i));
+    %     end
+    %     C = Par.s*C;
     
     Q = (Par.rho*A - Delta)/(Par.s*(2*Par.lambda+Par.rho));
     C = SimplexProj(Q');
@@ -61,14 +63,16 @@ while  ( ~terminate )
     
     %% computing errors
     err1(iter+1) = errorCoef(C, A);
-    err2(iter+1) = errorLinSys(X, A);
-    if (  (err1(iter+1) >= err1(iter) && err2(iter+1)<=tol) ||  iter >= Par.maxIter  )
+    err2(iter+1) = errorCoef(A, Apre);
+    err3(iter+1) = errorCoef(C, Cpre);
+    %err2(iter+1) = errorLinSys(X, A);
+    if (  (err1(iter+1) >= err1(iter) && err1(iter+1)<=tol && err2(iter+1)<=tol && err3(iter+1)<=tol) ||  iter >= Par.maxIter  )
         terminate = true;
-        %                 fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-        %     else
-        %                 if (mod(iter, Par.maxIter)==0)
-        %                     fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
-        %                 end
+        fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+    else
+        if (mod(iter, Par.maxIter)==0)
+            fprintf('err1: %2.4f, err2: %2.4f, iter: %3.0f \n',err1(end), err2(end), iter);
+        end
     end
     
     %% next iteration number

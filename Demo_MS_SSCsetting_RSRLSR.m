@@ -1,11 +1,11 @@
 clear;
 
-addpath '/Users/xujun/Documents/GitHub/SRLSR/';
+addpath '/home/csjunxu/Github/SRLSR/';
 
 
 dataset = 'Hopkins155';
-cd '/Users/xujun/Desktop/SC/Datasets/Hopkins155/';
-write_results_dir = ['/Users/xujun/Desktop/SC/Results/' dataset '/2018a/'];
+cd '/home/csjunxu/Github/data/clustering/Hopkins155/';
+write_results_dir = ['/home/csjunxu/Github/SRLSR_Results/' dataset '/'];
 if ~isdir(write_results_dir)
     mkdir(write_results_dir);
 end
@@ -16,15 +16,15 @@ end
 
 
 %% Subspace segmentation methods
-SegmentationMethod = 'RSRLSR';
+SegmentationMethod = 'SRLSR';
 
-for maxIter = 1:1:5
+for maxIter = 100 
     Par.maxIter = maxIter;
-    for s = [1:-.1:.1]
+    for s = [0.9]
         Par.s = s;
-        for rho = [1 2]
+        for rho = [1]
             Par.rho = rho;
-            for lambda = [0 .001 .01 .1]
+            for lambda = [.5]
                 Par.lambda = lambda;
                 maxNumGroup = 5;
                 for i = 1:maxNumGroup
@@ -64,7 +64,7 @@ for maxIter = 1:1:5
                             Xp = DataProjection(X,r);
                             
                             % Relaxed Simplex Representation
-                            C = RSRLSR( Xp , Par ) ;
+                            C = SRLSR( Xp , Par ) ;
                             nCluster = length( unique( gnd ) ) ;
                             Z = (C+C')/2;
                             idx = clu_ncut(Z,nCluster) ;
